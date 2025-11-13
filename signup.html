@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | PhineX</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-dragon"></i>
+        <span>PhineX</span>
+      </div>
+      <a href="index.html" class="btn-outline">Back to Home</a>
+    </div>
+  </nav>
+
+  <div class="auth-container">
+    <div class="auth-form">
+      <h2>Join PhineX</h2>
+      
+      <!-- Social Signup Buttons -->
+      <div class="social-login">
+        <button class="btn-google" id="googleSignupBtn">
+          <i class="fab fa-google"></i> Sign up with Google
+        </button>
+        <button class="btn-facebook" id="facebookSignupBtn">
+          <i class="fab fa-facebook-f"></i> Sign up with Facebook
+        </button>
+      </div>
+      
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <!-- Email/Password Form -->
+      <form id="signupForm">
+        <div class="form-group">
+          <input type="email" id="signupEmail" placeholder="Email" required>
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="form-group">
+          <input type="password" id="signupPassword" placeholder="Password" required>
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="robotCheck" required>
+          <label for="robotCheck">I'm not a robot 🤖</label>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="termsCheck" required>
+          <label for="termsCheck">I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a></label>
+        </div>
+        <button type="submit" class="btn-primary" id="signupBtn">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+      
+      <p class="auth-link">
+        Already have an account? <a href="login.html">Login here</a>
+      </p>
+      <div id="message" class="message"></div>
+    </div>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

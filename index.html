@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhineX | Professional Programming Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-dragon"></i>
+        <span>PhineX</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="hiring.html">Hiring</a></li>
+        <li><a href="academy.html">X-Academy</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="login.html" id="loginNav">Login</a></li>
+        <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Rest of your index.html content remains the same -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to <span class="gradient-text">PhineX</span></h1>
+      <p>Your gateway to innovation, learning, and opportunities in the programming world.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" id="joinAcademyBtn">
+          <i class="fas fa-graduation-cap"></i> Join X-Academy
+        </button>
+        <a href="hiring.html" class="btn-secondary">
+          <i class="fas fa-briefcase"></i> Explore Careers
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2>Why Choose PhineX?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-laptop-code"></i>
+          <h3>Learn by Doing</h3>
+          <p>Hands-on projects and real-world challenges to build practical programming skills.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-users"></i>
+          <h3>Expert Mentorship</h3>
+          <p>Guidance from industry professionals with years of software development experience.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-briefcase"></i>
+          <h3>Career Opportunities</h3>
+          <p>Connect with top tech companies through our exclusive hiring platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat">
+          <h3>1000+</h3>
+          <p>Developers Trained</p>
+        </div>
+        <div class="stat">
+          <h3>200+</h3>
+          <p>Partner Companies</p>
+        </div>
+        <div class="stat">
+          <h3>95%</h3>
+          <p>Employment Rate</p>
+        </div>
+        <div class="stat">
+          <h3>50+</h3>
+          <p>Countries</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <i class="fas fa-dragon"></i>
+            <span>PhineX</span>
+          </div>
+          <p>Transforming passionate coders into industry-ready professionals.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="hiring.html">Hiring</a></li>
+            <li><a href="academy.html">X-Academy</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 PhineX. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

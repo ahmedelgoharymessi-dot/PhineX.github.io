@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiring | PhineX</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-dragon"></i>
+        <span>PhineX</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="hiring.html" class="active">Hiring</a></li>
+        <li><a href="academy.html">X-Academy</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="login.html" id="loginNav">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hiring-hero">
+    <div class="container">
+      <h1>Find Top Programming Talent</h1>
+      <p>Connect with our graduates who are ready to make an impact in your organization.</p>
+    </div>
+  </section>
+
+  <section class="hiring-benefits">
+    <div class="container">
+      <h2>Why Hire From PhineX?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <i class="fas fa-check-circle"></i>
+          <h3>Vetted Talent</h3>
+          <p>All candidates complete rigorous training and assessment processes.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-bolt"></i>
+          <h3>Ready to Work</h3>
+          <p>Graduates are equipped with practical skills and real project experience.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-handshake"></i>
+          <h3>Direct Access</h3>
+          <p>Connect directly with candidates who match your specific requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
