@@ -14,6 +14,19 @@ if (!firebase.apps.length) {
 }
 const auth = firebase.auth();
 const db = firebase.firestore();
+a
+// ===== PROVIDER CONFIGURATION - ADD THIS SECTION =====
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
+
+// Configure providers (optional)
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
+facebookProvider.setCustomParameters({
+  'display': 'popup'
+});
 
 // Utility function to show messages
 function showMessage(message, type = 'error') {
@@ -144,6 +157,96 @@ if (logoutBtn) {
   });
 }
 
+// ===== GOOGLE LOGIN =====
+function setupGoogleLogin() {
+  const googleLoginBtn = document.getElementById('googleLoginBtn');
+  const googleSignupBtn = document.getElementById('googleSignupBtn');
+  
+  if (googleLoginBtn) {
+    googleLoginBtn.addEventListener('click', signInWithGoogle);
+  }
+  
+  if (googleSignupBtn) {
+    googleSignupBtn.addEventListener('click', signInWithGoogle);
+  }
+}
+
+async function signInWithGoogle() {
+  try {
+    const result = await auth.signInWithPopup(googleProvider);
+    const user = result.user;
+    
+    // Check if user exists in Firestore, if not create a record
+    const userDoc = await db.collection('users').doc(user.uid).get();
+    if (!userDoc.exists) {
+      await db.collection('users').doc(user.uid).set({
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        provider: 'google',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        role: 'student'
+      });
+    }
+    
+    showMessage('Google login successful! Redirecting...', 'success');
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1000);
+    
+  } catch (error) {
+    console.error('Google login error:', error);
+    showMessage('Google login failed: ' + error.message);
+  }
+}
+
+// ===== FACEBOOK LOGIN =====
+function setupFacebookLogin() {
+  const facebookLoginBtn = document.getElementById('facebookLoginBtn');
+  const facebookSignupBtn = document.getElementById('facebookSignupBtn');
+  
+  if (facebookLoginBtn) {
+    facebookLoginBtn.addEventListener('click', signInWithFacebook);
+  }
+  
+  if (facebookSignupBtn) {
+    facebookSignupBtn.addEventListener('click', signInWithFacebook);
+  }
+}
+
+async function signInWithFacebook() {
+  try {
+    // Add additional scopes if needed
+    facebookProvider.addScope('email');
+    facebookProvider.addScope('public_profile');
+    
+    const result = await auth.signInWithPopup(facebookProvider);
+    const user = result.user;
+    
+    // Check if user exists in Firestore, if not create a record
+    const userDoc = await db.collection('users').doc(user.uid).get();
+    if (!userDoc.exists) {
+      await db.collection('users').doc(user.uid).set({
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        provider: 'facebook',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        role: 'student'
+      });
+    }
+    
+    showMessage('Facebook login successful! Redirecting...', 'success');
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1000);
+    
+  } catch (error) {
+    console.error('Facebook login error:', error);
+    showMessage('Facebook login failed: ' + error.message);
+  }
+}
+
 // ===== JOIN X-ACADEMY =====
 const joinAcademyBtns = document.querySelectorAll("#joinAcademyBtn");
 joinAcademyBtns.forEach(btn => {
@@ -264,6 +367,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// Initialize social login buttons when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  setupGoogleLogin();
+  setupFacebookLogin();
+});
+
 // Add message styles to CSS
 const style = document.createElement('style');
 style.textContent = `
@@ -317,111 +426,25 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
-// Add these functions to your existing app.js file
 
-// ===== GOOGLE LOGIN =====
-function setupGoogleLogin() {
-  const googleLoginBtn = document.getElementById('googleLoginBtn');
-  const googleSignupBtn = document.getElementById('googleSignupBtn');
-  
-  if (googleLoginBtn) {
-    googleLoginBtn.addEventListener('click', signInWithGoogle);
-  }
-  
-  if (googleSignupBtn) {
-    googleSignupBtn.addEventListener('click', signInWithGoogle);
-  }
-}
+function checkCode() {
+    const correctCode = "FAMILY.PHINEX";
+    const userInput = document.getElementById('code-input').value.toUpperCase();
+    const successMessage = document.getElementById('message-success');
+    const errorMessage = document.getElementById('message-error');
+    const discordInvite = document.getElementById('discord-invite'); // Get the new element
 
-async function signInWithGoogle() {
-  try {
-    const result = await auth.signInWithPopup(googleProvider);
-    const user = result.user;
-    
-    // Check if user exists in Firestore, if not create a record
-    const userDoc = await db.collection('users').doc(user.uid).get();
-    if (!userDoc.exists) {
-      await db.collection('users').doc(user.uid).set({
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        provider: 'google',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        role: 'student'
-      });
+    // Hide previous messages and link
+    successMessage.style.display = 'none';
+    errorMessage.style.display = 'none';
+    discordInvite.style.display = 'none';
+
+    if (userInput === correctCode) {
+        // Code is correct: show success message and discord link
+        successMessage.style.display = 'block';
+        discordInvite.style.display = 'block';
+    } else {
+        // Code is incorrect: show error message
+        errorMessage.style.display = 'block';
     }
-    
-    showMessage('Google login successful! Redirecting...', 'success');
-    setTimeout(() => {
-      window.location.href = 'index.html';
-    }, 1000);
-    
-  } catch (error) {
-    console.error('Google login error:', error);
-    showMessage('Google login failed: ' + error.message);
-  }
 }
-
-// ===== FACEBOOK LOGIN =====
-function setupFacebookLogin() {
-  const facebookLoginBtn = document.getElementById('facebookLoginBtn');
-  const facebookSignupBtn = document.getElementById('facebookSignupBtn');
-  
-  if (facebookLoginBtn) {
-    facebookLoginBtn.addEventListener('click', signInWithFacebook);
-  }
-  
-  if (facebookSignupBtn) {
-    facebookSignupBtn.addEventListener('click', signInWithFacebook);
-  }
-}
-
-async function signInWithFacebook() {
-  try {
-    // Add additional scopes if needed
-    facebookProvider.addScope('email');
-    facebookProvider.addScope('public_profile');
-    
-    const result = await auth.signInWithPopup(facebookProvider);
-    const user = result.user;
-    
-    // Check if user exists in Firestore, if not create a record
-    const userDoc = await db.collection('users').doc(user.uid).get();
-    if (!userDoc.exists) {
-      await db.collection('users').doc(user.uid).set({
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        provider: 'facebook',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        role: 'student'
-      });
-    }
-    
-    showMessage('Facebook login successful! Redirecting...', 'success');
-    setTimeout(() => {
-      window.location.href = 'index.html';
-    }, 1000);
-    
-  } catch (error) {
-    console.error('Facebook login error:', error);
-    showMessage('Facebook login failed: ' + error.message);
-  }
-}
-
-// Initialize social login buttons when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  setupGoogleLogin();
-  setupFacebookLogin();
-  
-  // Your existing DOM loaded code...
-  const hamburger = document.querySelector('.hamburger');
-  const navMenu = document.querySelector('.nav-menu');
-  
-  if (hamburger && navMenu) {
-    hamburger.addEventListener('click', function() {
-      navMenu.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    });
-  }
-});

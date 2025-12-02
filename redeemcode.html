@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Code | PhineX</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-dragon"></i>
+                <span>PhineX</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hiring.html">Join Us</a></li>
+                <li><a href="x-academy.html">X-Academy</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="login.html" id="loginNav">Login</a></li>
+                <li><a href="signup.html" id="signupNav">Signup</a></li>
+                <li><a href="redeemcode.html" id="redeemNav">Redeem Code</a></li>
+                <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="redeem-hero">
+        <div class="redeem-container">
+            <div class="redeem-header">
+                <div class="redeem-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h1>Unlock Premium Features</h1>
+                <p>Enter your exclusive code to access special perks and join our community</p>
+            </div>
+            
+            <div class="redeem-card">
+                <label class="code-label" for="code-input">Your Redeem Code</label>
+                <div class="code-input-container">
+                    <input type="text" 
+                           id="code-input" 
+                           class="code-input"
+                           placeholder="Enter code here..."
+                           maxlength="50">
+                </div>
+                
+                <button onclick="checkCode()" class="redeem-btn pulse">
+                    <i class="fas fa-key"></i>
+                    Redeem Code
+                </button>
+                
+                <div id="message-success" class="message success">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="message-content">
+                        <h3>Success!</h3>
+                        <p>Your code has been successfully redeemed. Welcome to the premium community!</p>
+                    </div>
+                </div>
+                
+                <div id="message-error" class="message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="message-content">
+                        <h3>Invalid Code</h3>
+                        <p>The code you entered is incorrect. Please check and try again.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="discord-invite" class="discord-invite">
+                <div class="discord-card">
+                    <div class="discord-icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3>Join Our Community</h3>
+                    <p>Connect with other members, get exclusive updates, and participate in special events</p>
+                    <a href="https://discord.gg/eDfb3uvY" target="_blank" class="discord-btn">
+                        <i class="fab fa-discord"></i>
+                        Join Discord Server
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>What You Get</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Fast Access</h3>
+                <p>Unlock exclusive fast join to our developers community only available to code holders</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Community</h3>
+                <p>Join our Discord community with no tests or restrictions</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-dragon"></i>
+                <span>PhineX</span>
+            </div>
+            <p class="copyright">© 2024 PhineX. All rights reserved. | Redeem Code System</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add this JavaScript at the bottom of your body
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Enter key support for code input
+            const codeInput = document.getElementById('code-input');
+            if (codeInput) {
+                codeInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkCode();
+                    }
+                });
+            }
+        });
+        
+        // Your checkCode function remains the same
+        function checkCode() {
+            const correctCode = "FAMILY.PHINEX";
+            const userInput = document.getElementById('code-input').value.toUpperCase();
+            const successMessage = document.getElementById('message-success');
+            const errorMessage = document.getElementById('message-error');
+            const discordInvite = document.getElementById('discord-invite');
+            
+            // Hide previous messages and link
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            discordInvite.style.display = 'none';
+            
+            if (userInput === correctCode) {
+                successMessage.style.display = 'flex';
+                discordInvite.style.display = 'block';
+                localStorage.setItem('codeRedeemed', 'true');
+            } else {
+                errorMessage.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>

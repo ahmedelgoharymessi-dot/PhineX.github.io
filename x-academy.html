@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X-Academy | PhineX</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-dragon"></i>
+        <span>PhineX</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="hiring.html">Join Us</a></li>
+        <li><a href="x-academy.html">X-Academy</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="login.html" id="loginNav">Login</a></li>
+        <li><a href="signup.html" id="signupNav">Signup</a></li>
+        <li><a href="redeemcode.html" id="redeemNav">Redeem Code</a></li>
+        <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="academy-hero">
+    <div class="container">
+      <h1>X-Academy</h1>
+      <p class="subtitle">Forge Your Future in Programming</p>
+      <p class="description">
+        X-Academy is a premier programming academy that identifies, trains, and scouts exceptional programming talent. 
+        Through rigorous training and real-world projects, we transform passionate coders into industry-ready professionals.
+      </p>
+      <a href="x-acadmy-test.html" class="btn-primary" id="joinAcademyBtn">
+        <i class="fas fa-rocket"></i> Start Your Journey
+      </a>
+    </div>
+  </section>
+
+  <section class="academy-features">
+    <div class="container">
+      <h2>What We Offer</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-code"></i>
+          <h3>Full-Stack Development</h3>
+          <p>Master both frontend and backend technologies with hands-on projects.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>Mobile App Development</h3>
+          <p>Create cross-platform mobile applications for Android.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-computer"></i>
+          <h3>Practice</h3>
+          <p>Learn by doing with real projects and senior developers.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

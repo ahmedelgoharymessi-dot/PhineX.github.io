@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:C:\Ahmed Al Gohary\54c2b68a-f28d-49fa-80ec-6fe552620db8.png">
+  <meta property="og:title">PhineX / Proffessional Programming Platform</head><meta>
   <title>PhineX | Professional Programming Platform</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -22,10 +23,12 @@
       </div>
       <ul class="nav-menu">
         <li><a href="index.html">Home</a></li>
-        <li><a href="hiring.html">Hiring</a></li>
-        <li><a href="academy.html">X-Academy</a></li>
-        <li><a href="about.html">About Us</a></li>
+        <li><a href="hiring.html">Join Us</a></li>
+        <li><a href="x-academy.html">X-Academy</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
         <li><a href="login.html" id="loginNav">Login</a></li>
+        <li><a href="signup.html" id="signupNav">Signup</a></li>
+        <li><a href="redeemcode.html" id="redeemNav">Redeem Code</a></li>
         <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
       </ul>
       <div class="hamburger">
@@ -36,69 +39,69 @@
     </div>
   </nav>
 
-  <!-- Rest of your index.html content remains the same -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Welcome to <span class="gradient-text">PhineX</span></h1>
-      <p>Your gateway to innovation, learning, and opportunities in the programming world.</p>
-      <div class="hero-buttons">
-        <button class="btn-primary" id="joinAcademyBtn">
-          <i class="fas fa-graduation-cap"></i> Join X-Academy
-        </button>
-        <a href="hiring.html" class="btn-secondary">
-          <i class="fas fa-briefcase"></i> Explore Careers
-        </a>
+    <section class="hero" style="background-image: url('Phinex.png'); background-size: cover; background-position: center;">
+      <div class="hero-content">
+        <h1>Welcome to <span class="gradient-text">PhineX</span></h1>
+        <p>Your gateway to innovation, learning, and opportunities in the programming world.</p>
+        <div class="hero-buttons">
+          <a href="x-academy.html" class="btn-primary" id="joinAcademyBtn">
+            <i class="fas fa-graduation-cap"></i> Join X-Academy
+          </a>
+          <a href="hiring.html" class="btn-secondary">
+            <i class="fas fa-briefcase"></i> Join Our Team
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
 
   <!-- Features Section -->
   <section class="features">
     <div class="container">
-      <h2>Why Choose PhineX?</h2>
+      <h2 href="hiring.html">Why Choose PhineX?</h2>
       <div class="features-grid">
         <div class="feature-card">
           <i class="fas fa-laptop-code"></i>
-          <h3>Learn by Doing</h3>
-          <p>Hands-on projects and real-world challenges to build practical programming skills.</p>
+          <h3><a href="https://discord.gg/eDfb3uvY" style="color: rgb(255, 255, 255); text-decoration: none;">Develop in-groups</a></h3>
+          <p>Instead of programming alone , join our group to collaborate and build amazing projects together in less time !</p>
         </div>
         <div class="feature-card">
           <i class="fas fa-users"></i>
-          <h3>Expert Mentorship</h3>
-          <p>Guidance from industry professionals with years of software development experience.</p>
+          <h3><a href="https://discord.gg/Zr5CppHg" hover="" style="color: rgb(255, 255, 255); text-decoration: none;">Learn more</a></h3>
+          <p>If you are still learning, join our community to grow your skills and knowledge.</p>
         </div>
         <div class="feature-card">
-          <i class="fas fa-briefcase"></i>
-          <h3>Career Opportunities</h3>
-          <p>Connect with top tech companies through our exclusive hiring platform.</p>
+          <i class="fas fa-dollar-sign"></i>
+          <h3><a href="https://discord.gg/eDfb3uvY" style="color: rgb(255, 255, 255); text-decoration: none;">Opportunities</a></h3>
+          <p>More projects to participate in and earn from.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="stats">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat">
-          <h3>1000+</h3>
-          <p>Developers Trained</p>
-        </div>
-        <div class="stat">
-          <h3>200+</h3>
-          <p>Partner Companies</p>
-        </div>
-        <div class="stat">
-          <h3>95%</h3>
-          <p>Employment Rate</p>
-        </div>
-        <div class="stat">
-          <h3>50+</h3>
-          <p>Countries</p>
-        </div>
+<!-- Stats Section -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat">
+        <h3>100+</h3>
+        <p>Developers in Demand</p>
+      </div>
+      <div class="stat">
+        <h3>200+</h3>
+        <p>Revenue Generated</p>
+      </div>
+      <div class="stat">
+        <h3>90%</h3>
+        <p>Error-Free Projects</p>
+      </div>
+      <div class="stat">
+        <h3>5</h3>
+        <p>Completed Projects</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Footer -->
   <footer>
@@ -109,7 +112,7 @@
             <i class="fas fa-dragon"></i>
             <span>PhineX</span>
           </div>
-          <p>Transforming passionate coders into industry-ready professionals.</p>
+          <p>Group of senior programmers</p>
         </div>
         <div class="footer-section">
           <h4>Quick Links</h4>
@@ -118,20 +121,23 @@
             <li><a href="hiring.html">Hiring</a></li>
             <li><a href="academy.html">X-Academy</a></li>
             <li><a href="about.html">About</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="redeemcode.html">Redeem Code</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>Connect</h4>
           <div class="social-links">
-            <a href="#"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://discord.gg/Zr5CppHg"><i class="fab fa-discord"></i></a>
+            <a href="https://PhineX.github.io"><i class="fab fa-github"></i></a>
+            <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ"><i class="fab fa-youtube"></i></a>
+            <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2024 PhineX. All rights reserved.</p>
+        <p>&copy; 2025 PhineX. All rights reserved.</p>
       </div>
     </div>
   </footer>

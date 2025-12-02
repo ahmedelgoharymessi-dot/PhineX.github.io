@@ -1,77 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up | PhineX</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-</head>
-<body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <i class="fas fa-dragon"></i>
-        <span>PhineX</span>
-      </div>
-      <a href="index.html" class="btn-outline">Back to Home</a>
-    </div>
-  </nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-  <div class="auth-container">
-    <div class="auth-form">
-      <h2>Join PhineX</h2>
-      
-      <!-- Social Signup Buttons -->
-      <div class="social-login">
-        <button class="btn-google" id="googleSignupBtn">
-          <i class="fab fa-google"></i> Sign up with Google
-        </button>
-        <button class="btn-facebook" id="facebookSignupBtn">
-          <i class="fab fa-facebook-f"></i> Sign up with Facebook
-        </button>
-      </div>
-      
-      <div class="divider">
-        <span>or</span>
-      </div>
+        body {
+            background: url("Phinex\ -\ Copy.png") no-repeat center center/cover fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-      <!-- Email/Password Form -->
-      <form id="signupForm">
-        <div class="form-group">
-          <input type="email" id="signupEmail" placeholder="Email" required>
-          <i class="fas fa-envelope"></i>
-        </div>
-        <div class="form-group">
-          <input type="password" id="signupPassword" placeholder="Password" required>
-          <i class="fas fa-lock"></i>
-        </div>
-        <div class="form-group checkbox-group">
-          <input type="checkbox" id="robotCheck" required>
-          <label for="robotCheck">I'm not a robot 🤖</label>
-        </div>
-        <div class="form-group checkbox-group">
-          <input type="checkbox" id="termsCheck" required>
-          <label for="termsCheck">I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a></label>
-        </div>
-        <button type="submit" class="btn-primary" id="signupBtn">
-          <i class="fas fa-user-plus"></i> Create Account
-        </button>
-      </form>
-      
-      <p class="auth-link">
-        Already have an account? <a href="login.html">Login here</a>
-      </p>
-      <div id="message" class="message"></div>
-    </div>
-  </div>
+        .login-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-  <script src="firebase-config.js"></script>
-  <script src="app.js"></script>
+        .system-title {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .system-title h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .system-title p {
+            font-size: 1.2rem;
+            opacity: 1;
+            color: #ffffff;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .login-box, .registration-box {
+            background-color: #1a1a1a;
+            border: 2px solid #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.3s ease;
+        }
+
+        .login-box:hover, .registration-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.5);
+        }
+
+        .login-box h2, .registration-box h2 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .login-box h2:after, .registration-box h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #ffffff;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ffffff;
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #ffffff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        .remember-forgot a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .construction-notice {
+            background-color: #2a2a2a;
+            border-left: 5px solid #ffffff;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .construction-notice i {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .construction-notice p {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .construction-image {
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .construction-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .return-home {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 15px 30px;
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #ffffff;
+        }
+
+        .return-home i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .return-home:hover {
+            background: linear-gradient(135deg, #000000 0%, #7c30ff 100%);
+            box-shadow: 0 8px 20px rgba(132, 0, 255, 0.3);
+            border: 2px solid #4b00e2;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        .social-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #ffffff;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .social-login p:before, .social-login p:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #ffffff;
+        }
+
+        .social-login p:before {
+            left: 0;
+        }
+
+        .social-login p:after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: #000000;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            background-color: #ffffff;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .form-group label a {
+            color: #ffffff;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+            flex-direction: column;
+            align-items: center;
+            }
+            
+            .login-box, .registration-box {
+            max-width: 100%;
+            }
+            
+            .system-title h1 {
+            font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-box, .registration-box {
+            padding: 25px;
+            }
+            
+            .system-title h1 {
+            font-size: 1.8rem;
+            }
+            
+            .remember-forgot {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            color: #ffcaca;
+            transform: 0.3s;
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <div class="login-container">
+        <div class="system-title">
+            <h1>Login & Registration System</h1>
+            <p>Welcome to our secure authentication system. Sign in to access your account or register to join our community.</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="login-box">
+            <h2>Sign In</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" placeholder="Enter your username or email" required>
+                </div>
+                <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <div class="remember-forgot">
+                <div>
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Sign In</button>
+                
+                <div class="social-login">
+                <p>Or sign in with</p>
+                <div class="social-icons">
+                    <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="google"><i class="fab fa-google"></i></a>
+                    <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+                </div>
+                
+                <div class="construction-notice">
+                <i class="fas fa-tools"></i>
+                <p>Login functionality is currently under construction. Demo mode active.</p>
+                </div>
+            </form>
+            </div>
+            
+            <div class="registration-box">
+            <h2>Create Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" placeholder="Create a strong password" required>
+                </div>
+                <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                </div>
+                <div class="form-group">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
+                </div>
+                <button type="submit" class="btn" id="registerBtn">Create Account</button>
+                
+                <div class="construction-notice">
+                <i class="fas fa-tools"></i>
+                <p>Registration functionality is currently under construction. Demo mode active.</p>
+                </div>
+            </form>
+            </div>
+        </div>
+        
+        <div class="construction-image">
+            <img src="download (1).jpeg" alt="Under construction">
+        </div>
+        
+        <a href="index.html" class="return-home">
+            <i class="fas fa-home"></i> Return Home
+        </a>
+        </div>
+
+        <script>
+        // Demo functionality for the forms
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const loginBtn = document.getElementById('loginBtn');
+            const originalText = loginBtn.textContent;
+            
+            // Show loading state
+            loginBtn.textContent = 'Signing In...';
+            loginBtn.disabled = true;
+            
+            // Simulate login process
+            setTimeout(() => {
+            alert('Login functionality is under construction. This is a demo only.');
+            loginBtn.textContent = originalText;
+            loginBtn.disabled = false;
+            
+            // Clear form
+            document.getElementById('loginForm').reset();
+            }, 1500);
+        });
+        
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const registerBtn = document.getElementById('registerBtn');
+            const originalText = registerBtn.textContent;
+            
+            // Show loading state
+            registerBtn.textContent = 'Creating Account...';
+            registerBtn.disabled = true;
+            
+            // Simulate registration process
+            setTimeout(() => {
+            alert('Registration functionality is under construction. This is a demo only.');
+            registerBtn.textContent = originalText;
+            registerBtn.disabled = false;
+            
+            // Clear form
+            document.getElementById('registerForm').reset();
+            }, 1500);
+        });
+        
+        // Password confirmation validation
+        const regPassword = document.getElementById('regPassword');
+        const confirmPassword = document.getElementById('confirmPassword');
+        
+        function validatePassword() {
+            if (regPassword.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords do not match");
+            } else {
+            confirmPassword.setCustomValidity('');
+            }
+        }
+        
+        regPassword.addEventListener('change', validatePassword);
+        confirmPassword.addEventListener('keyup', validatePassword);
+        </script>
 </body>
 </html>
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en"> -->
+<!-- <head> -->
+<!--   <meta charset="UTF-8"> -->
+<!--   <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!--   <title>Sign Up | PhineX</title> -->
+<!--   <link rel="stylesheet" href="style.css"> -->
+<!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+<!--   -->
+<!-- Firebase SDK -->
+<!--   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> -->
+<!--   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> -->
+<!--   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> -->
+<!-- </head> -->
+<!-- <body> -->
+<!--   <nav class="navbar"> -->
+<!--     <div class="nav-container"> -->
+<!--       <div class="logo"> -->
+<!--         <i class="fas fa-dragon"></i> -->
+<!--         <span>PhineX</span> -->
+<!--       <ul class="nav-menu"> -->
+<!--         <li><a href="index.html">Home</a></li> -->
+<!--         <li><a href="hiring.html">Join Us</a></li> -->
+<!--         <li><a href="x-academy.html">X-Academy</a></li> -->
+<!--         <li><a href="aboutus.html">About Us</a></li> -->
+<!--         <li><a href="login.html" id="loginNav">Login</a></li> -->
+<!--         <li><a href="signup.html" id="signupNav">Signup</a></li> -->
+<!--         <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li> -->
+<!--       </ul> -->
+<!--       </div> -->
+<!--       <a href="index.html" class="btn-outline">Back to Home</a> -->
+<!--     </div> -->
+<!--   </nav> -->
+
+<!--   <div class="auth-container"> -->
+<!--     <div class="auth-form"> -->
+<!--       <h2>Join PhineX</h2> -->
+<!--       -->
+<!--        Social Signup Buttons --> 
+<!--       <div class="social-login"> -->
+<!--         <button class="btn-google" id="googleSignupBtn"> -->
+<!--           <i class="fab fa-google"></i> Sign up with Google -->
+<!--         </button> -->
+<!--         <button class="btn-facebook" id="facebookSignupBtn"> -->
+<!--           <i class="fab fa-facebook-f"></i> Sign up with Facebook -->
+<!--         </button> -->
+<!--       </div> -->
+<!--       -->
+<!--       <div class="divider"> -->
+<!--         <span>or</span> -->
+<!--       </div> -->
+
+<!--       Email/Password Form -->
+<!--       <form id="signupForm"> -->
+<!--         <div class="form-group"> -->
+<!--           <input type="email" id="signupEmail" placeholder="Email" required> -->
+<!--           <i class="fas fa-envelope"></i> -->
+<!--         </div> -->
+<!--         <div class="form-group"> -->
+<!--           <input type="password" id="signupPassword" placeholder="Password" required> -->
+<!--           <i class="fas fa-lock"></i> -->
+<!--         </div> -->
+<!--         <div class="form-group checkbox-group"> -->
+<!--           <input type="checkbox" id="robotCheck" required> -->
+<!--           <label for="robotCheck">I'm not a robot 🤖</label> -->
+<!--         </div> -->
+<!--         <div class="form-group checkbox-group"> -->
+<!--           <input type="checkbox" id="termsCheck" required> -->
+<!--           <label for="termsCheck">I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a></label> -->
+<!--         </div> -->
+<!--         <button type="submit" class="btn-primary" id="signupBtn"> -->
+<!--           <i class="fas fa-user-plus"></i> Create Account -->
+<!--         </button> -->
+<!--       </form> -->
+<!--       -->
+<!--       <p class="auth-link"> -->
+<!--         Already have an account? <a href="login.html">Login here</a> -->
+<!--       </p> -->
+<!--       <div id="message" class="message"></div> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!--   <script src="firebase-config.js"></script> -->
+<!--   <script src="app.js"></script> -->
+<!-- </body> -->
+<!-- </html> -->
