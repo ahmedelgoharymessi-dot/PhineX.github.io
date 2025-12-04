@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:image" content="C:\Ahmed Al Gohary\54c2b68a-f28d-49fa-80ec-6fe552620db8.png">
-  <link rel="icon" type="image/png" href="Phinex - Copy2.png">
+  <meta property="og:image" content="Phinex.png">
+  <link rel="icon" type="image/png" class="icon" href="Phinex.png">
   <title>PhineX</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,52 +22,49 @@
         <span>PhineX</span>
       </div>
       <ul class="nav-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="hiring.html">Join Us</a></li>
-        <li><a href="x-academy.html">X-Academy</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="login.html" id="loginNav">Login</a></li>
-        <li><a href="signup.html" id="signupNav">Signup</a></li>
-        <li><a href="redeemcode.html" id="redeemNav">Redeem Code</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="hiring.html"><i class="fas fa-people-group"></i> Join Us</a></li>
+        <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
+        <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a href="redeemcode.html" id="redeemNav"><i class="fas fa-key"></i> Redeem Code</a></li>
+        <li><a href="login.html" id="loginNav"><i class="fas fa-sign-in-alt"></i></a></li>
+        <li><a href="signup.html" id="signupNav"><i class="fas fa-user-plus"></i></a></li>
         <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
       </ul>
-      <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
     </div>
   </nav>
 
-    <section class="hero" style="background-image: url('Phinex.png'); background-size: cover; background-position: center;">
-      <div class="hero-content">
-        <h1>Welcome to <span class="gradient-text">PhineX</span></h1>
-        <p>Your gateway to innovation, learning, and opportunities in the programming world.</p>
-        <div class="hero-buttons">
-          <a href="x-academy.html" class="btn-primary" id="joinAcademyBtn">
-            <i class="fas fa-graduation-cap"></i> Join X-Academy
-          </a>
-          <a href="hiring.html" class="btn-secondary">
-            <i class="fas fa-briefcase"></i> Join Our Team
-          </a>
-        </div>
+  <section class="hero" style="background-image: url('Phinex.png'); background-size: cover; background-position: center;">
+    <div class="redeem-icon">
+      <i class="fas fa-home"></i>
+    </div>
+    <div class="hero-content">
+      <h1>Welcome to <span class="gradient-text">PhineX</span></h1>
+      <p>Your gateway to innovation, learning, and opportunities in the programming world.</p>
+      <div class="hero-buttons">
+        <a href="x-academy.html" class="btn-primary" id="joinAcademyBtn">
+          <i class="fas fa-graduation-cap"></i> Join X-Academy
+        </a>
+        <a href="hiring.html" class="btn-secondary">
+          <i class="fas fa-briefcase"></i> Join Our Team
+        </a>
       </div>
-    </section>
-
+    </div>
+  </section>
 
   <!-- Features Section -->
   <section class="features">
     <div class="container">
-      <h2 href="hiring.html">Why Choose PhineX?</h2>
+      <h2>Why Choose PhineX?</h2>
       <div class="features-grid">
         <div class="feature-card">
           <i class="fas fa-laptop-code"></i>
           <h3><a href="https://discord.gg/eDfb3uvY" style="color: rgb(255, 255, 255); text-decoration: none;">Develop in-groups</a></h3>
-          <p>Instead of programming alone , join our group to collaborate and build amazing projects together in less time !</p>
+          <p>Instead of programming alone, join our group to collaborate and build amazing projects together in less time!</p>
         </div>
         <div class="feature-card">
           <i class="fas fa-users"></i>
-          <h3><a href="https://discord.gg/Zr5CppHg" hover="" style="color: rgb(255, 255, 255); text-decoration: none;">Learn more</a></h3>
+          <h3><a href="https://discord.gg/Zr5CppHg" style="color: rgb(255, 255, 255); text-decoration: none;">Learn more</a></h3>
           <p>If you are still learning, join our community to grow your skills and knowledge.</p>
         </div>
         <div class="feature-card">
@@ -79,29 +76,29 @@
     </div>
   </section>
 
-<!-- Stats Section -->
-<section class="stats">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat">
-        <h3>100+</h3>
-        <p>Developers in Demand</p>
-      </div>
-      <div class="stat">
-        <h3>200+</h3>
-        <p>Revenue Generated</p>
-      </div>
-      <div class="stat">
-        <h3>90%</h3>
-        <p>Error-Free Projects</p>
-      </div>
-      <div class="stat">
-        <h3>5</h3>
-        <p>Completed Projects</p>
+  <!-- Stats Section -->
+  <section class="stats" style="text-align: center;">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat">
+          <h3>100+</h3>
+          <p>Developers in Demand</p>
+        </div>
+        <div class="stat">
+          <h3>200+</h3>
+          <p>Revenue Generated</p>
+        </div>
+        <div class="stat">
+          <h3>90%</h3>
+          <p>Error-Free Projects</p>
+        </div>
+        <div class="stat">
+          <h3>5</h3>
+          <p>Completed Projects</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Footer -->
   <footer>
@@ -117,36 +114,128 @@
         <div class="footer-section">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="index.html" class="home-footer">Home</a></li>
-            <li><a href="hiring.html" class="hiring-footer">Hiring</a></li>
-            <li><a href="academy.html" class="academy-footer">X-Academy</a></li>
-            <li><a href="about.html" class="about-footer">About</a></li>
-            <li><a href="login.html" class="login-footer">Login</a></li>
-            <li><a href="signup.html" class="signup-footer">Signup</a></li>
-            <li><a href="redeemcode.html" class="redeem-footer">Redeem Code</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="hiring.html">Hiring</a></li>
+            <li><a href="x-academy.html">X-Academy</a></li>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="redeemcode.html">Redeem Code</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>Connect</h4>
           <div class="social-links">
-            <a href="https://discord.gg/Zr5CppHg"><i class="fab fa-discord"></i></a>
-            <a href="https://PhineX.github.io"><i class="fab fa-github"></i></a>
-            <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ"><i class="fab fa-youtube"></i></a>
-            <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://discord.gg/Zr5CppHg" style="margin-bottom: 20px" class="discordlink"><i class="fab fa-discord"></i></a>
+            <a href="https://PhineX.github.io" style="margin-bottom: 20px" class="githublink"><i class="fab fa-github"></i></a>
+            <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" style="margin-bottom: 20px" class="youtubelink"><i class="fab fa-youtube"></i></a>
+            <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" style="margin-bottom: 20px" class="whatsapplink"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2025 PhineX. All rights reserved.</p>
-        <p >Made with <i class="fas fa-heart"></i> <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink"> @Ahmed Al Gohary</a></p>
+        <p>Made with <i class="fas fa-heart"></i> <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink"> @Ahmed Al Gohary</a></p>
       </div>
     </div>
   </footer>
 
   <script src="firebase-config.js"></script>
   <script src="app.js"></script>
+  </section>
+  <!-- Mobile menu toggle -->
+  <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <style>
+    /* Mobile menu toggle styles */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 9999;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 6px;
+    }
+    /* small-screen layout: hide nav-menu by default, show toggle */
+    @media (max-width: 900px) {
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-menu {
+        display: none !important;
+        position: absolute;
+        top: 64px;
+        right: 12px;
+        background: rgba(0,0,0,0.9);
+        padding: 12px;
+        border-radius: 8px;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 180px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      }
+      .nav-menu.open {
+        display: flex !important;
+      }
+      .nav-menu li a, .nav-menu li button {
+        color: #fff;
+      }
+    }
+  </style>
+
+  <script>
+    // Menu toggle behavior for mobile
+    (function () {
+      const toggle = document.getElementById('menuToggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      if (!toggle || !navMenu) return;
+
+      // ensure navMenu has an id for aria-controls
+      if (!navMenu.id) navMenu.id = 'navMenu';
+
+      toggle.setAttribute('aria-controls', navMenu.id);
+
+      toggle.addEventListener('click', function (e) {
+        const opened = navMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', opened);
+      });
+
+      // Close menu when a link is clicked (mobile)
+      navMenu.addEventListener('click', function (e) {
+        const target = e.target.closest('a, button');
+        if (!target) return;
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          navMenu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (e) {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          if (!e.target.closest('.nav-container') && !e.target.closest('#menuToggle')) {
+            if (navMenu.classList.contains('open')) {
+              navMenu.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+      });
+
+      // Optional: close on escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          navMenu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
-
-
-
