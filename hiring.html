@@ -18,27 +18,30 @@
         <i class="fas fa-dragon"></i>
         <span>PhineX</span>
       </div>
-      <ul class="nav-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="hiring.html">Join Us</a></li>
-        <li><a href="x-academy.html">X-Academy</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="login.html" id="loginNav">Login</a></li>
-        <li><a href="signup.html" id="signupNav">Signup</a></li>
-        <li><a href="redeemcode.html" id="redeemNav">Redeem Code</a></li>
+      <ul class="nav-menu" id="primary-navigation">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="hiring.html"><i class="fas fa-people-group"></i> Join Us</a></li>
+        <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
+        <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a href="redeemcode.html" id="redeemNav"><i class="fas fa-key"></i> Redeem Code</a></li>
+        <li><a href="login.html" id="loginNav"><i class="fas fa-sign-in-alt"></i></a></li>
+        <li><a href="signup.html" id="signupNav"><i class="fas fa-user-plus"></i></a></li>
         <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
       </ul>
     </div>
   </nav>
 
   <section class="hiring-hero">
+    <div class="redeem-icon">
+      <i class="fas fa-people-group"></i>
+    </div>
     <div class="container">
       <h1>We need You !</h1>
       <p style="padding: 10px 20px; margin-top: 10px;">Join Us and be part of our growing team.</p>
       <a href="X-Academy.html" class="btn-primary">
         <i class="fas fa-graduation-cap"></i> Join X-Academy First
       </a>
-      <a href="redeemcode.html" class="btn-secondary" style="padding: 10px 20px; font-size: 18px; margin-left: 20px;">
+      <a href="x-academy-test.html" class="btn-secondary" style="padding: 10px 20px; font-size: 18px; margin-left: 10px; margin-top: 20px;">
         <i class="fas fa-laptop-code"></i> Join Our Developers Community
       </a>
     </div>
@@ -58,15 +61,145 @@
           <h3>projects</h3>
           <p>Choose or suggest projects you want to work on and contribute to their success.</p>
         </div>
-        <div class="benefit-card">
-          <i class="fas fa-handshake"></i>
-          <h3>Direct Access</h3>
-          <p>Connect directly with us on discord or other social-links to be able to edit and develope projects easliy</p>
+      </div> <!-- CLOSE .benefits-grid -->
+    </div> <!-- CLOSE .container -->
+  </section> <!-- CLOSE .hiring-benefits -->
+
+  </section>
+  <!-- Mobile menu toggle -->
+  <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <style>
+    /* Mobile menu toggle styles */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 9999;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    /* small-screen layout: hide nav-menu by default, show toggle */
+    @media (max-width: 900px) {
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+
+      .nav-menu {
+        display: none !important;
+        position: absolute;
+        top: 64px;
+        right: 12px;
+        background: rgba(0,0,0,0.9);
+        padding: 12px;
+        border-radius: 8px;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 180px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      }
+
+      .nav-menu.open {
+        display: flex !important;
+      }
+
+    }
+  </style>
+
+  <script>
+    // Menu toggle behavior for mobile
+    (function () {
+      const toggle = document.getElementById('menuToggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      if (!toggle || !navMenu) return;
+
+      // ensure navMenu has an id for aria-controls
+      if (!navMenu.id) navMenu.id = 'navMenu';
+
+      toggle.setAttribute('aria-controls', navMenu.id);
+
+      toggle.addEventListener('click', function (e) {
+        const opened = navMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', opened);
+      });
+
+      // Close menu when a link is clicked (mobile)
+      navMenu.addEventListener('click', function (e) {
+        const target = e.target.closest('a, button');
+        if (!target) return;
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          navMenu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (e) {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          if (!e.target.closest('.nav-container') && !e.target.closest('#menuToggle')) {
+            if (navMenu.classList.contains('open')) {
+              navMenu.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+      });
+
+      // Optional: close on escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          navMenu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <i class="fas fa-dragon"></i>
+            <span>PhineX</span>
+          </div>
+          <p>Group of senior programmers</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="hiring.html">Hiring</a></li>
+            <li><a href="x-academy.html">X-Academy</a></li>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="redeemcode.html">Redeem Code</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="https://discord.gg/Zr5CppHg" style="margin-bottom: 20px"><i class="fab fa-discord"></i></a>
+            <a href="https://PhineX.github.io" style="margin-bottom: 20px"><i class="fab fa-github"></i></a>
+            <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" style="margin-bottom: 20px"><i class="fab fa-youtube"></i></a>
+            <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" style="margin-bottom: 20px"><i class="fab fa-whatsapp"></i></a>
+          </div>
         </div>
       </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 PhineX. All rights reserved.</p>
+         <p>Made with <i class="fas fa-heart"></i><a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink">@Ahmed Al Gohary</a></p>
+      </div>
     </div>
-  </section>
-
+  </footer>
   <script src="firebase-config.js"></script>
   <script src="app.js"></script>
 </body>
