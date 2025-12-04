@@ -354,15 +354,67 @@ if (document.getElementById("questions")) {
   });
 }
 
-// ===== MOBILE MENU TOGGLE =====
+// ===== MOBILE MENU TOGGLE (slide in from left) =====
 document.addEventListener('DOMContentLoaded', function() {
   const hamburger = document.querySelector('.hamburger');
   const navMenu = document.querySelector('.nav-menu');
-  
+
+  // Inject mobile slide CSS (keeps desktop layout untouched)
+  if (navMenu) {
+    const mobileStyle = document.createElement('style');
+    mobileStyle.textContent = `
+      /* mobile: start hidden off-screen left, slide in when .slide-in is set */
+      .nav-menu {
+        transition: transform 300ms ease;
+        transform: translateX(-110%);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 280px;
+        max-width: 80%;
+        z-index: 9999;
+        background: var(--darker);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .nav-menu.slide-in {
+        transform: translateX(0);
+      }
+      /* keep original desktop behavior */
+      @media (min-width: 769px) {
+        .nav-menu {
+          position: static;
+          transform: none;
+          height: auto;
+          width: auto;
+          max-width: none;
+          display: flex;
+          flex-direction: row;
+        }
+      }
+    `;
+    document.head.appendChild(mobileStyle);
+  }
+
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', function() {
-      navMenu.classList.toggle('active');
+      const open = navMenu.classList.toggle('slide-in');
       hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      // prevent body scroll when menu open on mobile
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // close when clicking outside the menu
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('slide-in')) {
+        navMenu.classList.remove('slide-in');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
     });
   }
 });
