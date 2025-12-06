@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>X-Academy Test | PhineX</title>
+  <title>X-Developers Test | PhineX</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -396,1252 +396,317 @@
         justify-content: center;
       }
     }
+
+    /* Timer specific CSS */
+    .timer-container {
+        background-color: #dc2626; /* Red background for urgency */
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .timer-container i {
+        font-size: 1.5rem;
+    }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="nav-container">
       <div class="logo">
-        <i class="fas fa-dragon"></i>
-        <span>PhineX</span>
+        <i class="fas fa-microscope"></i>
+        <span>X-Developers Test</span>
+      </div>
+      <div class="timer-container">
+        <i class="far fa-clock"></i>
+        <span id="time">5:00</span> <!-- Placeholder for timer -->
       </div>
     </div>
   </nav>
-    </div>
-  <div class="test-container">
-    <form id="testForm">
-      <div class="test-header">
-        <h1>X-Academy Entry Assessment</h1>
-        <p>Complete this assessment to help us understand your programming background and goals.</p>
-        <p>You need at least 90% to pass this assessment.</p>
-      </div>
 
-      <div id="questions" class="questions-container"></div>
-
-      <div class="test-footer">
-        <button type="submit" class="btn-primary" id="submitBtn">
-          <i class="fas fa-paper-plane"></i> Submit Assessment
-        </button>
-        <a href="index.html" class="btn-home">
-          <i class="fas fa-home"></i> Home
-        </a>
-      </div>
-    </form>
-
-    <div id="resultContainer" class="result-container hidden">
-      <!-- Result will be shown here -->
+  <main class="test-container">
+    <div class="test-header" id="welcome-screen">
+      <h1>Welcome to the X-Developers Test</h1>
+      <p>This test contains 10 extremely hard questions. You have a limited time to complete them.</p>
+      <p>Time limit: 5 minutes.</p>
+      <button class="btn-primary" onclick="startTest()" style="margin-top: 10px;">
+        <i class="fas fa-play"></i> Start Test
+      </button>
+      <a href="x-academy-pretest.html" class="btn-secondary" style="margin-top: 10px; display: inline-flex; align-items: center;">
+        <i class="fas fa-arrow-left"></i> Back to Pre-Test Info
+      </a>
     </div>
 
-    <div id="thankYou" class="thank-you hidden">
-      <div class="success-message">
-        <i class="fas fa-check-circle"></i>
-        <h2>Thank You for Completing the Assessment!</h2>
-        <p>We'll review your submission and contact you within 3-5 business days.</p>
-        <p>Join our community to connect with other learners:</p>
-        <div class="community-links">
-          <a href="https://discord.gg/H4CAhy3y" target="_blank" class="btn-secondary">
-            <i class="fab fa-discord"></i> Discord Community
-          </a>
-          <a href="index.html" class="btn-outline">
-            <i class="fas fa-home"></i> Return Home
-          </a>
-        </div>
-      </div>
+    <div class="questions-container hidden" id="questions-screen">
+      <!-- Questions will be dynamically injected here by JavaScript -->
     </div>
-  </div>
 
-  <div id="celebration" class="celebration hidden"></div>
+    <div class="test-footer hidden" id="submit-footer">
+      <button class="btn-primary" onclick="submitTest()">
+        <i class="fas fa-check-circle"></i> Submit Test
+      </button>
+    </div>
 
+    <div class="result-container hidden" id="result-screen">
+      <!-- Results will be dynamically injected here -->
+    </div>
+
+  </main>
+  
+  <!-- JavaScript Code -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Test questions and answers
-      const testQuestions = [
+    const testQuestions = [
         {
           id: 1,
-          question: "What does HTML stand for?",
+          question: "An element has `width: 300px; padding: 20px; border: 10px solid black; box-sizing: content-box;`. What is its total rendered width?",
           options: [
-            { id: 'a', text: "Hyper Text Markup Language", isCorrect: true },
-            { id: 'b', text: "High Tech Modern Language", isCorrect: false },
-            { id: 'c', text: "Hyperlink and Text Markup Language", isCorrect: false },
-            { id: 'd', text: "Home Tool Markup Language", isCorrect: false }
+            { id: 'a', text: "300px", isCorrect: false },
+            { id: 'b', text: "340px", isCorrect: false },
+            { id: 'c', text: "360px", isCorrect: true },
+            { id: 'd', text: "390px", isCorrect: false }
           ]
         },
         {
           id: 2,
-          question: "Which tag is used to create a hyperlink?",
+          question: "In complex stacking contexts using CSS `position` and `z-index`, which property on a parent element can force a new stacking context *without* changing its `position` value away from static?",
           options: [
-            { id: 'a', text: "< link >", isCorrect: false },
-            { id: 'b', text: "< a >", isCorrect: true },
-            { id: 'c', text: "< href >", isCorrect: false },
-            { id: 'd', text: "< hyperlink >", isCorrect: false }
+            { id: 'a', text: "margin", isCorrect: false },
+            { id: 'b', text: "display", isCorrect: false },
+            { id: 'c', text: "opacity (if < 1)", isCorrect: true },
+            { id: 'd', text: "color", isCorrect: false }
           ]
         },
         {
           id: 3,
-          question: "Which tag defines the main content of an HTML document?",
+          question: "An HTML element has inline CSS `style=\"color: blue;\"`, a class rule `.text { color: green; }`, and an ID rule `#message { color: orange; }`. Which color will the text be?",
           options: [
-            { id: 'a', text: "< main >", isCorrect: true },
-            { id: 'b', text: "< body>", isCorrect: false },
-            { id: 'c', text: "< section >", isCorrect: false },
-            { id: 'd', text: "< content >", isCorrect: false }
+            { id: 'a', text: "Green", isCorrect: false },
+            { id: 'b', text: "Orange", isCorrect: false },
+            { id: 'c', text: "Red (default)", isCorrect: false },
+            { id: 'd', text: "Blue", isCorrect: true }
           ]
         },
         {
           id: 4,
-          question: "What is the correct HTML element for inserting a line break?",
+          question: "A flex container is 500px wide. Two items inside have `width: 300px` and `flex-shrink: 1`. What is the final width of each item?",
           options: [
-            { id: 'a', text: "< br >", isCorrect: true },
-            { id: 'b', text: "< break >", isCorrect: false },
-            { id: 'c', text: "< lb >", isCorrect: false },
-            { id: 'd', text: "< newline >", isCorrect: false }
+            { id: 'a', text: "300px", isCorrect: false },
+            { id: 'b', text: "250px", isCorrect: true },
+            { id: 'c', text: "200px", isCorrect: false },
+            { id: 'd', text: "500px", isCorrect: false }
           ]
         },
         {
           id: 5,
-          question: "Which attribute is used to specify an alternate text for an image?",
+          question: "What CSS technique can eliminate the whitespace between two adjacent `display: inline-block;` elements without modifying the HTML structure or using comments?",
           options: [
-            { id: 'a', text: "title", isCorrect: false },
-            { id: 'b', text: "src", isCorrect: false },
-            { id: 'c', text: "alt", isCorrect: true },
-            { id: 'd', text: "href", isCorrect: false }
+            { id: 'a', text: "Setting margin: -4px;", isCorrect: false },
+            { id: 'b', text: "Setting font-size: 0; on the parent container", isCorrect: true },
+            { id: 'c', text: "Setting word-spacing: -1em;", isCorrect: false },
+            { id: 'd', text: "Setting white-space: nowrap;", isCorrect: false }
           ]
         },
         {
           id: 6,
-          question: "Which HTML element is used for the largest heading?",
+          question: "Which HTML attribute pair makes a non-semantic `div` behave like a clickable button for screen readers and keyboard navigation?",
           options: [
-            { id: 'a', text: "< h6 >", isCorrect: false },
-            { id: 'b', text: "< heading >", isCorrect: false },
-            { id: 'c', text: "< h1 >", isCorrect: true },
-            { id: 'd', text: "< head >", isCorrect: false }
+            { id: 'a', text: "role=\"button\" and aria-pressed=\"false\"", isCorrect: false },
+            { id: 'b', text: "type=\"button\" and tabindex=\"0\"", isCorrect: false },
+            { id: 'c', text: "role=\"button\" and tabindex=\"0\"", isCorrect: true },
+            { id: 'd', text: "aria-label=\"button\" and onclick=\"func()\"", isCorrect: false }
           ]
         },
         {
           id: 7,
-          question: "What is the purpose of the <meta> tag?",
+          question: "Which statement accurately describes the difference between the HTML `<canvas>` and `<svg>` elements?",
           options: [
-            { id: 'a', text: "To define metadata about the HTML document", isCorrect: true },
-            { id: 'b', text: "To create a hyperlink", isCorrect: false },
-            { id: 'c', text: "To embed JavaScript", isCorrect: false },
-            { id: 'd', text: "To style the page", isCorrect: false }
+            { id: 'a', text: "< canvas > is for vector graphics, < svg > is for bitmap graphics.", isCorrect: false },
+            { id: 'b', text: "< canvas > graphics are part of the DOM, < svg > graphics are not.", isCorrect: false },
+            { id: 'c', text: "< canvas > is better for dynamic/game rendering; < svg > is better for static, resolution-independent diagrams.", isCorrect: true },
+            { id: 'd', text: "< canvas > uses CSS width/height properties for its drawing surface size.", isCorrect: false }
           ]
         },
         {
           id: 8,
-          question: "Which tag is used to define an unordered list?",
+          question: "When an HTML form contains an `< input type=\"file\" >`, which `enctype` value must be set on the `< form >` element for a successful file upload?",
           options: [
-            { id: 'a', text: "< ul >", isCorrect: true },
-            { id: 'b', text: "< ol >", isCorrect: false },
-            { id: 'c', text: "< li >", isCorrect: false },
-            { id: 'd', text: "< list >", isCorrect: false }
+            { id: 'a', text: "text/plain", isCorrect: false },
+            { id: 'b', text: "application/x-www-form-urlencoded", isCorrect: false },
+            { id: 'c', text: "multipart/form-data", isCorrect: true },
+            { id: 'd', text: "application/json", isCorrect: false }
           ]
         },
         {
           id: 9,
-          question: "Which tag creates a drop-down list in HTML?",
+          question: "Which HTML `< meta >` tag attribute is used to prevent a browser from caching the page for highly sensitive or real-time data?",
           options: [
-            { id: 'a', text: "< input type=\"dropdown\" >", isCorrect: false },
-            { id: 'b', text: "< select >", isCorrect: true },
-            { id: 'c', text: "< list >", isCorrect: false },
-            { id: 'd', text: "< option >", isCorrect: false }
+            { id: 'a', text: "< meta name=\"viewport\" ... >", isCorrect: false },
+            { id: 'b', text: "< meta http-equiv=\"refresh\" ... >", isCorrect: false },
+            { id: 'c', text: "< meta name=\"robots\" ... >", isCorrect: false },
+            { id: 'd', text: "< meta http-equiv=\"cache-control\" content=\"no-cache\" >", isCorrect: true }
           ]
         },
         {
           id: 10,
-          question: "Which HTML5 element is used for playing audio files?",
-          options: [
-            { id: 'a', text: "< sound >", isCorrect: false },
-            { id: 'b', text: "< audio >", isCorrect: true },
-            { id: 'c', text: "< mp3 >", isCorrect: false },
-            { id: 'd', text: "< media >", isCorrect: false }
-          ]
-        },
-        {
-          id: 11,
-          question: "What is the correct HTML5 element for a footer?",
-          options: [
-            { id: 'a', text: "< bottom >", isCorrect: false },
-            { id: 'b', text: "< footer >", isCorrect: true },
-            { id: 'c', text: "< section >", isCorrect: false },
-            { id: 'd', text: "< foot >", isCorrect: false }
-          ]
-        },
-        {
-          id: 12,
-          question: "Which tag is used to embed JavaScript in HTML?",
-          options: [
-            { id: 'a', text: "< js >", isCorrect: false },
-            { id: 'b', text: "< script >", isCorrect: true },
-            { id: 'c', text: "< javascript >", isCorrect: false },
-            { id: 'd', text: "< code >", isCorrect: false }
-          ]
-        },
-        {
-          id: 13,
-          question: "Which tag defines a table row?",
-          options: [
-            { id: 'a', text: "< td >", isCorrect: false },
-            { id: 'b', text: "< tr >", isCorrect: true },
-            { id: 'c', text: "< th >", isCorrect: false },
-            { id: 'd', text: "< table >", isCorrect: false }
-          ]
-        },
-        {
-          id: 15,
-          question: "In HTML5, which element is used for navigation links?",
-          options: [
-            { id: 'a', text: "< nav >", isCorrect: true },
-            { id: 'b', text: "< navigate >", isCorrect: false },
-            { id: 'c', text: "< links >", isCorrect: false },
-            { id: 'd', text: "< menu >", isCorrect: false }
-          ]
-        },
-        {
-          id: 19,
-          question: "Which property is used to set the background color?",
-          options: [
-            { id: 'a', text: "bgcolor", isCorrect: false },
-            { id: 'b', text: "background-color", isCorrect: true },
-            { id: 'c', text: "color-background", isCorrect: false },
-            { id: 'd', text: "bg-color", isCorrect: false }
-          ]
-        },
-        {
-          id: 20,
-          question: "How do you make each word in a text start with a capital letter?",
-          options: [
-            { id: 'a', text: "text-transform: uppercase", isCorrect: false },
-            { id: 'b', text: "text-transform: capitalize", isCorrect: true },
-            { id: 'c', text: "text-style: capital", isCorrect: false },
-            { id: 'd', text: "font-transform: capitalize", isCorrect: false }
-          ]
-        },
-        {
-          id: 21,
-          question: "What is the default value of the position property?",
-          options: [
-            { id: 'a', text: "relative", isCorrect: false },
-            { id: 'b', text: "fixed", isCorrect: false },
-            { id: 'c', text: "absolute", isCorrect: false },
-            { id: 'd', text: "static", isCorrect: true }
-          ]
-        },
-        {
-          id: 22,
-          question: "Which CSS property controls the text size?",
-          options: [
-            { id: 'a', text: "font-size", isCorrect: true },
-            { id: 'b', text: "text-style", isCorrect: false },
-            { id: 'c', text: "text-size", isCorrect: false },
-            { id: 'd', text: "font-style", isCorrect: false }
-          ]
-        },
-        {
-          id: 23,
-          question: "How do you apply CSS to all <p> elements?",
-          options: [
-            { id: 'a', text: "p { ... }", isCorrect: true },
-            { id: 'b', text: ".p { ... }", isCorrect: false },
-            { id: 'c', text: "#p { ... }", isCorrect: false },
-            { id: 'd', text: "all.p { ... }", isCorrect: false }
-          ]
-        },
-        {
-          id: 24,
-          question: "Which property is used to create space between elements' borders?",
-          options: [
-            { id: 'a', text: "padding", isCorrect: false },
-            { id: 'b', text: "margin", isCorrect: true },
-            { id: 'c', text: "border-spacing", isCorrect: false },
-            { id: 'd', text: "spacing", isCorrect: false }
-          ]
-        },
-        {
-          id: 25,
-          question: "Which value of display makes an element inline but allows width and height?",
-          options: [
-            { id: 'a', text: "inline", isCorrect: false },
-            { id: 'b', text: "block", isCorrect: false },
-            { id: 'c', text: "inline-block", isCorrect: true },
-            { id: 'd', text: "flex", isCorrect: false }
-          ]
-        },
-        {
-          id: 26,
-          question: "How do you make a list that lists its items with squares?",
-          options: [
-            { id: 'a', text: "list-style-type: square", isCorrect: true },
-            { id: 'b', text: "list: square", isCorrect: false },
-            { id: 'c', text: "list-type: square", isCorrect: false },
-            { id: 'd', text: "list-style: square", isCorrect: false }
-          ]
-        },
-        {
-          id: 27,
-          question: "Which property is used to change the font family?",
-          options: [
-            { id: 'a', text: "font-family", isCorrect: true },
-            { id: 'b', text: "font-type", isCorrect: false },
-            { id: 'c', text: "font-group", isCorrect: false },
-            { id: 'd', text: "font-face", isCorrect: false }
-          ]
-        },
-        {
-          id: 28,
-          question: "How do you select all elements with class \"btn\"?",
-          options: [
-            { id: 'a', text: "#btn", isCorrect: false },
-            { id: 'b', text: ".btn", isCorrect: true },
-            { id: 'c', text: "*btn", isCorrect: false },
-            { id: 'd', text: "all.btn", isCorrect: false }
-          ]
-        },
-        {
-          id: 29,
-          question: "Which property is used to align text?",
-          options: [
-            { id: 'a', text: "text-align", isCorrect: true },
-            { id: 'b', text: "align-text", isCorrect: false },
-            { id: 'c', text: "text-position", isCorrect: false },
-            { id: 'd', text: "font-align", isCorrect: false }
-          ]
-        },
-        {
-          id: 30,
-          question: "What is the CSS box model order from inside to outside?",
-          options: [
-            { id: 'a', text: "Margin, Border, Padding, Content", isCorrect: false },
-            { id: 'b', text: "Content, Padding, Border, Margin", isCorrect: true },
-            { id: 'c', text: "Padding, Content, Border, Margin", isCorrect: false },
-            { id: 'd', text: "Content, Border, Padding, Margin", isCorrect: false }
-          ]
-        },
-        {
-          id: 31,
-          question: "Which keyword is used to declare a variable in modern JavaScript?",
-          options: [
-            { id: 'a', text: "var", isCorrect: false },
-            { id: 'b', text: "let", isCorrect: false },
-            { id: 'c', text: "const", isCorrect: false },
-            { id: 'd', text: "Both b and c", isCorrect: true }
-          ]
-        },
-        {
-          id: 32,
-          question: "What will typeof null return?",
-          options: [
-            { id: 'a', text: "\"null\"", isCorrect: false },
-            { id: 'b', text: "\"object\"", isCorrect: true },
-            { id: 'c', text: "\"undefined\"", isCorrect: false },
-            { id: 'd', text: "\"nil\"", isCorrect: false }
-          ]
-        },
-        {
-          id: 33,
-          question: "Which method adds a new element to the end of an array?",
-          options: [
-            { id: 'a', text: "push()", isCorrect: true },
-            { id: 'b', text: "pop()", isCorrect: false },
-            { id: 'c', text: "shift()", isCorrect: false },
-            { id: 'd', text: "unshift()", isCorrect: false }
-          ]
-        },
-        {
-          id: 34,
-          question: "What does === mean in JavaScript?",
-          options: [
-            { id: 'a', text: "Assignment", isCorrect: false },
-            { id: 'b', text: "Equality with type conversion", isCorrect: false },
-            { id: 'c', text: "Equality without type conversion", isCorrect: true },
-            { id: 'd', text: "Approximate equality", isCorrect: false }
-          ]
-        },
-        {
-          id: 35,
-          question: "Which built-in method removes the last element from an array?",
-          options: [
-            { id: 'a', text: "remove()", isCorrect: false },
-            { id: 'b', text: "pop()", isCorrect: true },
-            { id: 'c', text: "delete()", isCorrect: false },
-            { id: 'd', text: "splice()", isCorrect: false }
-          ]
-        },
-        {
-          id: 36,
-          question: "What will console.log(2 + \"2\") output?",
-          options: [
-            { id: 'a', text: "4", isCorrect: false },
-            { id: 'b', text: "\"22\"", isCorrect: true },
-            { id: 'c', text: "NaN", isCorrect: false },
-            { id: 'd', text: "Error", isCorrect: false }
-          ]
-        },
-        {
-          id: 37,
-          question: "Which function is used to parse a string to an integer?",
-          options: [
-            { id: 'a', text: "parseInt()", isCorrect: true },
-            { id: 'b', text: "parseFloat()", isCorrect: false },
-            { id: 'c', text: "toInteger()", isCorrect: false },
-            { id: 'd', text: "Number()", isCorrect: false }
-          ]
-        },
-        {
-          id: 38,
-          question: "What is the correct way to write a JavaScript array?",
-          options: [
-            { id: 'a', text: "var colors = \"red\", \"green\", \"blue\"", isCorrect: false },
-            { id: 'b', text: "var colors = [\"red\", \"green\", \"blue\"]", isCorrect: true },
-            { id: 'c', text: "var colors = (1:\"red\", 2:\"green\", 3:\"blue\")", isCorrect: false },
-            { id: 'd', text: "var colors = \"red\", \"green\", \"blue\"", isCorrect: false }
-          ]
-        },
-        {
-          id: 39,
-          question: "Which event occurs when the user clicks on an HTML element?",
-          options: [
-            { id: 'a', text: "onchange", isCorrect: false },
-            { id: 'b', text: "onclick", isCorrect: true },
-            { id: 'c', text: "onmouseover", isCorrect: false },
-            { id: 'd', text: "onmouseclick", isCorrect: false }
-          ]
-        },
-        {
-          id: 40,
-          question: "What will console.log(typeof []) output?",
-          options: [
-            { id: 'a', text: "\"array\"", isCorrect: false },
-            { id: 'b', text: "\"object\"", isCorrect: true },
-            { id: 'c', text: "\"list\"", isCorrect: false },
-            { id: 'd', text: "\"undefined\"", isCorrect: false }
-          ]
-        },
-        {
-          id: 41,
-          question: "How do you declare a JavaScript function?",
-          options: [
-            { id: 'a', text: "function myFunction()", isCorrect: true },
-            { id: 'b', text: "def myFunction()", isCorrect: false },
-            { id: 'c', text: "function:myFunction()", isCorrect: false },
-            { id: 'd', text: "func myFunction()", isCorrect: false }
-          ]
-        },
-        {
-          id: 42,
-          question: "What is the purpose of the this keyword in JavaScript?",
-          options: [
-            { id: 'a', text: "It refers to the previous object", isCorrect: false },
-            { id: 'b', text: "It refers to the current object", isCorrect: true },
-            { id: 'c', text: "It refers to any object", isCorrect: false },
-            { id: 'd', text: "It is a placeholder", isCorrect: false }
-          ]
-        },
-        {
-          id: 43,
-          question: "Which method converts JSON string to a JavaScript object?",
-          options: [
-            { id: 'a', text: "JSON.parse()", isCorrect: true },
-            { id: 'b', text: "JSON.stringify()", isCorrect: false },
-            { id: 'c', text: "JSON.toObject()", isCorrect: false },
-            { id: 'd', text: "JSON.convert()", isCorrect: false }
-          ]
-        },
-        {
-          id: 44,
-          question: "What does NaN stand for?",
-          options: [
-            { id: 'a', text: "Not a Node", isCorrect: false },
-            { id: 'b', text: "Not a Number", isCorrect: true },
-            { id: 'c', text: "Null and Number", isCorrect: false },
-            { id: 'd', text: "No assigned Number", isCorrect: false }
-          ]
-        },
-        {
-          id: 45,
-          question: "Which loop is used to iterate over the properties of an object?",
-          options: [
-            { id: 'a', text: "for", isCorrect: false },
-            { id: 'b', text: "for...in", isCorrect: true },
-            { id: 'c', text: "while", isCorrect: false },
-            { id: 'd', text: "do...while", isCorrect: false }
-          ]
-        },
-        {
-          id: 46,
-          question: "What is the output of Boolean(\"false\")?",
-          options: [
-            { id: 'a', text: "false", isCorrect: false },
-            { id: 'b', text: "true", isCorrect: true },
-            { id: 'c', text: "NaN", isCorrect: false },
-            { id: 'd', text: "undefined", isCorrect: false }
-          ]
-        },
-        {
-          id: 47,
-          question: "What does the addEventListener() method do?",
-          options: [
-            { id: 'a', text: "Adds an event to a CSS element", isCorrect: false },
-            { id: 'b', text: "Attaches an event handler to an element", isCorrect: true },
-            { id: 'c', text: "Creates a new event", isCorrect: false },
-            { id: 'd', text: "Adds a listener to the server", isCorrect: false }
-          ]
-        },
-        {
-          id: 48,
-          question: "Which operator returns true if the two values are equal without type coercion?",
-          options: [
-            { id: 'a', text: "==", isCorrect: false },
-            { id: 'b', text: "=", isCorrect: false },
-            { id: 'c', text: "===", isCorrect: true },
-            { id: 'd', text: "!=", isCorrect: false }
-          ]
-        },
-        {
-          id: 49,
-          question: "What will console.log(0.1 + 0.2 == 0.3) output?",
-          options: [
-            { id: 'a', text: "true", isCorrect: false },
-            { id: 'b', text: "false", isCorrect: true },
-            { id: 'c', text: "undefined", isCorrect: false },
-            { id: 'd', text: "NaN", isCorrect: false }
-          ]
-        },
-        {
-          id: 50,
-          question: "How do you check if a variable is an array?",
-          options: [
-            { id: 'a', text: "typeof arr === \"array\"", isCorrect: false },
-            { id: 'b', text: "arr.isArray()", isCorrect: false },
-            { id: 'c', text: "Array.isArray(arr)", isCorrect: true },
-            { id: 'd', text: "arr instanceof Array", isCorrect: false }
-          ]
-        },
-        {
-          id: 51,
-          question: "Which keyword is used to define a class in Java?",
-          options: [
-            { id: 'a', text: "class", isCorrect: true },
-            { id: 'b', text: "Class", isCorrect: false },
-            { id: 'c', text: "className", isCorrect: false },
-            { id: 'd', text: "struct", isCorrect: false }
-          ]
-        },
-        {
-          id: 52,
-          question: "What is the default value of a boolean variable in Java?",
-          options: [
-            { id: 'a', text: "true", isCorrect: false },
-            { id: 'b', text: "false", isCorrect: true },
-            { id: 'c', text: "0", isCorrect: false },
-            { id: 'd', text: "null", isCorrect: false }
-          ]
-        },
-        {
-          id: 53,
-          question: "Which method is the entry point of a Java program?",
-          options: [
-            { id: 'a', text: "main()", isCorrect: true },
-            { id: 'b', text: "start()", isCorrect: false },
-            { id: 'c', text: "run()", isCorrect: false },
-            { id: 'd', text: "init()", isCorrect: false }
-          ]
-        },
-        {
-          id: 54,
-          question: "Which of these is not a primitive data type in Java?",
-          options: [
-            { id: 'a', text: "int", isCorrect: false },
-            { id: 'b', text: "float", isCorrect: false },
-            { id: 'c', text: "String", isCorrect: true },
-            { id: 'd', text: "boolean", isCorrect: false }
-          ]
-        },
-        {
-          id: 55,
-          question: "Which keyword is used to create an object in Java?",
-          options: [
-            { id: 'a', text: "create", isCorrect: false },
-            { id: 'b', text: "new", isCorrect: true },
-            { id: 'c', text: "object", isCorrect: false },
-            { id: 'd', text: "instantiate", isCorrect: false }
-          ]
-        },
-        {
-          id: 56,
-          question: "What does public static void main(String[] args) mean?",
-          options: [
-            { id: 'a', text: "The method returns a string", isCorrect: false },
-            { id: 'b', text: "The method is accessible from anywhere, belongs to the class, returns nothing, and accepts command line arguments", isCorrect: true },
-            { id: 'c', text: "The method is private and returns an integer", isCorrect: false },
-            { id: 'd', text: "The method is static and returns a boolean", isCorrect: false }
-          ]
-        },
-        {
-          id: 57,
-          question: "Which keyword is used for inheritance in Java?",
-          options: [
-            { id: 'a', text: "inherits", isCorrect: false },
-            { id: 'b', text: "extends", isCorrect: true },
-            { id: 'c', text: "implements", isCorrect: false },
-            { id: 'd', text: "super", isCorrect: false }
-          ]
-        },
-        {
-          id: 58,
-          question: "Which collection class allows duplicate elements?",
-          options: [
-            { id: 'a', text: "Set", isCorrect: false },
-            { id: 'b', text: "Map", isCorrect: false },
-            { id: 'c', text: "List", isCorrect: true },
-            { id: 'd', text: "Queue", isCorrect: false }
-          ]
-        },
-        {
-          id: 59,
-          question: "Which keyword is used to prevent method overriding?",
-          options: [
-            { id: 'a', text: "final", isCorrect: true },
-            { id: 'b', text: "static", isCorrect: false },
-            { id: 'c', text: "private", isCorrect: false },
-            { id: 'd', text: "protected", isCorrect: false }
-          ]
-        },
-        {
-          id: 60,
-          question: "Which package is automatically imported in Java?",
-          options: [
-            { id: 'a', text: "java.util", isCorrect: false },
-            { id: 'b', text: "java.lang", isCorrect: true },
-            { id: 'c', text: "java.io", isCorrect: false },
-            { id: 'd', text: "java.net", isCorrect: false }
-          ]
-        },
-        {
-          id: 61,
-          question: "What is the parent class of all Java classes?",
-          options: [
-            { id: 'a', text: "Object", isCorrect: true },
-            { id: 'b', text: "Class", isCorrect: false },
-            { id: 'c', text: "Root", isCorrect: false },
-            { id: 'd', text: "Parent", isCorrect: false }
-          ]
-        },
-        {
-          id: 62,
-          question: "Which exception is thrown when dividing by zero?",
-          options: [
-            { id: 'a', text: "NullPointerException", isCorrect: false },
-            { id: 'b', text: "ArithmeticException", isCorrect: true },
-            { id: 'c', text: "DivideByZeroException", isCorrect: false },
-            { id: 'd', text: "NumberFormatException", isCorrect: false }
-          ]
-        },
-        {
-          id: 63,
-          question: "Which keyword is used to define a constant in Java?",
-          options: [
-            { id: 'a', text: "const", isCorrect: false },
-            { id: 'b', text: "final", isCorrect: true },
-            { id: 'c', text: "static", isCorrect: false },
-            { id: 'd', text: "constant", isCorrect: false }
-          ]
-        },
-        {
-          id: 64,
-          question: "What is the size of an int in Java?",
-          options: [
-            { id: 'a', text: "2 bytes", isCorrect: false },
-            { id: 'b', text: "4 bytes", isCorrect: true },
-            { id: 'c', text: "8 bytes", isCorrect: false },
-            { id: 'd', text: "Depends on the OS", isCorrect: false }
-          ]
-        },
-        {
-          id: 65,
-          question: "Which method is used to compare two strings in Java?",
-          options: [
-            { id: 'a', text: "equals()", isCorrect: true },
-            { id: 'b', text: "==", isCorrect: false },
-            { id: 'c', text: "compare()", isCorrect: false },
-            { id: 'd', text: "check()", isCorrect: false }
-          ]
-        },
-        {
-          id: 66,
-          question: "What is the output of System.out.println(10 + 20 + \"Hello\")?",
-          options: [
-            { id: 'a', text: "30Hello", isCorrect: true },
-            { id: 'b', text: "1020Hello", isCorrect: false },
-            { id: 'c', text: "Hello30", isCorrect: false },
-            { id: 'd', text: "Error", isCorrect: false }
-          ]
-        },
-        {
-          id: 67,
-          question: "Which keyword is used to implement an interface?",
-          options: [
-            { id: 'a', text: "extends", isCorrect: false },
-            { id: 'b', text: "implements", isCorrect: true },
-            { id: 'c', text: "interface", isCorrect: false },
-            { id: 'd', text: "abstract", isCorrect: false }
-          ]
-        },
-        {
-          id: 68,
-          question: "What is polymorphism?",
-          options: [
-            { id: 'a', text: "Same method name with different parameters", isCorrect: false },
-            { id: 'b', text: "Ability of an object to take many forms", isCorrect: true },
-            { id: 'c', text: "Hiding implementation details", isCorrect: false },
-            { id: 'd', text: "Inheriting from multiple classes", isCorrect: false }
-          ]
-        },
-        {
-          id: 69,
-          question: "Which loop is guaranteed to execute at least once?",
-          options: [
-            { id: 'a', text: "for", isCorrect: false },
-            { id: 'b', text: "while", isCorrect: false },
-            { id: 'c', text: "do-while", isCorrect: true },
-            { id: 'd', text: "for-each", isCorrect: false }
-          ]
-        },
-        {
-          id: 70,
-          question: "Which data structure uses FIFO (First In First Out)?",
-          options: [
-            { id: 'a', text: "Stack", isCorrect: false },
-            { id: 'b', text: "Queue", isCorrect: true },
-            { id: 'c', text: "List", isCorrect: false },
-            { id: 'd', text: "Set", isCorrect: false }
-          ]
-        },
-        {
-          id: 71,
-          question: "Which keyword is used to define a function in Python?",
-          options: [
-            { id: 'a', text: "def", isCorrect: true },
-            { id: 'b', text: "function", isCorrect: false },
-            { id: 'c', text: "func", isCorrect: false },
-            { id: 'd', text: "define", isCorrect: false }
-          ]
-        },
-        {
-          id: 72,
-          question: "What is the output of print(type([]))?",
-          options: [
-            { id: 'a', text: "<class 'list'>", isCorrect: true },
-            { id: 'b', text: "<class 'array'>", isCorrect: false },
-            { id: 'c', text: "<class 'tuple'>", isCorrect: false },
-            { id: 'd', text: "<class 'dict'>", isCorrect: false }
-          ]
-        },
-        {
-          id: 73,
-          question: "How do you start a comment in Python?",
-          options: [
-            { id: 'a', text: "//", isCorrect: false },
-            { id: 'b', text: "#", isCorrect: true },
-            { id: 'c', text: "/*", isCorrect: false },
-            { id: 'd', text: "<!--", isCorrect: false }
-          ]
-        },
-        {
-          id: 74,
-          question: "Which method removes the last element from a list?",
-          options: [
-            { id: 'a', text: "pop()", isCorrect: true },
-            { id: 'b', text: "remove()", isCorrect: false },
-            { id: 'c', text: "delete()", isCorrect: false },
-            { id: 'd', text: "discard()", isCorrect: false }
-          ]
-        },
-        {
-          id: 75,
-          question: "What is the result of 2 ** 3?",
-          options: [
-            { id: 'a', text: "6", isCorrect: false },
-            { id: 'b', text: "8", isCorrect: true },
-            { id: 'c', text: "9", isCorrect: false },
-            { id: 'd', text: "5", isCorrect: false }
-          ]
-        },
-        {
-          id: 76,
-          question: "Which of these is immutable?",
-          options: [
-            { id: 'a', text: "List", isCorrect: false },
-            { id: 'b', text: "Dictionary", isCorrect: false },
-            { id: 'c', text: "Tuple", isCorrect: true },
-            { id: 'd', text: "Set", isCorrect: false }
-          ]
-        },
-        {
-          id: 77,
-          question: "How do you open a file for reading?",
-          options: [
-            { id: 'a', text: "open(\"file.txt\", \"r\")", isCorrect: true },
-            { id: 'b', text: "open(\"file.txt\", \"read\")", isCorrect: false },
-            { id: 'c', text: "open(\"file.txt\", \"w\")", isCorrect: false },
-            { id: 'd', text: "open(\"file.txt\")", isCorrect: false }
-          ]
-        },
-        {
-          id: 78,
-          question: "What does len([1,2,3]) return?",
-          options: [
-            { id: 'a', text: "3", isCorrect: true },
-            { id: 'b', text: "4", isCorrect: false },
-            { id: 'c', text: "0", isCorrect: false },
-            { id: 'd', text: "6", isCorrect: false }
-          ]
-        },
-        {
-          id: 79,
-          question: "Which keyword handles exceptions in Python?",
-          options: [
-            { id: 'a', text: "try-except", isCorrect: true },
-            { id: 'b', text: "catch", isCorrect: false },
-            { id: 'c', text: "throw", isCorrect: false },
-            { id: 'd', text: "exception", isCorrect: false }
-          ]
-        },
-        {
-          id: 80,
-          question: "What is the output of print(\"Hello\" * 3)?",
-          options: [
-            { id: 'a', text: "HelloHelloHello", isCorrect: true },
-            { id: 'b', text: "Hello3", isCorrect: false },
-            { id: 'c', text: "TypeError", isCorrect: false },
-            { id: 'd', text: "Hello Hello Hello", isCorrect: false }
-          ]
-        },
-        {
-          id: 81,
-          question: "Which module is used for regular expressions?",
-          options: [
-            { id: 'a', text: "regex", isCorrect: false },
-            { id: 'b', text: "re", isCorrect: true },
-            { id: 'c', text: "pyregex", isCorrect: false },
-            { id: 'd', text: "regexp", isCorrect: false }
-          ]
-        },
-        {
-          id: 82,
-          question: "How do you create a virtual environment in Python?",
-          options: [
-            { id: 'a', text: "python -m venv myenv", isCorrect: false },
-            { id: 'b', text: "virtualenv myenv", isCorrect: false },
-            { id: 'c', text: "python create venv myenv", isCorrect: false },
-            { id: 'd', text: "Both a and b", isCorrect: true }
-          ]
-        },
-        {
-          id: 83,
-          question: "What does __init__ represent in a class?",
-          options: [
-            { id: 'a', text: "Destructor", isCorrect: false },
-            { id: 'b', text: "Constructor", isCorrect: true },
-            { id: 'c', text: "Iterator", isCorrect: false },
-            { id: 'd', text: "Method overloading", isCorrect: false }
-          ]
-        },
-        {
-          id: 84,
-          question: "Which operator is used for integer division?",
-          options: [
-            { id: 'a', text: "/", isCorrect: false },
-            { id: 'b', text: "//", isCorrect: true },
-            { id: 'c', text: "%", isCorrect: false },
-            { id: 'd', text: "**", isCorrect: false }
-          ]
-        },
-        {
-          id: 85,
-          question: "What will list(range(3)) produce?",
-          options: [
-            { id: 'a', text: "[0, 1, 2]", isCorrect: true },
-            { id: 'b', text: "[1, 2, 3]", isCorrect: false },
-            { id: 'c', text: "[0, 1, 2, 3]", isCorrect: false },
-            { id: 'd', text: "[3]", isCorrect: false }
-          ]
-        },
-        {
-          id: 86,
-          question: "What does PHP stand for?",
-          options: [
-            { id: 'a', text: "Personal Home Page", isCorrect: false },
-            { id: 'b', text: "PHP: Hypertext Preprocessor", isCorrect: false },
-            { id: 'c', text: "Private Home Page", isCorrect: false },
-            { id: 'd', text: "Both a and b", isCorrect: true }
-          ]
-        },
-        {
-          id: 87,
-          question: "Which symbol is used to declare a variable in PHP?",
-          options: [
-            { id: 'a', text: "$", isCorrect: true },
-            { id: 'b', text: "@", isCorrect: false },
-            { id: 'c', text: "#", isCorrect: false },
-            { id: 'd', text: "&", isCorrect: false }
-          ]
-        },
-        {
-          id: 88,
-          question: "How do you output \"Hello World\" in PHP?",
-          options: [
-            { id: 'a', text: "echo \"Hello World\";", isCorrect: false },
-            { id: 'b', text: "print(\"Hello World\");", isCorrect: false },
-            { id: 'c', text: "printf(\"Hello World\");", isCorrect: false },
-            { id: 'd', text: "All of the above", isCorrect: true }
-          ]
-        },
-        {
-          id: 89,
-          question: "Which function includes a file and raises an error if missing?",
-          options: [
-            { id: 'a', text: "include()", isCorrect: false },
-            { id: 'b', text: "require()", isCorrect: true },
-            { id: 'c', text: "import()", isCorrect: false },
-            { id: 'd', text: "use()", isCorrect: false }
-          ]
-        },
-        {
-          id: 90,
-          question: "What is the correct way to start a session in PHP?",
-          options: [
-            { id: 'a', text: "session_start();", isCorrect: true },
-            { id: 'b', text: "start_session();", isCorrect: false },
-            { id: 'c', text: "begin_session();", isCorrect: false },
-            { id: 'd', text: "session_begin();", isCorrect: false }
-          ]
-        },
-        {
-          id: 91,
-          question: "Which superglobal holds POST data?",
-          options: [
-            { id: 'a', text: "$_POST", isCorrect: true },
-            { id: 'b', text: "$_GET", isCorrect: false },
-            { id: 'c', text: "$_REQUEST", isCorrect: false },
-            { id: 'd', text: "$_DATA", isCorrect: false }
-          ]
-        },
-        {
-          id: 92,
-          question: "How do you connect to a MySQL database in PHP?",
-          options: [
-            { id: 'a', text: "mysql_connect()", isCorrect: false },
-            { id: 'b', text: "mysqli_connect()", isCorrect: false },
-            { id: 'c', text: "connect_mysql()", isCorrect: false },
-            { id: 'd', text: "db_connect()", isCorrect: true }
-          ]
-        },
-        {
-          id: 93,
-          question: "Which function returns the length of a string?",
-          options: [
-            { id: 'a', text: "len()", isCorrect: false },
-            { id: 'b', text: "strlen()", isCorrect: true },
-            { id: 'c', text: "length()", isCorrect: false },
-            { id: 'd', text: "str_length()", isCorrect: false }
-          ]
-        },
-        {
-          id: 94,
-          question: "What is the result of echo \"5\" + \"10\";?",
-          options: [
-            { id: 'a', text: "510", isCorrect: false },
-            { id: 'b', text: "15", isCorrect: true },
-            { id: 'c', text: "Error", isCorrect: false },
-            { id: 'd', text: "5+10", isCorrect: false }
-          ]
-        },
-        {
-          id: 95,
-          question: "Which function converts a string to lowercase?",
-          options: [
-            { id: 'a', text: "strtolower()", isCorrect: true },
-            { id: 'b', text: "lowercase()", isCorrect: false },
-            { id: 'c', text: "strlower()", isCorrect: false },
-            { id: 'd', text: "toLower()", isCorrect: false }
-          ]
-        },
-        {
-          id: 96,
-          question: "How do you declare a constant in PHP?",
-          options: [
-            { id: 'a', text: "define(\"CONST_NAME\", value);", isCorrect: false },
-            { id: 'b', text: "const CONST_NAME = value;", isCorrect: false },
-            { id: 'c', text: "Both a and b", isCorrect: true },
-            { id: 'd', text: "constant(\"CONST_NAME\", value);", isCorrect: false }
-          ]
-        },
-        {
-          id: 97,
-          question: "Which operator concatenates two strings?",
-          options: [
-            { id: 'a', text: "+", isCorrect: false },
-            { id: 'b', text: ".", isCorrect: true },
-            { id: 'c', text: "&", isCorrect: false },
-            { id: 'd', text: "||", isCorrect: false }
-          ]
-        },
-        {
-          id: 98,
-          question: "What does === mean in PHP?",
-          options: [
-            { id: 'a', text: "Equal value and type", isCorrect: true },
-            { id: 'b', text: "Equal value", isCorrect: false },
-            { id: 'c', text: "Assignment", isCorrect: false },
-            { id: 'd', text: "Not equal", isCorrect: false }
-          ]
-        },
-        {
-          id: 99,
-          question: "Which function sends raw HTTP headers?",
-          options: [
-            { id: 'a', text: "header()", isCorrect: true },
-            { id: 'b', text: "send_header()", isCorrect: false },
-            { id: 'c', text: "http_header()", isCorrect: false },
-            { id: 'd', text: "set_header()", isCorrect: false }
-          ]
-        },
-        {
-          id: 100,
-          question: "What will count([1,2,3]) return?",
-          options: [
-            { id: 'a', text: "3", isCorrect: true },
-            { id: 'b', text: "4", isCorrect: false },
-            { id: 'c', text: "1", isCorrect: false },
-            { id: 'd', text: "0", isCorrect: false }
+          question: "Which of the following is an invalid nesting structure according to HTML5 specification rules regarding flow/phrasing content?",
+          options: [
+            { id: 'a', text: "< div > < p >...< /p >< /div >", isCorrect: false },
+            { id: 'b', text: "< p >< span >...< /span >< /p >", isCorrect: false },
+            { id: 'c', text: "< span >< div >...< /div >< /span >", isCorrect: true },
+            { id: 'd', text: "< ul >< li >...< /li >< /ul >", isCorrect: false }
           ]
         }
-        ,
-          {
-            id: 11,
-            question: "Upload supporting file (min 50 MB)",
-            options: [
-              {
-                id: 'u',
-                text: `<div style="width:100%;padding:0.25rem 0;">
-            <input type="file" id="uploadFile11" style="display:none"
-              onchange="(function(inp){const f=inp.files && inp.files[0]; if(!f){return;} if(f.size>50*1024*1024){alert('File exceeds 50 MB. Please choose a smaller file.'); inp.value=''; return;} window.uploadedFile11=f; document.getElementById('uploadInfo11').textContent = f.name + ' (' + (f.size/1048576).toFixed(2) + ' MB)'; document.querySelector('[data-question-id=&quot;11&quot;][data-option-id=&quot;u&quot;]').classList.add('selected'); })(this)" />
-
-            <div id="dropzone11"
-              style="width:100%;padding:1rem;border:2px dashed #475569;border-radius:8px;text-align:center;color:#94a3b8;cursor:pointer;"
-              onclick="document.getElementById('uploadFile11').click();"
-              ondragover="event.preventDefault(); this.style.borderColor='#60a5fa';"
-              ondragleave="this.style.borderColor='';"
-              ondrop="(function(e){e.preventDefault(); this.style.borderColor=''; const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if(!f) return; if(f.size>50*1024*1024){alert('File exceeds 50 MB. Please choose a smaller file.'); return;} window.uploadedFile11 = f; document.getElementById('uploadInfo11').textContent = f.name + ' (' + (f.size/1048576).toFixed(2) + ' MB)'; document.querySelector('[data-question-id=&quot;11&quot;][data-option-id=&quot;u&quot;]').classList.add('selected'); })(event)"
-            >
-              <strong>Drag & drop a file here</strong><br/>or click to browse<br/><small>Max size: 50 MB</small>
-            </div>
-
-            <div id="uploadInfo11" style="margin-top:0.5rem;color:#94a3b8;font-size:0.95rem;"></div>
-                </div>`,
-                isCorrect: false
-              }
-            ]
-          }
       ];
-      
-      const questionsContainer = document.getElementById('questions');
-      const testForm = document.getElementById('testForm');
-      const thankYouSection = document.getElementById('thankYou');
-      const resultContainer = document.getElementById('resultContainer');
-      const celebrationContainer = document.getElementById('celebration');
-      const submitBtn = document.getElementById('submitBtn');
 
-      // Render questions
-      function renderQuestions() {
-        questionsContainer.innerHTML = '';
-        
-        testQuestions.forEach((q, index) => {
-          const questionElement = document.createElement('div');
-          questionElement.className = 'question-card';
-          
-          let optionsHTML = '';
-          q.options.forEach(option => {
-            optionsHTML += `
-              <div class="option" data-question-id="${q.id}" data-option-id="${option.id}">
-                <div class="option-label">${option.id}</div>
-                <span>${option.text}</span>
-              </div>
-            `;
-          });
-          
-          questionElement.innerHTML = `
-            <div class="question-title">
-              <div class="question-number">${index + 1}</div>
-              <span>${q.question}</span>
-            </div>
-            <div class="options-container">
-              ${optionsHTML}
-            </div>
-          `;
-          
-          questionsContainer.appendChild(questionElement);
-        });
 
-        // Add click event to options
-        document.querySelectorAll('.option').forEach(option => {
-          option.addEventListener('click', function() {
-            const questionId = this.getAttribute('data-question-id');
-            const optionId = this.getAttribute('data-option-id');
-            
-            // Remove selected class from all options in this question
-            document.querySelectorAll(`[data-question-id="${questionId}"]`).forEach(opt => {
-              opt.classList.remove('selected');
-            });
-            
-            // Add selected class to clicked option
-            this.classList.add('selected');
-          });
-        });
-      }
+    // State variables
+    let userAnswers = {};
+    let timerInterval;
+    const SECONDS_PER_QUESTION = 30; // 30 seconds per question
+    const TOTAL_TIME = testQuestions.length * SECONDS_PER_QUESTION; // 10 questions * 30s = 300s (5 mins)
+    let timeLeft = TOTAL_TIME;
+    let timerExpired = false;
 
-      // Calculate score and show result
-      function calculateScore() {
-        let correctAnswers = 0;
-        
-        testQuestions.forEach(q => {
-          const selectedOption = document.querySelector(`[data-question-id="${q.id}"].selected`);
-          
-          if (selectedOption) {
-            const selectedOptionId = selectedOption.getAttribute('data-option-id');
-            const correctOption = q.options.find(opt => opt.isCorrect);
-            
-            if (correctOption && selectedOptionId === correctOption.id) {
-              correctAnswers++;
-            }
-          }
-        });
-        
-        const score = (correctAnswers / testQuestions.length) * 100;
-        return { correctAnswers, totalQuestions: testQuestions.length, score };
-      }
+    // DOM Elements
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const questionsScreen = document.getElementById('questions-screen');
+    const submitFooter = document.getElementById('submit-footer');
+    const resultScreen = document.getElementById('result-screen');
+    const timeDisplay = document.getElementById('time');
+    const timerContainer = document.querySelector('.timer-container');
 
-      // Create celebration effect
-      function createCelebration() {
-        celebrationContainer.innerHTML = '';
-        celebrationContainer.classList.remove('hidden');
-        
-        const colors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
-        
-        for (let i = 0; i < 150; i++) {
-          const confetti = document.createElement('div');
-          confetti.className = 'confetti';
-          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.left = `${Math.random() * 100}vw`;
-          confetti.style.animationDelay = `${Math.random() * 3}s`;
-          confetti.style.animationDuration = `${1 + Math.random() * 2}s`;
-          confetti.style.animationName = 'confetti-fall';
-          confetti.style.animationTimingFunction = 'linear';
-          confetti.style.animationIterationCount = '1';
-          
-          celebrationContainer.appendChild(confetti);
+    // Function to format time (MM:SS)
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Function to start the timer
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timeDisplay.textContent = formatTime(timeLeft);
+
+        if (timeLeft <= 60) {
+            timerContainer.style.backgroundColor = '#f97316'; // Orange for last minute
         }
-        
-        // Remove confetti after animation
-        setTimeout(() => {
-          celebrationContainer.classList.add('hidden');
-          celebrationContainer.innerHTML = '';
-        }, 4000);
-      }
-
-      // Show result
-      function showResult({ correctAnswers, totalQuestions, score }) {
-        // Hide the form
-        testForm.classList.add('hidden');
-        
-        // Show result container
-        resultContainer.classList.remove('hidden');
-        
-        // Determine result message
-        let resultMessage = '';
-        let resultDetails = '';
-        let isPassed = score >= 90;
-        
-        if (isPassed) {
-          resultMessage = "Congratulations! You've Passed!";
-          resultDetails = `You scored ${score.toFixed(1)}% (${correctAnswers}/${totalQuestions} correct answers). You have demonstrated excellent programming knowledge!`;
-          
-          // Add celebration effect and redirect after a delay
-          setTimeout(() => {
-            createCelebration();
-          }, 500);
-          
-          setTimeout(() => {
-            window.location.href = "index.html";
-          }, 3000);
-        } else {
-          resultMessage = "Assessment Not Passed";
-          resultDetails = `You scored ${score.toFixed(1)}% (${correctAnswers}/${totalQuestions} correct answers). Unfortunately, you need at least 90% to pass this assessment.`;
-          
-          // Disable the form and show failure message
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<i class="fas fa-ban"></i> Test Locked';
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerExpired = true;
+          submitTest();
         }
-        
-        // Build result HTML
-        const resultHTML = `
-          <div class="result-header">
-            <div class="result-score">${score.toFixed(1)}%</div>
-            <div class="result-message">${resultMessage}</div>
-            <div class="result-details">${resultDetails}</div>
+      }, 1000);
+    }
+
+    // Function to render questions
+    function renderQuestions() {
+      questionsScreen.innerHTML = ''; // Clear existing questions
+      testQuestions.forEach((q) => {
+        const questionCard = document.createElement('div');
+        questionCard.classList.add('question-card');
+        questionCard.innerHTML = `
+          <div class="question-title">
+            <span class="question-number">${q.id}</span>
+            <span>${q.question}</span>
           </div>
-          
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${score}%"></div>
+          <div class="options-container" id="options-${q.id}">
+            <!-- Options populated below -->
           </div>
-          
-          ${!isPassed ? `
-            <div class="failed-message">
-              <h3><i class="fas fa-exclamation-triangle"></i> Test Locked</h3>
-              <p>You cannot retake this assessment as you scored below 90%. Please review the material and try again later.</p>
-            </div>
-            
-            <div class="community-links">
-              <a href="https://discord.gg/eDfb3uvY" target="_blank" class="fas fa-discord btn-secondary">
-                <i class="fas fa-discord"></i>  join Developers community Discord
-              </a>
-              <a href="index.html" class="btn-outline">
-                <i class="fas fa-home"></i> Return Home
-              </a>
-            </div>
-          ` : `
-            <div class="success-message">
-              <p class="pulse">You will be redirected to the home page in a few seconds...</p>
-            </div>
-          `}
         `;
-        
-        resultContainer.innerHTML = resultHTML;
-      }
+        questionsScreen.appendChild(questionCard);
 
-      // Handle form submission
-      testForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Check if all questions are answered
-        const answeredQuestions = new Set();
-        document.querySelectorAll('.option.selected').forEach(option => {
-          answeredQuestions.add(option.getAttribute('data-question-id'));
+        const optionsContainer = document.getElementById(`options-${q.id}`);
+        q.options.forEach((option) => {
+          const optionDiv = document.createElement('div');
+          optionDiv.classList.add('option');
+          optionDiv.setAttribute('data-question-id', q.id);
+          optionDiv.setAttribute('data-option-id', option.id);
+          optionDiv.innerHTML = `
+            <span class="option-label">${option.id.toUpperCase()}</span>
+            <span>${option.text}</span>
+          `;
+          optionDiv.addEventListener('click', () => selectOption(q.id, option.id));
+          optionsContainer.appendChild(optionDiv);
         });
-        
-        if (answeredQuestions.size !== testQuestions.length) {
-          alert(`Please answer all ${testQuestions.length} questions before submitting.`);
-          return;
+      });
+    }
+
+    // Function to handle option selection
+    function selectOption(questionId, optionId) {
+      if (timerExpired) return;
+      userAnswers[questionId] = optionId;
+      
+      // Update UI to show selection
+      const options = document.querySelectorAll(`[data-question-id="${questionId}"]`);
+      options.forEach(opt => opt.classList.remove('selected'));
+      document.querySelector(`[data-question-id="${questionId}"][data-option-id="${optionId}"]`).classList.add('selected');
+    }
+
+    // Function to start the test
+    function startTest() {
+      welcomeScreen.classList.add('hidden');
+      questionsScreen.classList.remove('hidden');
+      submitFooter.classList.remove('hidden');
+      timerContainer.classList.remove('hidden');
+      renderQuestions();
+      startTimer();
+    }
+
+    // Function to submit the test
+    function submitTest() {
+      clearInterval(timerInterval);
+      questionsScreen.classList.add('hidden');
+      submitFooter.classList.add('hidden');
+      resultScreen.classList.remove('hidden');
+
+      let correctAnswers = 0;
+      testQuestions.forEach(q => {
+        const userAnswerId = userAnswers[q.id];
+        const correctOption = q.options.find(opt => opt.isCorrect);
+        if (userAnswerId === correctOption.id) {
+          correctAnswers++;
         }
-        
-        // Calculate score and show result
-        const result = calculateScore();
-        showResult(result);
       });
 
-      // Initialize the test
-      renderQuestions();
-    });
+      const totalQuestions = testQuestions.length;
+      const scorePercentage = (correctAnswers / totalQuestions) * 100;
+      const timeTaken = TOTAL_TIME - timeLeft;
+      const resultMessage = timerExpired ? "Time's up! Here are your results." : "Test Submitted Successfully!";
+      const passMessage = scorePercentage >= 70 ? "Congratulations! You passed!" : "Keep practicing!";
+
+      renderResult(correctAnswers, totalQuestions, scorePercentage, resultMessage, passMessage, timeTaken);
+    }
+
+    // Function to render the result screen
+    function renderResult(correct, total, percentage, message, passMsg, timeTaken) {
+      resultScreen.innerHTML = `
+        <div class="result-header">
+          <div class="result-score">${correct}/${total}</div>
+          <div class="result-message">${passMsg}</div>
+          <p class="result-details">${message}</p>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${percentage}%"></div>
+        </div>
+        <p>Your score: <strong>${percentage.toFixed(2)}%</strong></p>
+        <p>Time Taken: <strong>${formatTime(timeTaken)}</strong></p>
+        
+        <div class="community-links">
+            <a href="#" class="btn-secondary">
+                <i class="fab fa-discord"></i> Join Discord
+            </a>
+            <button class="btn-primary" onclick="window.location.reload()">
+                <i class="fas fa-redo"></i> Retake Test
+            </button>
+        </div>
+      `;
+    }
   </script>
 </body>
 </html>
