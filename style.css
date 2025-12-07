@@ -2160,3 +2160,243 @@ body {
     transform: translateY(-20px) scale(1.2); 
   }
 }
+
+.btn-facebook {
+  padding: 12px 24px;
+  border-radius: 1000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  width: 10px;
+  height: 60px;
+  background-color: transparent;
+}
+.btn-facebook:hover {
+  background-color: transparent;
+}
+/* Section Headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header i {
+  font-size: 3rem;
+  color: #93a9ff;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.section-subtitle {
+  color: #ffffff;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Benefits Grid */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.benefit-card {
+  background: rgb(98, 0, 177);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+}
+
+.benefit-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px;
+}
+
+.benefit-icon i {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.benefit-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+/* Requirements Grid */
+.requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.requirement-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 4px solid #4a6cf7;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.requirement-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.requirement-header i {
+  font-size: 1.5rem;
+  color: #4a6cf7;
+  margin-right: 15px;
+}
+
+.requirement-header h3 {
+  font-size: 1.3rem;
+  color: #5100ff;
+  margin: 0;
+}
+
+/* Code Section */
+.code-section {
+  background: rgb(0, 0, 0);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgb(255, 255, 255);
+  margin-top: 40px;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.code-header i {
+  font-size: 2rem;
+  color: #4a6cf7;
+  margin-right: 20px;
+}
+
+.code-header h3 {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  background: #1877f2;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin: 15px 0;
+  transition: background 0.3s ease;
+}
+
+.contact-link:hover {
+  background: #1666d9;
+}
+
+.contact-link i {
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+
+.note {
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .benefits-grid,
+  .requirements-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .code-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .code-header i {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+/* Add this to your CSS section */
+.checkbox-requirement {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.checkbox-requirement:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.checkbox-requirement input[type="checkbox"] {
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: white;
+    flex-shrink: 0;
+}
+
+.checkbox-requirement label {
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    line-height: 1.4;
+    user-select: none;
+}
+
+/* Style for disabled button */
+.btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
