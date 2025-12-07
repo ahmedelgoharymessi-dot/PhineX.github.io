@@ -481,7 +481,7 @@
                 <img src="Phinex.png" alt="X Academy logo" width="70" height="70">
             </div>
             <div class="header-text">
-                <h1><i class="fas fa-graduation-cap" style="margin-right: 5px;"></i>X Academy</h1>
+                <h1><i class="fas fa-graduation-cap" style="margin-right: 5px;"></i>X Developers</h1>
                 <p>Pre-test Assessment Center</p>
             </div>
         </header>
@@ -489,7 +489,7 @@
         <main class="pretest-card">
             <div class="pretest-grid">
                 <section class="content-area" aria-labelledby="pretest-title">
-                    <h1 id="pretest-title" class="test-title">HTML, CSS, JavaScript & Web Fundamentals</h1>
+                    <h1 id="pretest-title" class="test-title">Developers test</h1>
                     <p class="test-subtitle">Review the assessment details below before starting. Ensure you have all required materials ready.</p>
                     
                     <div class="meta-grid">
@@ -498,7 +498,7 @@
                                 <i class="fas fa-file-alt"></i>
                             </div>
                             <h3>Questions</h3>
-                            <p>100 + 1 File (>50MB)</p>
+                            <p>10 + 1 File (>3MB)</p>
                         </div>
                         
                         <div class="meta-item">
@@ -506,7 +506,7 @@
                                 <i class="far fa-clock"></i>
                             </div>
                             <h3>Duration</h3>
-                            <p>No time limit</p>
+                            <p>5 mins</p>
                         </div>
                         
                         <div class="meta-item">
@@ -514,7 +514,7 @@
                                 <i class="fas fa-check-circle"></i>
                             </div>
                             <h3>Passing Score</h3>
-                            <p>> 90%</p>
+                            <p>100%</p>
                         </div>
                         
                         <div class="meta-item">
@@ -555,7 +555,7 @@
                         <ul>
                             <li>
                                 <i class="fas fa-chevron-right"></i>
-                                <div><strong>Prepare your project file</strong> (minimum 50MB) before starting. You will need to upload it during the assessment.</div>
+                                <div><strong>Prepare your project file</strong> (minimum > 3MB) before starting. You will need to upload it during the assessment.</div>
                             </li>
                             <li>
                                 <i class="fas fa-chevron-right"></i>
@@ -574,7 +574,7 @@
                         <div class="footer-note">
                             <i class="fas fa-info-circle"></i>
                             <div>
-                                <strong>Note:</strong> The assessment will open in a new browser tab. Please ensure pop-ups are allowed for this site.
+                                <strong>Note:</strong> The assessment will open in a new browser tab. Please ensure pop-ups are allowed for this site & the File upload isn't available for now.
                             </div>
                         </div>
                     </section>
@@ -583,16 +583,27 @@
                 <aside class="side-panel" aria-label="Start assessment panel">
                     <div class="side-panel-content">
                         <div class="ready-label">Ready to begin?</div>
-                        <h2 class="test-summary">100 Questions + File Submission</h2>
+                        <h2 class="test-summary">10 Questions + File Submission</h2>
                         
                         <div class="file-requirement">
                             <i class="fas fa-file-upload"></i>
                             <div>
-                                <strong>File requirement:</strong> Prepare a project file (>50MB) for upload during the assessment.
+                                <strong>File requirement:</strong> Prepare a project file (> 3 MB) for upload during the assessment.
                             </div>
                         </div>
-                        
-                        <a href="x-academy-test.html" id="startBtn" class="btn btn-primary">
+                        <div class="checkbox-requirement">
+                            <input type="checkbox" id="confirmCheckbox" required>
+                            <label for="confirmCheckbox">
+                                Terms & Conditions of programming community Requirements
+                            </label>
+                        </div>
+                        <div class="checkbox-requirement" style="margin-top: 10px;">
+                            <input type="checkbox" id="confirmCheckbox" required>
+                            <label for="confirmCheckbox" style="margin-top: 10px;">
+                                I Agree to the <a href="hiring.html"></a>I confirm that I have prepared a file of size > 3 mb
+                            </label>
+                        </div>
+                        <a href="x-academy-test.html" id="startBtn" class="btn btn-primary" target="_blank" style="margin-top: 10px;">
                             <i class="fas fa-play-circle"></i>
                             Begin Assessment
                         </a>
@@ -612,18 +623,57 @@
     </div>
 
     <script>
+        // Replace the existing startBtn event listener with this updated version
+startBtn.addEventListener('click', function(e) {
+    const checkbox = document.getElementById('confirmCheckbox');
+    
+    if (!checkbox.checked) {
+        e.preventDefault();
+        alert("Please confirm that you have prepared your project file by checking the box above.");
+        
+        // Add visual feedback
+        checkbox.focus();
+        document.querySelector('.checkbox-requirement').style.background = 'rgba(255, 0, 0, 0.1)';
+        document.querySelector('.checkbox-requirement').style.border = '1px solid rgba(255, 0, 0, 0.3)';
+        
+        // Remove the highlight after a moment
+        setTimeout(() => {
+            document.querySelector('.checkbox-requirement').style.background = '';
+            document.querySelector('.checkbox-requirement').style.border = '';
+        }, 2000);
+        
+        return;
+    }
+    
+    if (!confirm("Are you ready to begin the assessment? Ensure you have your project file ready (>50MB).")) {
+        e.preventDefault();
+    } else {
+        // Optional: Add loading state
+        startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        startBtn.classList.add('disabled');
+    }
+    });
+
+    // Add real-time button state based on checkbox
+    const checkbox = document.getElementById('confirmCheckbox');
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            startBtn.classList.remove('disabled');
+        } else {
+            startBtn.classList.add('disabled');
+        }
+    });
+
+    // Initialize button state
+    startBtn.classList.add('disabled');
         // Add some interactive elements
         document.addEventListener('DOMContentLoaded', function() {
             const startBtn = document.getElementById('startBtn');
             
             // Add confirmation before starting test
             startBtn.addEventListener('click', function(e) {
-                if (!confirm("Are you ready to begin the assessment? Ensure you have your project file ready (>50MB).")) {
+                if (!confirm("Are you ready to begin the assessment? Ensure you have your project file ready (> 3MB).")) {
                     e.preventDefault();
-                } else {
-                    // Optional: Add loading state
-                    startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-                    startBtn.classList.add('disabled');
                 }
             });
             
