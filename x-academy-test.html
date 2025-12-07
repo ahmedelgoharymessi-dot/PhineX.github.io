@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>X-Developers Test | PhineX</title>
+  <link rel="stylesheet" href="cdnjs.cloudflare.com">
+  <link rel="icon" type="image/png" class="icon" href="Phinex.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* CSS styles remain mostly the same as provided earlier, adding a couple for code display */
     * {
       margin: 0;
       padding: 0;
@@ -18,7 +23,7 @@
       color: #e2e8f0;
       line-height: 1.6;
     }
-
+    /* ... (rest of the provided CSS) ... */
     .navbar {
       background-color: #1e293b;
       padding: 1rem 0;
@@ -104,6 +109,17 @@
       color: #f1f5f9;
       display: flex;
       gap: 0.75rem;
+      flex-direction: column;
+    }
+    
+    .question-code {
+        background-color: #0f172a;
+        padding: 1rem;
+        border-radius: 8px;
+        font-family: monospace;
+        white-space: pre-wrap;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
     }
 
     .question-number {
@@ -217,7 +233,8 @@
     .hidden {
       display: none;
     }
-
+    
+    /* ... (rest of the provided CSS for result screen/media queries) ... */
     .success-message i {
       font-size: 4rem;
       color: #10b981;
@@ -419,12 +436,12 @@
   <nav class="navbar">
     <div class="nav-container">
       <div class="logo">
-        <i class="fas fa-microscope"></i>
+        <i class="fas fa-laptop-code"></i>
         <span>X-Developers Test</span>
       </div>
       <div class="timer-container">
-        <i class="far fa-clock"></i>
-        <span id="time">5:00</span> <!-- Placeholder for timer -->
+        <i class="fas fa-clock"></i>
+        <span id="time">00:00</span> <!-- Timer updated by JS -->
       </div>
     </div>
   </nav>
@@ -432,14 +449,11 @@
   <main class="test-container">
     <div class="test-header" id="welcome-screen">
       <h1>Welcome to the X-Developers Test</h1>
-      <p>This test contains 10 extremely hard questions. You have a limited time to complete them.</p>
-      <p>Time limit: 5 minutes.</p>
+      <p>This test contains 10 randomly selected, extremely hard questions from a pool of 100. You have a limited time to complete them.</p>
+      <p>Time limit is 5 mins.</p>
       <button class="btn-primary" onclick="startTest()" style="margin-top: 10px;">
         <i class="fas fa-play"></i> Start Test
       </button>
-      <a href="x-academy-pretest.html" class="btn-secondary" style="margin-top: 10px; display: inline-flex; align-items: center;">
-        <i class="fas fa-arrow-left"></i> Back to Pre-Test Info
-      </a>
     </div>
 
     <div class="questions-container hidden" id="questions-screen">
@@ -460,10 +474,12 @@
   
   <!-- JavaScript Code -->
   <script>
-    const testQuestions = [
+    // The large pool of 100 questions (only 12 examples provided for brevity)
+    const ALL_QUESTIONS_POOL = [
         {
           id: 1,
           question: "An element has `width: 300px; padding: 20px; border: 10px solid black; box-sizing: content-box;`. What is its total rendered width?",
+          codeSnippet: null,
           options: [
             { id: 'a', text: "300px", isCorrect: false },
             { id: 'b', text: "340px", isCorrect: false },
@@ -474,6 +490,7 @@
         {
           id: 2,
           question: "In complex stacking contexts using CSS `position` and `z-index`, which property on a parent element can force a new stacking context *without* changing its `position` value away from static?",
+          codeSnippet: null,
           options: [
             { id: 'a', text: "margin", isCorrect: false },
             { id: 'b', text: "display", isCorrect: false },
@@ -483,17 +500,19 @@
         },
         {
           id: 3,
-          question: "An HTML element has inline CSS `style=\"color: blue;\"`, a class rule `.text { color: green; }`, and an ID rule `#message { color: orange; }`. Which color will the text be?",
+          question: "What will be the color of the text 'Hello World' given the following inline style and CSS rules?",
+          codeSnippet: '<p id="message" class="text" style="color: blue;">Hello World</p>\np { color: red; }\n.text { color: green; }\n#message { color: orange; }',
           options: [
-            { id: 'a', text: "Green", isCorrect: false },
-            { id: 'b', text: "Orange", isCorrect: false },
-            { id: 'c', text: "Red (default)", isCorrect: false },
+            { id: 'a', text: "Red", isCorrect: false },
+            { id: 'b', text: "Green", isCorrect: false },
+            { id: 'c', text: "Orange", isCorrect: false },
             { id: 'd', text: "Blue", isCorrect: true }
           ]
         },
         {
           id: 4,
           question: "A flex container is 500px wide. Two items inside have `width: 300px` and `flex-shrink: 1`. What is the final width of each item?",
+          codeSnippet: null,
           options: [
             { id: 'a', text: "300px", isCorrect: false },
             { id: 'b', text: "250px", isCorrect: true },
@@ -504,6 +523,7 @@
         {
           id: 5,
           question: "What CSS technique can eliminate the whitespace between two adjacent `display: inline-block;` elements without modifying the HTML structure or using comments?",
+          codeSnippet: null,
           options: [
             { id: 'a', text: "Setting margin: -4px;", isCorrect: false },
             { id: 'b', text: "Setting font-size: 0; on the parent container", isCorrect: true },
@@ -514,6 +534,7 @@
         {
           id: 6,
           question: "Which HTML attribute pair makes a non-semantic `div` behave like a clickable button for screen readers and keyboard navigation?",
+          codeSnippet: '<div id="myButton">Click me</div>',
           options: [
             { id: 'a', text: "role=\"button\" and aria-pressed=\"false\"", isCorrect: false },
             { id: 'b', text: "type=\"button\" and tabindex=\"0\"", isCorrect: false },
@@ -523,7 +544,8 @@
         },
         {
           id: 7,
-          question: "Which statement accurately describes the difference between the HTML `<canvas>` and `<svg>` elements?",
+          question: "Which statement accurately describes the difference between the HTML `< canvas >` and `< svg >` elements?",
+          codeSnippet: null,
           options: [
             { id: 'a', text: "< canvas > is for vector graphics, < svg > is for bitmap graphics.", isCorrect: false },
             { id: 'b', text: "< canvas > graphics are part of the DOM, < svg > graphics are not.", isCorrect: false },
@@ -533,7 +555,8 @@
         },
         {
           id: 8,
-          question: "When an HTML form contains an `< input type=\"file\" >`, which `enctype` value must be set on the `< form >` element for a successful file upload?",
+          question: "Which `enctype` must be set on the `< form >` element for a successful file upload?",
+          codeSnippet: '<form action="/upload" method="POST" enctype="...">\n  <input type="file" name="fileUpload">\n  <input type="submit">\n</form>',
           options: [
             { id: 'a', text: "text/plain", isCorrect: false },
             { id: 'b', text: "application/x-www-form-urlencoded", isCorrect: false },
@@ -544,6 +567,7 @@
         {
           id: 9,
           question: "Which HTML `< meta >` tag attribute is used to prevent a browser from caching the page for highly sensitive or real-time data?",
+          codeSnippet: null,
           options: [
             { id: 'a', text: "< meta name=\"viewport\" ... >", isCorrect: false },
             { id: 'b', text: "< meta http-equiv=\"refresh\" ... >", isCorrect: false },
@@ -554,23 +578,1012 @@
         {
           id: 10,
           question: "Which of the following is an invalid nesting structure according to HTML5 specification rules regarding flow/phrasing content?",
+          codeSnippet: null,
           options: [
-            { id: 'a', text: "< div > < p >...< /p >< /div >", isCorrect: false },
+            { id: 'a', text: "< div >< p >...< /p >< /div >", isCorrect: false },
             { id: 'b', text: "< p >< span >...< /span >< /p >", isCorrect: false },
             { id: 'c', text: "< span >< div >...< /div >< /span >", isCorrect: true },
             { id: 'd', text: "< ul >< li >...< /li >< /ul >", isCorrect: false }
           ]
-        }
-      ];
-
+        },
+        {
+          id: 11,
+          question: "How do you select all elements with the class 'intro' inside a < div > element using CSS?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "div > .intro", isCorrect: false },
+            { id: 'b', text: "div + .intro", isCorrect: false },
+            { id: 'c', text: "div.intro", isCorrect: false },
+            { id: 'd', text: "div .intro", isCorrect: true }
+          ]
+        },
+        {
+          id: 12,
+          question: "What is the purpose of the `aria-label` attribute in HTML?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "To define a keyboard shortcut for an element", isCorrect: false },
+            { id: 'b', text: "To provide a visible label for form elements", isCorrect: false },
+            { id: 'c', text: "To provide an accessible name for an element when no visible text is available", isCorrect: true },
+            { id: 'd', text: "To create a custom tooltip for an element", isCorrect: false }
+          ]
+        },
+        {
+          id: 13,
+          question: "Which of the following is NOT a valid way to declare a variable in JavaScript?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "var x = 10;", isCorrect: false },
+            { id: 'b', text: "let y = 20;", isCorrect: false },
+            { id: 'c', text: "const z = 30;", isCorrect: false },
+            { id: 'd', text: "variable w = 40;", isCorrect: true }
+          ]
+        },
+        {
+          id: 14,
+          question: "What will be the output of `console.log(typeof NaN)` in JavaScript?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "\"number\"", isCorrect: true },
+            { id: 'b', text: "\"NaN\"", isCorrect: false },
+            { id: 'c', text: "\"undefined\"", isCorrect: false },
+            { id: 'd', text: "\"object\"", isCorrect: false }
+          ]
+        },
+        {
+          id: 15,
+          question: "In React, what is the primary purpose of the `useEffect` hook?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "To manage state in functional components", isCorrect: false },
+            { id: 'b', text: "To perform side effects in functional components", isCorrect: true },
+            { id: 'c', text: "To create refs to DOM elements", isCorrect: false },
+            { id: 'd', text: "To optimize performance by memoizing values", isCorrect: false }
+          ]
+        },
+        {
+          id: 16,
+          question: "Which CSS property is used to create space between the element's border and its content?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "margin", isCorrect: false },
+            { id: 'b', text: "padding", isCorrect: true },
+            { id: 'c', text: "border-spacing", isCorrect: false },
+            { id: 'd', text: "gap", isCorrect: false }
+          ]
+        },
+        {
+          id: 17,
+          question: "What does the following code output?",
+          codeSnippet: "console.log(0.1 + 0.2 === 0.3);",
+          options: [
+            { id: 'a', text: "true", isCorrect: false },
+            { id: 'b', text: "false", isCorrect: true },
+            { id: 'c', text: "undefined", isCorrect: false },
+            { id: 'd', text: "NaN", isCorrect: false }
+          ]
+        },
+        {
+          id: 18,
+          question: "Which HTTP status code indicates that a resource has been permanently moved?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "200", isCorrect: false },
+            { id: 'b', text: "301", isCorrect: true },
+            { id: 'c', text: "404", isCorrect: false },
+            { id: 'd', text: "500", isCorrect: false }
+          ]
+        },
+        {
+          id: 19,
+          question: "In Git, what command is used to combine multiple commits into one?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "git merge", isCorrect: false },
+            { id: 'b', text: "git rebase", isCorrect: false },
+            { id: 'c', text: "git squash", isCorrect: false },
+            { id: 'd', text: "git rebase -i", isCorrect: true }
+          ]
+        },
+        {
+          id: 20,
+          question: "What is the time complexity of accessing an element in an array by index?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "O(1)", isCorrect: true },
+            { id: 'b', text: "O(log n)", isCorrect: false },
+            { id: 'c', text: "O(n)", isCorrect: false },
+            { id: 'd', text: "O(n²)", isCorrect: false }
+          ]
+        },
+        {
+          id: 21,
+          question: "Which of the following is NOT a valid JavaScript data type?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "symbol", isCorrect: false },
+            { id: 'b', text: "bigint", isCorrect: false },
+            { id: 'c', text: "float", isCorrect: true },
+            { id: 'd', text: "undefined", isCorrect: false }
+          ]
+        },
+        {
+          id: 22,
+          question: "What does CSS stand for?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "Computer Style Sheets", isCorrect: false },
+            { id: 'b', text: "Creative Style System", isCorrect: false },
+            { id: 'c', text: "Cascading Style Sheets", isCorrect: true },
+            { id: 'd', text: "Colorful Style Sheets", isCorrect: false }
+          ]
+        },
+        {
+          id: 23,
+          question: "Which method is used to add an element to the end of an array in JavaScript?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "push()", isCorrect: true },
+            { id: 'b', text: "append()", isCorrect: false },
+            { id: 'c', text: "addToEnd()", isCorrect: false },
+            { id: 'd', text: "insertLast()", isCorrect: false }
+          ]
+        },
+        {
+          id: 24,
+          question: "What is the purpose of the `alt` attribute in an HTML image tag?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "To specify image dimensions", isCorrect: false },
+            { id: 'b', text: "To provide alternative text for screen readers", isCorrect: true },
+            { id: 'c', text: "To set image alignment", isCorrect: false },
+            { id: 'd', text: "To define image loading strategy", isCorrect: false }
+          ]
+        },
+        {
+          id: 25,
+          question: "Which SQL clause is used to filter results?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "SELECT", isCorrect: false },
+            { id: 'b', text: "FROM", isCorrect: false },
+            { id: 'c', text: "WHERE", isCorrect: true },
+            { id: 'd', text: "ORDER BY", isCorrect: false }
+          ]
+        },
+        {
+          id: 26,
+          question: "What will be the value of `x` after this code executes?",
+          codeSnippet: "let x = 5;\nx += '5';",
+          options: [
+            { id: 'a', text: "10", isCorrect: false },
+            { id: 'b', text: "55", isCorrect: true },
+            { id: 'c', text: "\"55\"", isCorrect: true },
+            { id: 'd', text: "Error", isCorrect: false }
+          ]
+        },
+        {
+          id: 27,
+          question: "In object-oriented programming, what is encapsulation?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "The process of converting data into code", isCorrect: false },
+            { id: 'b', text: "Hiding implementation details and exposing only necessary features", isCorrect: true },
+            { id: 'c', text: "Creating multiple methods with the same name", isCorrect: false },
+            { id: 'd', text: "Inheriting properties from a parent class", isCorrect: false }
+          ]
+        },
+        {
+          id: 28,
+          question: "Which of these is a NoSQL database?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "MySQL", isCorrect: false },
+            { id: 'b', text: "PostgreSQL", isCorrect: false },
+            { id: 'c', text: "MongoDB", isCorrect: true },
+            { id: 'd', text: "SQLite", isCorrect: false }
+          ]
+        },
+        {
+          id: 29,
+          question: "What does API stand for?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "Application Programming Interface", isCorrect: true },
+            { id: 'b', text: "Advanced Programming Instruction", isCorrect: false },
+            { id: 'c', text: "Automated Program Integration", isCorrect: false },
+            { id: 'd', text: "Application Process Integration", isCorrect: false }
+          ]
+        },
+        {
+          id: 30,
+          question: "Which CSS selector has the highest specificity?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "Class selector (.class)", isCorrect: false },
+            { id: 'b', text: "ID selector (#id)", isCorrect: true },
+            { id: 'c', text: "Element selector (div)", isCorrect: false },
+            { id: 'd', text: "Inline style", isCorrect: true }
+          ]
+        },
+        {
+          id: 31,
+          question: "What is the purpose of the `map()` method in JavaScript?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "To create a new array by transforming each element", isCorrect: true },
+            { id: 'b', text: "To filter array elements based on a condition", isCorrect: false },
+            { id: 'c', text: "To reduce an array to a single value", isCorrect: false },
+            { id: 'd', text: "To sort array elements", isCorrect: false }
+          ]
+        },
+        {
+          id: 32,
+          question: "Which HTML5 tag is used for navigation links?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "< nav >", isCorrect: true },
+            { id: 'b', text: "< navigation >", isCorrect: false },
+            { id: 'c', text: "< menu >", isCorrect: false },
+            { id: 'd', text: "< links >", isCorrect: false }
+          ]
+        },
+        {
+          id: 33,
+          question: "What is the default port for HTTPS?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "80", isCorrect: false },
+            { id: 'b', text: "443", isCorrect: true },
+            { id: 'c', text: "8080", isCorrect: false },
+            { id: 'd', text: "21", isCorrect: false }
+          ]
+        },
+        {
+          id: 34,
+          question: "Which of these is a JavaScript runtime environment?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "Node.js", isCorrect: true },
+            { id: 'b', text: "Django", isCorrect: false },
+            { id: 'c', text: "Apache", isCorrect: false },
+            { id: 'd', text: "Nginx", isCorrect: false }
+          ]
+        },
+        {
+          id: 35,
+          question: "What does the `flex` property in CSS Flexbox control?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "The direction of flex items", isCorrect: false },
+            { id: 'b', text: "How flex items grow, shrink, and their initial size", isCorrect: true },
+            { id: 'c', text: "The alignment of flex items", isCorrect: false },
+            { id: 'd', text: "The wrapping behavior of flex items", isCorrect: false }
+          ]
+        },
+        {
+          id: 36,
+          question: "Which command is used to install dependencies from package.json?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "npm init", isCorrect: false },
+            { id: 'b', text: "npm start", isCorrect: false },
+            { id: 'c', text: "npm install", isCorrect: true },
+            { id: 'd', text: "npm build", isCorrect: false }
+          ]
+        },
+        {
+          id: 37,
+          question: "What will this code output?",
+          codeSnippet: "console.log([] == ![]);",
+          options: [
+            { id: 'a', text: "true", isCorrect: false },
+            { id: 'b', text: "false", isCorrect: true },
+            { id: 'c', text: "undefined", isCorrect: false },
+            { id: 'd', text: "Error", isCorrect: false }
+          ]
+        },
+        {
+          id: 38,
+          question: "Which method converts a JSON string to a JavaScript object?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "JSON.parse()", isCorrect: true },
+            { id: 'b', text: "JSON.stringify()", isCorrect: false },
+            { id: 'c', text: "JSON.toObject()", isCorrect: false },
+            { id: 'd', text: "JSON.convert()", isCorrect: false }
+          ]
+        },
+        {
+          id: 39,
+          question: "What is the purpose of the `z-index` property in CSS?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "To control element sizing", isCorrect: false },
+            { id: 'b', text: "To set the stacking order of positioned elements", isCorrect: true },
+            { id: 'c', text: "To define animation duration", isCorrect: false },
+            { id: 'd', text: "To control text alignment", isCorrect: false }
+          ]
+        },
+        {
+          id: 40,
+          question: "Which HTTP method is used to update an existing resource?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "GET", isCorrect: false },
+            { id: 'b', text: "POST", isCorrect: false },
+            { id: 'c', text: "PUT", isCorrect: true },
+            { id: 'd', text: "DELETE", isCorrect: false }
+          ]
+        },
+        {
+          id: 41,
+          question: "What does the `this` keyword refer to in a JavaScript object method?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "The global window object", isCorrect: false },
+            { id: 'b', text: "The object that owns the method", isCorrect: true },
+            { id: 'c', text: "The parent object", isCorrect: false },
+            { id: 'd', text: "The method itself", isCorrect: false }
+          ]
+        },
+        {
+          id: 42,
+          question: "Which CSS unit is relative to the font-size of the root element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "em", isCorrect: false },
+            { id: 'b', text: "rem", isCorrect: true },
+            { id: 'c', text: "px", isCorrect: false },
+            { id: 'd', text: "%", isCorrect: false }
+          ]
+        },
+        {
+          id: 43,
+          question: "What is the output of this code?",
+          codeSnippet: "let a = [1, 2, 3];\nlet b = a;\nb.push(4);\nconsole.log(a.length);",
+          options: [
+            { id: 'a', text: "3", isCorrect: false },
+            { id: 'b', text: "4", isCorrect: true },
+            { id: 'c', text: "Error", isCorrect: false },
+            { id: 'd', text: "undefined", isCorrect: false }
+          ]
+        },
+        {
+          id: 44,
+          question: "Which HTML attribute is used to make an input field required?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "validate", isCorrect: false },
+            { id: 'b', text: "required", isCorrect: true },
+            { id: 'c', text: "mandatory", isCorrect: false },
+            { id: 'd', text: "mustfill", isCorrect: false }
+          ]
+        },
+        {
+          id: 45,
+          question: "What is a closure in JavaScript?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "A function that returns another function", isCorrect: false },
+            { id: 'b', text: "A function with access to its own scope, outer function's scope, and global scope", isCorrect: true },
+            { id: 'c', text: "A function that closes the browser window", isCorrect: false },
+            { id: 'd', text: "A function that executes immediately", isCorrect: false }
+          ]
+        },
+        {
+          id: 46,
+          question: "Which of these is NOT a valid way to center a div horizontally in CSS?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "margin: 0 auto;", isCorrect: false },
+            { id: 'b', text: "text-align: center;", isCorrect: false },
+            { id: 'c', text: "position: absolute; left: 50%;", isCorrect: false },
+            { id: 'd', text: "display: center;", isCorrect: true }
+          ]
+        },
+        {
+          id: 47,
+          question: "In CSS, which property is used to control the indentation of the first line of text in a block-level element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "text-indent", isCorrect: true },
+            { id: 'b', text: "line-height", isCorrect: false },
+            { id: 'c', text: "letter-spacing", isCorrect: false },
+            { id: 'd', text: "word-spacing", isCorrect: false }
+          ]
+        },
+        {
+          id: 48,
+          question: "In CSS, which property is used to control the spacing between characters in a text element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "letter-spacing", isCorrect: true },
+            { id: 'b', text: "word-spacing", isCorrect: false },
+            { id: 'c', text: "text-indent", isCorrect: false },
+            { id: 'd', text: "line-height", isCorrect: false }
+          ]
+        },
+        {
+          id: 49,
+          question: "In CSS, which property is used to control the spacing between the lines of text within an element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "line-height", isCorrect: true },
+            { id: 'b', text: "text-indent", isCorrect: false },
+            { id: 'c', text: "letter-spacing", isCorrect: false },
+            { id: 'd', text: "word-spacing", isCorrect: false }
+          ]
+        },
+        {
+          id: 50,
+          question: "In CSS, which property is used to control the indentation of the first line of text in a block-level element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "text-indent", isCorrect: true },
+            { id: 'b', text: "line-height", isCorrect: false },
+            { id: 'c', text: "letter-spacing", isCorrect: false },
+            { id: 'd', text: "word-spacing", isCorrect: false }
+          ]
+        },
+        {
+          id: 51,
+          question: "In CSS, which property is used to control the space between words in a text element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "letter-spacing", isCorrect: false },
+            { id: 'b', text: "word-spacing", isCorrect: true },
+            { id: 'c', text: "text-indent", isCorrect: false },
+            { id: 'd', text: "line-height", isCorrect: false }
+          ]
+        },
+        {
+          id: 52,
+          question: "In CSS, which property is used to control the space between characters in a text element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "word-spacing", isCorrect: false },
+            { id: 'b', text: "text-indent", isCorrect: false },
+            { id: 'c', text: "letter-spacing", isCorrect: true },
+            { id: 'd', text: "line-height", isCorrect: false }
+          ]
+        },
+        { id: 53,
+          question: "In CSS, which property is used to control the spacing between lines of text within an element?",
+          codeSnippet: null,
+          options: [
+            { id: 'a', text: "letter-spacing", isCorrect: false },
+            { id: 'b', text: "line-height", isCorrect: true },
+            { id: 'c', text: "text-spacing", isCorrect: false },
+            { id: 'd', text: "word-spacing", isCorrect: false }
+          ]
+        },
+        {
+          id: 54,
+          question: "In CSS Grid, which property is used to define the size of rows in a grid container?",
+          codeSnippet: ".grid-container { display: grid; ... }",
+          options: [
+            { id: 'a', text: "grid-template-columns", isCorrect: false },
+            { id: 'b', text: "grid-auto-rows", isCorrect: false },
+            { id: 'c', text: "grid-template-rows", isCorrect: true },
+            { id: 'd', text: "grid-auto-columns", isCorrect: false }
+          ]
+        },
+        { id: 55,
+question: "Which HTML attribute is used to provide a hint or example input to the user in a text field, which disappears when the field is focused?",
+codeSnippet: '< input type="text" ... >',
+options: [
+{ id: 'a', text: "value", isCorrect: false },
+{ id: 'b', text: "label", isCorrect: false },
+{ id: 'c', text: "placeholder", isCorrect: true },
+{ id: 'd', text: "hint", isCorrect: false }
+]
+},
+{
+id: 56,
+question: "What is the difference between the CSS properties visibility: hidden; and display: none;?",
+codeSnippet: ".hidden { visibility: hidden; }\n.none { display: none; }",
+options: [
+{ id: 'a', text: "visibility: hidden; hides the element but it still occupies space; display: none; hides the element and removes it from the document flow.", isCorrect: true },
+{ id: 'b', text: "display: none; hides the element but it still occupies space; visibility: hidden; hides the element and removes it from the document flow.", isCorrect: false },
+{ id: 'c', text: "They are functionally identical.", isCorrect: false },
+{ id: 'd', text: "visibility: hidden; makes the element transparent; display: none; makes it invisible.", isCorrect: false }
+]
+},
+{
+id: 57,
+question: "Which HTML tag is used to define an independent, self-contained piece of content, like a blog post or news article?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< section >", isCorrect: false },
+{ id: 'b', text: "< article >", isCorrect: true },
+{ id: 'c', text: "< div >", isCorrect: false },
+{ id: 'd', text: "< aside >", isCorrect: false }
+]
+},
+{
+id: 58,
+question: "In CSS, what is the default value for the box-sizing property?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "border-box", isCorrect: false },
+{ id: 'b', text: "padding-box", isCorrect: false },
+{ id: 'c', text: "content-box", isCorrect: true },
+{ id: 'd', text: "margin-box", isCorrect: false }
+]
+},
+{
+id: 59,
+question: "Which HTML attribute is used to group related input fields in a form with a boundary and a caption?",
+codeSnippet: '\n ...\n \n ...\n',
+options: [
+{ id: 'a', text: "< fieldset >", isCorrect: true },
+{ id: 'b', text: "< div >", isCorrect: false },
+{ id: 'c', text: "< section >", isCorrect: false },
+{ id: 'd', text: "< group >", isCorrect: false }
+]
+},
+{
+id: 60,
+question: "Which CSS property is used to control the appearance of an element's outline?",
+codeSnippet: "button:focus { ... }",
+options: [
+{ id: 'a', text: "border", isCorrect: false },
+{ id: 'b', text: "shadow", isCorrect: false },
+{ id: 'c', text: "outline", isCorrect: true },
+{ id: 'd', text: "focus-style", isCorrect: false }
+]
+},
+{
+id: 61,
+question: "What is the correct HTML element for inserting a line break?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< break >", isCorrect: false },
+{ id: 'b', text: "< linebreak >", isCorrect: false },
+{ id: 'c', text: "< br >", isCorrect: true },
+{ id: 'd', text: "< lb >", isCorrect: false }
+]
+},
+{
+id: 62,
+question: "In Flexbox, what does the align-items property control?",
+codeSnippet: ".container { display: flex; align-items: center; }",
+options: [
+{ id: 'a', text: "Alignment of items along the main axis.", isCorrect: false },
+{ id: 'b', text: "Alignment of items along the cross-axis.", isCorrect: true },
+{ id: 'c', text: "The spacing between flex items.", isCorrect: false },
+{ id: 'd', text: "Whether items wrap to a new line.", isCorrect: false }
+]
+},
+{
+id: 63,
+question: "Which HTML tag is used to define metadata about an HTML document, such as author, description, and keywords?",
+codeSnippet: "\n ...\n",
+options: [
+{ id: 'a', text: "< head >", isCorrect: false },
+{ id: 'b', text: "< meta >", isCorrect: true },
+{ id: 'c', text: "< tiltle >", isCorrect: false },
+{ id: 'd', text: "< info >", isCorrect: false }
+]
+},
+{
+id: 64,
+question: "What CSS property is used to change the mouse cursor when hovering over an element?",
+codeSnippet: "a:hover { ... }",
+options: [
+{ id: 'a', text: "pointer", isCorrect: false },
+{ id: 'b', text: "mouse", isCorrect: false },
+{ id: 'c', text: "cursor", isCorrect: true },
+{ id: 'd', text: "interaction", isCorrect: false }
+]
+},
+{
+id: 65,
+question: "Which HTML5 attribute indicates that a form input field should have focus when the page loads?",
+codeSnippet: '<input type="text" ...>',
+options: [
+{ id: 'a', text: "focus", isCorrect: false },
+{ id: 'b', text: "autofocus", isCorrect: true },
+{ id: 'c', text: "selected", isCorrect: false },
+{ id: 'd', text: "active", isCorrect: false }
+]
+},
+{
+id: 66,
+question: "In CSS, which selector is used to select elements that are the first child of their parent?",
+codeSnippet: "ul li:first-child { ... }",
+options: [
+{ id: 'a', text: ":first-of-type", isCorrect: false },
+{ id: 'b', text: "::first", isCorrect: false },
+{ id: 'c', text: ":first-child", isCorrect: true },
+{ id: 'd', text: ":nth-child(1)", isCorrect: false }
+]
+},
+{
+id: 67,
+question: "Which HTML attribute specifies the URL of the page that the link goes to?",
+codeSnippet: '<a ...>Link Text',
+options: [
+{ id: 'a', text: "src", isCorrect: false },
+{ id: 'b', text: "link", isCorrect: false },
+{ id: 'c', text: "href", isCorrect: true },
+{ id: 'd', text: "url", isCorrect: false }
+]
+},
+{
+id: 68,
+question: "What CSS property is used to create space outside the element's border?",
+codeSnippet: "div { ... }",
+options: [
+{ id: 'a', text: "padding", isCorrect: false },
+{ id: 'b', text: "border-spacing", isCorrect: false },
+{ id: 'c', text: "margin", isCorrect: true },
+{ id: 'd', text: "outline-space", isCorrect: false }
+]
+},
+{
+id: 69,
+question: "Which HTML element is used to define a list item within an ordered or unordered list?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< ol >", isCorrect: false },
+{ id: 'b', text: "< ul >", isCorrect: false },
+{ id: 'c', text: "< li >", isCorrect: true },
+{ id: 'd', text: "< list >", isCorrect: false }
+]
+},
+{
+id: 70,
+question: "In CSS, what is the purpose of the float property?",
+codeSnippet: ".image { float: left; }",
+options: [
+{ id: 'a', text: "To make an element hover over other elements.", isCorrect: false },
+{ id: 'b', text: "To position an element to the left or right, allowing text and inline elements to wrap around it.", isCorrect: true },
+{ id: 'c', text: "To create a sticky position effect.", isCorrect: false },
+{ id: 'd', text: "To center an element horizontally.", isCorrect: false }
+]
+},
+{
+id: 71,
+question: "Which HTML tag is used for the largest heading?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< heading >", isCorrect: false },
+{ id: 'b', text: "< h6 >", isCorrect: false },
+{ id: 'c', text: "< h3 >", isCorrect: false },
+{ id: 'd', text: "< h1 >", isCorrect: true }
+]
+},
+{
+id: 72,
+question: "What CSS property is used to set the background color of an element?",
+codeSnippet: "body { ... }",
+options: [
+{ id: 'a', text: "color", isCorrect: false },
+{ id: 'b', text: "bgcolor", isCorrect: false },
+{ id: 'c', text: "background-color", isCorrect: true },
+{ id: 'd', text: "fill-color", isCorrect: false }
+]
+},
+{
+id: 73,
+question: "Which HTML attribute specifies that an input field should be disabled?",
+codeSnippet: '<input type="text" ...>',
+options: [
+{ id: 'a', text: "active=false", isCorrect: false },
+{ id: 'b', text: "disabled", isCorrect: true },
+{ id: 'c', text: "readonly", isCorrect: false },
+{ id: 'd', text: "inactive", isCorrect: false }
+]
+},
+{
+id: 74,
+question: "Which CSS property is used to control the style of a list's bullets or numbers?",
+codeSnippet: "ul { ... }",
+options: [
+{ id: 'a', text: "list-style-type", isCorrect: true },
+{ id: 'b', text: "marker-style", isCorrect: false },
+{ id: 'c', text: "bullet-style", isCorrect: false },
+{ id: 'd', text: "list-decoration", isCorrect: false }
+]
+},
+{
+id: 75,
+question: "What is the purpose of the HTML <abbr> tag?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "To create a line break.", isCorrect: false },
+{ id: 'b', text: "To define an abbreviation or acronym.", isCorrect: true },
+{ id: 'c', text: "To insert a horizontal rule.", isCorrect: false },
+{ id: 'd', text: "To make text bold.", isCorrect: false }
+]
+},
+{
+id: 76,
+question: "In CSS, how do you select all < p > elements where the title attribute is present, regardless of its value?",
+codeSnippet: '...\n...',
+options: [
+{ id: 'a', text: "p[title='*']", isCorrect: false },
+{ id: 'b', text: "p[title]", isCorrect: true },
+{ id: 'c', text: "p.title", isCorrect: false },
+{ id: 'd', text: "p > title", isCorrect: false }
+]
+},
+{
+id: 77,
+question: "Which HTML element is used to represent the dominant content of the < body > of a document, excluding content that is repeated across a set of documents?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< aside >", isCorrect: false },
+{ id: 'b', text: "< header >", isCorrect: false },
+{ id: 'c', text: "< footer >", isCorrect: false },
+{ id: 'd', text: "< main >", isCorrect: true }
+]
+},
+{
+id: 78,
+question: "What is the correct CSS syntax for making a paragraph italic?",
+codeSnippet: "p { ... }",
+options: [
+{ id: 'a', text: "font-style: italic;", isCorrect: true },
+{ id: 'b', text: "text-decoration: italic;", isCorrect: false },
+{ id: 'c', text: "font-weight: italic;", isCorrect: false },
+{ id: 'd', text: "text-style: italic;", isCorrect: false }
+]
+},
+{
+id: 79,
+question: "Which HTML attribute specifies the width of an image?",
+codeSnippet: '<img src="photo.jpg" ...>',
+options: [
+{ id: 'a', text: "size", isCorrect: false },
+{ id: 'b', text: "dimensions", isCorrect: false },
+{ id: 'c', text: "width", isCorrect: true },
+{ id: 'd', text: "style", isCorrect: false }
+]
+},
+{
+id: 80,
+question: "In CSS, what does the text-transform property do?",
+codeSnippet: "h1 { text-transform: uppercase; }",
+options: [
+{ id: 'a', text: "Changes the font family of the text.", isCorrect: false },
+{ id: 'b', text: "Changes the color of the text.", isCorrect: false },
+{ id: 'c', text: "Changes the capitalization of the text (e.g., uppercase, lowercase).", isCorrect: true },
+{ id: 'd', text: "Adds a shadow effect to the text.", isCorrect: false }
+]
+},
+{
+id: 81,
+question: "Which HTML tag is used to define a client-side script (like JavaScript)?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< javascript >", isCorrect: false },
+{ id: 'b', text: "< script >", isCorrect: true },
+{ id: 'c', text: "< js >", isCorrect: false },
+{ id: 'd', text: "< code >", isCorrect: false }
+]
+},
+{
+id: 82,
+question: "Which CSS property is used to add a shadow effect to text?",
+codeSnippet: "h2 { ... }",
+options: [
+{ id: 'a', text: "box-shadow", isCorrect: false },
+{ id: 'b', text: "text-decoration", isCorrect: false },
+{ id: 'c', text: "text-shadow", isCorrect: true },
+{ id: 'd', text: "font-shadow", isCorrect: false }
+]
+},
+{
+id: 83,
+question: "What is the correct HTML for creating a checkbox?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: '< check >', isCorrect: false },
+{ id: 'b', text: '< input type="checkbox" >', isCorrect: true },
+{ id: 'c', text: '< cb >', isCorrect: false },
+{ id: 'd', text: '< input type="check" >', isCorrect: false }
+]
+},
+{
+id: 84,
+question: "Which CSS property is used to specify the minimum width of an element?",
+codeSnippet: "div { ... }",
+options: [
+{ id: 'a', text: "max-width", isCorrect: false },
+{ id: 'b', text: "width-min", isCorrect: false },
+{ id: 'c', text: "min-width", isCorrect: true },
+{ id: 'd', text: "minimum-width", isCorrect: false }
+]
+},
+{
+id: 85,
+question: "Which HTML attribute specifies how the browser should handle preformatted text that exceeds the line width?",
+codeSnippet: '<pre ...>...',
+options: [
+{ id: 'a', text: "wrap", isCorrect: false },
+{ id: 'b', text: "overflow", isCorrect: false },
+{ id: 'c', text: "word-wrap", isCorrect: false },
+{ id: 'd', text: "wrap or pre-wrap", isCorrect: true } // HTML5 specifies 'wrap', CSS white-space uses 'pre-wrap'
+]
+},
+{
+id: 86,
+question: "What does the CSS property outline-offset do?",
+codeSnippet: "button:focus { outline: 2px solid blue; outline-offset: 5px; }",
+options: [
+{ id: 'a', text: "Changes the color of the outline.", isCorrect: false },
+{ id: 'b', text: "Adds space between an outline and the edge of an element/border.", isCorrect: true },
+{ id: 'c', text: "Changes the style of the outline.", isCorrect: false },
+{ id: 'd', text: "Adds a shadow to the outline.", isCorrect: false }
+]
+},
+{
+id: 87,
+question: "Which HTML element is used to define a caption for a < figure > element?",
+codeSnippet: '\n \n ...\n',
+options: [
+{ id: 'a', text: "< c >", isCorrect: false },
+{ id: 'b', text: "< caption >", isCorrect: false },
+{ id: 'c', text: "< figcaption >", isCorrect: true },
+{ id: 'd', text: '< figure type="caption"', isCorrect: false }
+]
+},
+{
+id: 88,
+question: "In CSS, how can you force an element to start on a new line after a floated element?",
+codeSnippet: ".float-left { float: left; } .new-line { ... }",
+options: [
+{ id: 'a', text: "display: block;", isCorrect: false },
+{ id: 'b', text: "overflow: hidden;", isCorrect: false },
+{ id: 'c', text: "clear: both;", isCorrect: true },
+{ id: 'd', text: "float: none;", isCorrect: false }
+]
+},
+{
+id: 89,
+question: "Which HTML tag is used to embed scalable vector graphics (SVG) directly into an HTML document?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< vector >", isCorrect: false },
+{ id: 'b', text: "< img src='....' >", isCorrect: false },
+{ id: 'c', text: "< svg >", isCorrect: true },
+{ id: 'd', text: "< canvas >", isCorrect: false }
+]
+},
+{
+id: 90,
+question: "What is the purpose of the transform CSS property?",
+codeSnippet: ".box { transform: rotate(45deg); }",
+options: [
+{ id: 'a', text: "To change the color of an element.", isCorrect: false },
+{ id: 'b', text: "To apply 2D or 3D transformations to an element (like rotate, scale, translate).", isCorrect: true },
+{ id: 'c', text: "To transition CSS property values smoothly.", isCorrect: false },
+{ id: 'd', text: "To change the display type of an element.", isCorrect: false }
+]
+},
+{
+id: 91,
+question: "Which HTML attribute specifies a keyboard shortcut for an element?",
+codeSnippet: '<a href="/contact" ...>Contact Us',
+options: [
+{ id: 'a', text: "shortcut", isCorrect: false },
+{ id: 'b', text: "key", isCorrect: false },
+{ id: 'c', text: "accesskey", isCorrect: true },
+{ id: 'd', text: "keyboard", isCorrect: false }
+]
+},
+{
+id: 92,
+question: "In CSS, what is the effect of setting background-attachment: fixed;?",
+codeSnippet: "body { background-image: url('bg.jpg'); background-attachment: fixed; }",
+options: [
+{ id: 'a', text: "The background image scrolls with the element.", isCorrect: false },
+{ id: 'b', text: "The background image is centered in the element.", isCorrect: false },
+{ id: 'c', text: "The background image is fixed relative to the viewport and does not scroll with the element.", isCorrect: true },
+{ id: 'd', text: "The background image repeats to fill the element.", isCorrect: false }
+]
+},
+{
+id: 93,
+question: "Which HTML tag is used to mark text as no longer accurate or relevant?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< removed >", isCorrect: false },
+{ id: 'b', text: "< wrong >", isCorrect: false },
+{ id: 'c', text: "< del >", isCorrect: true },
+{ id: 'd', text: "< old >", isCorrect: false }
+]
+},
+{
+id: 94,
+question: "What is the purpose of the transition CSS property?",
+codeSnippet: ".box:hover { background-color: blue; transition: background-color 0.5s ease-in-out; }",
+options: [
+{ id: 'a', text: "To apply transformations like rotate or scale.", isCorrect: false },
+{ id: 'b', text: "To create complex animations with keyframes.", isCorrect: false },
+{ id: 'c', text: "To create smooth changes in CSS property values over a specified duration.", isCorrect: true },
+{ id: 'd', text: "To make an element interactive on hover.", isCorrect: false }
+]
+},
+{
+id: 95,
+question: "Which HTML tag is used to define an inline quotation?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< blockquote >", isCorrect: false },
+{ id: 'b', text: "< cite >", isCorrect: false },
+{ id: 'c', text: "< q >", isCorrect: true },
+{ id: 'd', text: "< quote >", isCorrect: false }
+]
+},
+{
+id: 96,
+question: "In CSS, what does the object-fit property control?",
+codeSnippet: "img { object-fit: cover; width: 100px; height: 100px; }",
+options: [
+{ id: 'a', text: "How an image or video should be resized to fit its container.", isCorrect: true },
+{ id: 'b', text: "The alignment of the object within its container.", isCorrect: false },
+{ id: 'c', text: "Whether the object is visible or hidden.", isCorrect: false },
+{ id: 'd', text: "The border style of the object.", isCorrect: false }
+]
+},
+{
+id: 97,
+question: "Which HTML attribute is used to provide a path to a resource like an image or script?",
+codeSnippet: '<img ...>\n<script ...>',
+options: [
+{ id: 'a', text: "href", isCorrect: false },
+{ id: 'b', text: "link", isCorrect: false },
+{ id: 'c', text: "src", isCorrect: true },
+{ id: 'd', text: "path", isCorrect: false }
+]
+},
+{
+id: 98,
+question: "In CSS, what is the shorthand property for setting the padding-top, padding-right, padding-bottom, and padding-left all at once?",
+codeSnippet: "div { ... }",
+options: [
+{ id: 'a', text: "margin", isCorrect: false },
+{ id: 'b', text: "spacing", isCorrect: false },
+{ id: 'c', text: "padding", isCorrect: true },
+{ id: 'd', text: "box-padding", isCorrect: false }
+]
+},
+{
+id: 99,
+question: "Which HTML tag is used to embed audio content in a document?",
+codeSnippet: null,
+options: [
+{ id: 'a', text: "< sound >", isCorrect: false },
+{ id: 'b', text: "< music >", isCorrect: false },
+{ id: 'c', text: "< audio >", isCorrect: true },
+{ id: 'd', text: "< mp3 >", isCorrect: false }
+]
+},
+{
+id: 100,
+question: "In CSS, what does the white-space property control?",
+codeSnippet: "p { white-space: nowrap; }",
+options: [
+{ id: 'a', text: "The space around an element's border.", isCorrect: false },
+{ id: 'b', text: "The space between words.", isCorrect: false },
+{ id: 'c', text: "How whitespace inside an element is handled (e.g., collapsing spaces, wrapping lines).", isCorrect: true },
+{ id: 'd', text: "The background color of an element.", isCorrect: false }
+]},
+    ];
 
     // State variables
     let userAnswers = {};
     let timerInterval;
-    const SECONDS_PER_QUESTION = 30; // 30 seconds per question
-    const TOTAL_TIME = testQuestions.length * SECONDS_PER_QUESTION; // 10 questions * 30s = 300s (5 mins)
+    const SECONDS_PER_QUESTION = 30;
+    const NUMBER_OF_QUESTIONS_TO_PICK = 10;
+    const TOTAL_TIME = NUMBER_OF_QUESTIONS_TO_PICK * SECONDS_PER_QUESTION; // 5 minutes
     let timeLeft = TOTAL_TIME;
     let timerExpired = false;
+    let testQuestions = []; // Array to hold the 10 selected questions
 
     // DOM Elements
     const welcomeScreen = document.getElementById('welcome-screen');
@@ -579,6 +1592,14 @@
     const resultScreen = document.getElementById('result-screen');
     const timeDisplay = document.getElementById('time');
     const timerContainer = document.querySelector('.timer-container');
+
+    // Utility function to escape HTML for display as code
+    function escapeHTML(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str; // textContent automatically escapes <, >, & etc.
+        return div.innerHTML;
+    }
 
     // Function to format time (MM:SS)
     function formatTime(seconds) {
@@ -603,22 +1624,34 @@
         }
       }, 1000);
     }
+    
+    // Function to select N random questions from the pool
+    function selectRandomQuestions(pool, num) {
+        const shuffled = [...pool].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, num).map((q, index) => ({...q, id: index + 1})); // Reset IDs for current test
+    }
 
     // Function to render questions
     function renderQuestions() {
-      questionsScreen.innerHTML = ''; // Clear existing questions
+      questionsScreen.innerHTML = '';
       testQuestions.forEach((q) => {
         const questionCard = document.createElement('div');
         questionCard.classList.add('question-card');
-        questionCard.innerHTML = `
+        
+        let questionHTML = `
           <div class="question-title">
             <span class="question-number">${q.id}</span>
             <span>${q.question}</span>
-          </div>
-          <div class="options-container" id="options-${q.id}">
-            <!-- Options populated below -->
-          </div>
         `;
+
+        // If a code snippet exists, escape it and add it to the display
+        if (q.codeSnippet) {
+            const escapedCode = escapeHTML(q.codeSnippet);
+            questionHTML += `<pre class="question-code"><code>${escapedCode}</code></pre>`;
+        }
+        questionHTML += `</div><div class="options-container" id="options-${q.id}"></div>`;
+        
+        questionCard.innerHTML = questionHTML;
         questionsScreen.appendChild(questionCard);
 
         const optionsContainer = document.getElementById(`options-${q.id}`);
@@ -642,7 +1675,6 @@
       if (timerExpired) return;
       userAnswers[questionId] = optionId;
       
-      // Update UI to show selection
       const options = document.querySelectorAll(`[data-question-id="${questionId}"]`);
       options.forEach(opt => opt.classList.remove('selected'));
       document.querySelector(`[data-question-id="${questionId}"][data-option-id="${optionId}"]`).classList.add('selected');
@@ -650,12 +1682,15 @@
 
     // Function to start the test
     function startTest() {
+      testQuestions = selectRandomQuestions(ALL_QUESTIONS_POOL, NUMBER_OF_QUESTIONS_TO_PICK);
+      
       welcomeScreen.classList.add('hidden');
       questionsScreen.classList.remove('hidden');
       submitFooter.classList.remove('hidden');
       timerContainer.classList.remove('hidden');
       renderQuestions();
       startTimer();
+      timeDisplay.textContent = formatTime(TOTAL_TIME); // Set initial display time
     }
 
     // Function to submit the test
@@ -664,6 +1699,7 @@
       questionsScreen.classList.add('hidden');
       submitFooter.classList.add('hidden');
       resultScreen.classList.remove('hidden');
+      timerContainer.style.backgroundColor = '#10b981'; // Green on completion
 
       let correctAnswers = 0;
       testQuestions.forEach(q => {
@@ -685,7 +1721,7 @@
 
     // Function to render the result screen
     function renderResult(correct, total, percentage, message, passMsg, timeTaken) {
-      resultScreen.innerHTML = `
+      let resultHTML = `
         <div class="result-header">
           <div class="result-score">${correct}/${total}</div>
           <div class="result-message">${passMsg}</div>
@@ -698,14 +1734,30 @@
         <p>Time Taken: <strong>${formatTime(timeTaken)}</strong></p>
         
         <div class="community-links">
-            <a href="#" class="btn-secondary">
-                <i class="fab fa-discord"></i> Join Discord
+      `;
+
+      // Conditionally add the Discord link if the score is 100%
+      if (percentage === 100) {
+        resultHTML += `
+            <a href="discord.gg" target="_blank" class="btn-secondary">
+                <i class="fas fa-discord"></i> Claim your reward on Discord!
             </a>
-            <button class="btn-primary" onclick="window.location.reload()">
-                <i class="fas fa-redo"></i> Retake Test
-            </button>
+        `;
+      }
+
+      resultHTML += `
+           <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+              <button class="btn-primary" onclick="window.location.reload()" style="margin-right: 10px;">
+                  <i class="fas fa-redo"></i> Retake Test
+              </button>
+              <a href="x-academy.html" class="btn-secondary" style="margin-left: 10px;">
+                  <i class="fas fa-graduation-cap"></i> Go to X-Academy
+              </a>
+            </div>
         </div>
       `;
+      
+      resultScreen.innerHTML = resultHTML;
     }
   </script>
 </body>
