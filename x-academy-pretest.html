@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>X Academy — Pre-test Assessment</title>
+    <title>X Developers — Pre-test Assessment</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -54,16 +54,46 @@
             line-height: 1.6;
         }
         
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            margin-top: 1000px;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 20%);
-        }
+       /* Default for all devices */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 20%);
+}
+@media (min-width: 1024px) {
+    body {
+        margin-top: 600px !important;
+    }
+}
+/* Phones (portrait) */
+@media (max-width: 767px) {
+    body {
+        margin-top: 1150px;
+        margin-bottom: 1150px;
+    }
+}
+
+/* Tablets and larger */
+@media (min-width: 768px) {
+    body {
+        margin-top: 400px;
+        margin-bottom: 500px;
+    }
+}
+@media (min-width: 320px) {
+    body {
+        margin-top: 1300px;
+    }
+}
+@media (min-width: 375px) {
+    body {
+        margin-top: 1300px;
+    }
+}
         
         /* Container */
         .container {
