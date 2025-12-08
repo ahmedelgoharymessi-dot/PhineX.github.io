@@ -59,7 +59,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            margin-top: 500px;
+            margin-top: 1000px;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 20%);
@@ -629,7 +629,7 @@ startBtn.addEventListener('click', function(e) {
     
     if (!checkbox.checked) {
         e.preventDefault();
-        alert("Please confirm that you have prepared your project file by checking the box above.");
+        alert("Please confirm that you agree on the terms & conditions of programmers.");
         
         // Add visual feedback
         checkbox.focus();
@@ -643,14 +643,6 @@ startBtn.addEventListener('click', function(e) {
         }, 2000);
         
         return;
-    }
-    
-    if (!confirm("Are you ready to begin the assessment? Ensure you have your project file ready (>50MB).")) {
-        e.preventDefault();
-    } else {
-        // Optional: Add loading state
-        startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-        startBtn.classList.add('disabled');
     }
     });
 
