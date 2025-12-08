@@ -1708,20 +1708,100 @@ body {
   }
 }
 .discordlink:hover {
-  background: #166fe5;
-  transform: translateY(-5px);
+  background: #166fe5 !important;
+  box-shadow: #166fe5 !important;
+  transform: translateY(-5px) !important;
 }
 .githublink:hover {
-  background: #000000;
-  transform: translateY(-5px);
+  background: #000000 !important;
+  box-shadow: #000000 !important;
+  transform: translateY(-5px) !important;
 }
 .youtubelink:hover {
-  background: red;
-  transform: translateY(-5px);
+  background: red !important;
+  box-shadow: red !important;
+  transform: translateY(-5px) !important;
 }
 .whatsapplink:hover {
-  background: #009100;
-  transform: translateY(-5px);
+  background: #009100 !important;
+  box-shadow: #009100 !important;
+  transform: translateY(-5px) !important;
+}
+/* REMOVE or COMMENT OUT these conflicting styles */
+
+/* FACEBOOK SOCIAL LINK FIX */
+.social-links .btn-facebooklink {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  margin-bottom: 20px !important;
+  font-size: 1.2rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-bottom: 20px !important;
+  line-height: 1 !important;
+  position: relative !important;
+}
+
+/* Fix for the icon centering */
+.social-links .btn-facebooklink i {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  font-size: 1.2rem !important;
+}
+
+/* Hover effect */
+.btn-facebooklink:hover {
+  background: #1e00ff !important;
+  box-shadow: 0 5px 15px rgb(55, 0, 255) !important;
+  transform: translateY(-5px) !important;
+  color: white !important;
+}
+
+/* Ensure all social links have the same styling */
+.social-links a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  margin-bottom: 20px !important;
+}
+
+/* Make sure the social-links container is properly aligned */
+.social-links {
+  display: flex !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+}
+
+/* If still not aligned, add this */
+.footer-section .social-links {
+  display: flex !important;
+  gap: 15px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
 }
 /* PhineX Dragon Loading Animation - Optimized */
 .loading-overlay {
@@ -2399,4 +2479,35 @@ body {
     cursor: not-allowed;
     transform: none !important;
     box-shadow: none !important;
+}
+/* Fix for Facebook social link to match others */
+.social-links .btn-facebooklink {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transition: var(--transition) !important;
+  color: var(--light) !important;
+  text-decoration: none !important;
+  margin-bottom: 20px !important;
+  font-size: 1.2rem !important;
+  transform: translateY(0) !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Remove the conflicting btn-facebooklink styles */
+.social-links .btn-facebooklink:hover {
+  background: #1877F2 !important;
+  box-shadow: 0 0 15px rgba(24, 119, 242, 0.4) !important;
+  transform: translateY(-5px) !important;
+  color: white !important;
+}
+/* Make sure icon is centered */
+.social-links .btn-facebooklink i {
+  margin: 0 !important;
+  line-height: 0 !important;
 }
