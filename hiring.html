@@ -12,24 +12,24 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <i class="fas fa-dragon"></i>
-        <span>PhineX</span>
-      </div>
-      <ul class="nav-menu" id="primary-navigation">
-        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
-        <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
-        <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-        <li><a href="redeemcode.html" id="redeemNav"><i class="fas fa-key"></i> Redeem Code</a></li>
-        <li><a href="login.html" id="loginNav"><i class="fas fa-sign-in-alt"></i></a></li>
-        <li><a href="signup.html" id="signupNav"><i class="fas fa-user-plus"></i></a></li>
-        <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
-      </ul>
+ <!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <i class="fas fa-dragon"></i>
+      <span>PhineX</span>
     </div>
-  </nav>
+    <ul class="nav-menu" id="primary-navigation">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
+      <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
+      <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="bugreport.html"><i class="fas fa-exclamation-triangle"></i> Report Error</a></li>
+      <li><a href="redeemcode.html"><i class="fas fa-key"></i> Redeem Code</a></li>
+      <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+    </ul>
+  </div>
+</nav>
 
   <section class="hiring-hero">
     <div class="redeem-icon">
@@ -51,22 +51,22 @@
 <section class="hiring-benefits">
   <div class="container">
     <div class="section-header">
-      <i class="fas fa-star"></i>
+      <i class="fas fa-star" style="color: yellow;"></i>
       <h2>Why PhineX?</h2>
       <p class="section-subtitle">Join our innovative community and unlock amazing opportunities</p>
     </div>
     
     <div class="benefits-grid">
       <div class="benefit-card">
-        <div class="benefit-icon">
-          <i class="fas fa-money-bill-wave"></i>
+        <div class="benefit-icon" style="align-items: center;">
+          <i class="fas fa-dollar-sign"></i>
         </div>
         <h3>Earn Money Easily</h3>
         <p>Participate in projects and receive a generous share of profits from successful ventures you contribute to.</p>
       </div>
       
       <div class="benefit-card">
-        <div class="benefit-icon">
+        <div class="benefit-icon"style="align-items: center;">
           <i class="fas fa-project-diagram"></i>
         </div>
         <h3>Diverse Projects</h3>
@@ -74,7 +74,7 @@
       </div>
       
       <div class="benefit-card">
-        <div class="benefit-icon">
+        <div class="benefit-icon"style="align-items: center;">
           <i class="fas fa-users"></i>
         </div>
         <h3>Collaborative Community</h3>
