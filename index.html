@@ -15,25 +15,24 @@
 </head>
 <body>
 </div>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <i class="fas fa-dragon"></i>
-        <span>PhineX</span>
-      </div>
-      <ul class="nav-menu" id="primary-navigation">
-        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
-        <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
-        <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-        <li><a href="redeemcode.html" id="redeemNav"><i class="fas fa-key"></i> Redeem Code</a></li>
-        <li><a href="login.html" id="loginNav"><i class="fas fa-sign-in-alt"></i></a></li>
-        <li><a href="signup.html" id="signupNav"><i class="fas fa-user-plus"></i></a></li>
-        <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
-      </ul>
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <i class="fas fa-dragon"></i>
+      <span>PhineX</span>
     </div>
-  </nav>
+    <ul class="nav-menu" id="primary-navigation">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
+      <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
+      <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="bugreport.html"><i class="fas fa-exclamation-triangle"></i> Report Error</a></li>
+      <li><a href="redeemcode.html"><i class="fas fa-key"></i> Redeem Code</a></li>
+      <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+    </ul>
+  </div>
+</nav>
 
   <section class="hero" style="background-image: url('Phinex.png'); background-size: cover; background-position: center;">
     <div class="redeem-icon">
@@ -136,6 +135,7 @@
         </div>
       </div>
       </div>
+      
       <div class="footer-bottom">
         <p>&copy; 2025 PhineX. All rights reserved.</p>
         <p>Made with <i class="fas fa-heart"></i> By : <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink"><i class="fas fa-laptop-code" style="margin-right: 10px;"></i>@Ahmed Al Gohary</a></p>
@@ -145,7 +145,6 @@
 
   <script src="firebase-config.js"></script>
   <script src="app.js"></script>
-  </section>
   <!-- Mobile menu toggle -->
   <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fas fa-bars"></i>
@@ -166,9 +165,11 @@
       cursor: pointer;
       padding: 6px;
     }
+
     /* small-screen layout: hide nav-menu by default, show toggle */
     @media (max-width: 900px) {
       .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+
       .nav-menu {
         display: none !important;
         position: absolute;
@@ -182,9 +183,11 @@
         min-width: 180px;
         box-shadow: 0 8px 24px rgba(0,0,0,0.3);
       }
+
       .nav-menu.open {
         display: flex !important;
       }
+
       .nav-menu li a, .nav-menu li button {
         color: #fff;
       }
