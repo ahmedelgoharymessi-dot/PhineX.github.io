@@ -8,27 +8,282 @@
     <link rel="icon" type="image/png" class="icon" href="Phinex.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Animation keyframes */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @keyframes successGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(46, 204, 113, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(46, 204, 113, 0.8); }
+        }
+        
+        @keyframes confettiRain {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Message styles with animations */
+        .message {
+            display: none;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            animation: slideDown 0.5s ease-out;
+            transform-origin: top;
+        }
+        
+        .message.show {
+            display: flex !important;
+        }
+        
+        .success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border-left: 5px solid #1e8449;
+            animation: slideDown 0.5s ease-out, successGlow 2s infinite;
+        }
+        
+        .error {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-left: 5px solid #922b21;
+            animation: slideDown 0.5s ease-out, shake 0.5s ease-in-out;
+        }
+        
+        .message i {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .message-content h3 {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+        }
+        
+        .message-content p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Redeem button animation */
+        .redeem-btn.pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .redeem-btn.clicked {
+            animation: none;
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+        
+        /* Code input animation */
+        .code-input-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .code-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background: rgba(52, 152, 219, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .code-input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .code-input.invalid {
+            border-color: #e74c3c;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .code-input.valid {
+            border-color: #2ecc71;
+            animation: pulse 0.5s ease-in-out;
+        }
+        
+        /* Confetti container */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+        
+        /* Stats display */
+        .code-stats {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        .code-stats h4 {
+            margin: 0 0 10px 0;
+            color: #3498db;
+        }
+        
+        .usage-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .usage-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .stats-text {
+            font-size: 14px;
+            opacity: 0.8;
+            margin: 5px 0;
+        }
+        
+        /* Available codes section */
+        .available-codes {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        .available-codes h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .code-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .code-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .code-value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        
+        .code-status {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+        
+        .code-status.expired {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-dragon"></i>
-                <span>PhineX</span>
-            </a>
-        <ul class="nav-menu" id="primary-navigation">
-        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
-        <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
-        <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-        <li><a href="redeemcode.html" id="redeemNav"><i class="fas fa-key"></i> Redeem Code</a></li>
-        <li><a href="login.html" id="loginNav"><i class="fas fa-sign-in-alt"></i></a></li>
-        <li><a href="signup.html" id="signupNav"><i class="fas fa-user-plus"></i></a></li>
-        <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
-      </ul>
-        </div>
-    </nav>
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <i class="fas fa-dragon"></i>
+      <span>PhineX</span>
+    </div>
+    <ul class="nav-menu" id="primary-navigation">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
+      <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
+      <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="bugreport.html"><i class="fas fa-exclamation-triangle"></i> Report Error</a></li>
+      <li><a href="redeemcode.html"><i class="fas fa-key"></i> Redeem Code</a></li>
+      <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+    </ul>
+  </div>
+</nav>
 
     <!-- Main Content -->
     <main class="redeem-hero">
@@ -48,10 +303,11 @@
                            id="code-input" 
                            class="code-input"
                            placeholder="Enter code here..."
-                           maxlength="50">
+                           maxlength="50"
+                           autocomplete="off">
                 </div>
                 
-                <button onclick="checkCode()" class="redeem-btn pulse">
+                <button onclick="redeemCode()" class="redeem-btn pulse">
                     <i class="fas fa-key"></i>
                     Redeem Code
                 </button>
@@ -59,34 +315,53 @@
                 <div id="message-success" class="message success">
                     <i class="fas fa-check-circle"></i>
                     <div class="message-content">
-                        <h3>Success!</h3>
-                        <p>Your code has been successfully redeemed. Welcome to the premium community!</p>
+                        <h3>🎉 Success! Code Redeemed</h3>
+                        <p>Welcome to the premium community! You now have access to exclusive features.</p>
                     </div>
                 </div>
                 
                 <div id="message-error" class="message error">
                     <i class="fas fa-exclamation-circle"></i>
                     <div class="message-content">
-                        <h3>Invalid Code</h3>
-                        <p>The code you entered is incorrect. Please check and try again.</p>
+                        <h3>⚠️ Invalid Code</h3>
+                        <p>The code you entered is incorrect or has expired. Please check and try again.</p>
                     </div>
                 </div>
+                
+                <div id="message-warning" class="message" style="background: linear-gradient(135deg, #f39c12 0%, #d35400 100%); color: white; border-left: 5px solid #a35200;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="message-content">
+                        <h3>⚠️ Code Usage Limit Reached</h3>
+                        <p>This code has reached its maximum usage limit. Please try another code.</p>
+                    </div>
+                </div>
+                
+                <div id="code-stats" class="code-stats" style="display: none;">
+                    <h4>Code Usage Statistics</h4>
+                    <div class="usage-bar">
+                        <div id="usage-fill" class="usage-fill" style="width: 0%"></div>
+                    </div>
+                    <p id="stats-text" class="stats-text"></p>
+                </div>
             </div>
-            
-            <div id="discord-invite" class="discord-invite">
+
+            <div id="discord-invite" class="discord-invite" style="display: none;">
                 <div class="discord-card">
                     <div class="discord-icon">
                         <i class="fab fa-discord"></i>
                     </div>
-                    <h3>Join Our Community</h3>
+                    <h3>🎉 Welcome to Our Community!</h3>
                     <p>Connect with other members, get exclusive updates, and participate in special events</p>
-                    <a href="https://discord.gg/eDfb3uvY" target="_blank" class="discord-btn">
+                    <a href="https://discord.gg/5HfKBHYcGv" target="_blank" class="discord-btn">
                         <i class="fab fa-discord"></i>
                         Join Discord Server
                     </a>
                 </div>
             </div>
         </div>
+        
+        <!-- Confetti Container -->
+        <div id="confetti-container" class="confetti-container"></div>
     </main>
 
     <!-- Features Section -->
@@ -105,19 +380,21 @@
             </div>
         </div>
         <div class="code-section">
-      <div class="code-header">
-        <i class="fas fa-qrcode"></i>
-        <h3>How to Get a Redeem Code?</h3>
-      </div>
-      <div class="code-content">
-        <p>Contact the owner directly to request a redeem code:</p>
-        <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="contact-link">
-          <i class="fab fa-facebook"></i>
-          <span>Message on Facebook</span>
-        </a>
-        <p class="note">Codes are typically given to participants from partner programs, workshops, or special events.</p>
-      </div>
-    </div>
+            <div class="code-header">
+                <i class="fas fa-qrcode"></i>
+                <h3>How to Get a Redeem Code?</h3>
+            </div>
+            <div class="code-content">
+                <p>Contact the owner directly to request a redeem code:</p>
+                <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="contact-link">
+                    <i class="fab fa-facebook"></i>
+                    <span>Message on Facebook</span>
+                </a>
+                <p class="note">Codes are typically given to participants from partner programs, workshops, or special events.</p>
+            </div>
+        </div>
+    </section>
+
     </section>
   <!-- Mobile menu toggle -->
   <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,9 +439,6 @@
         display: flex !important;
       }
 
-      .nav-menu li a, .nav-menu li button {
-        color: #fff;
-      }
     }
   </style>
 
@@ -216,108 +490,270 @@
         }
       });
     })();
-  </script>
-    <script>
-        // Add this JavaScript at the bottom of your body
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hamburger menu toggle
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (hamburger) {
-                hamburger.addEventListener('click', function() {
-                    hamburger.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-            
-            // Enter key support for code input
-            const codeInput = document.getElementById('code-input');
-            if (codeInput) {
-                codeInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkCode();
-                    }
-                });
-            }
-        });
-        
-        // Your checkCode function remains the same
-        function checkCode() {
-            const correctCodes ="FAMILY.PHINEX";
-            const userInput = document.getElementById('code-input').value.toUpperCase();
-            const successMessage = document.getElementById('message-success');
-            const errorMessage = document.getElementById('message-error');
-            const discordInvite = document.getElementById('discord-invite');
-            
-            // Hide previous messages and link
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-            discordInvite.style.display = 'none';
-            
-            if (userInput === correctCode) {
-                successMessage.style.display = 'flex';
-                discordInvite.style.display = 'block';
-                localStorage.setItem('codeRedeemed', 'true');
-            } else {
-                errorMessage.style.display = 'flex';
+        // Redeem codes database with usage limits
+        const redeemCodes = {
+            "FAMILY.PHINEX": {
+                maxUses: null, // Unlimited
+                used: parseInt(localStorage.getItem('FAMILY.PHINEX_used')) || 0
+            },
+            "SOCIAL.PHINEX": {
+                maxUses: 50,
+                used: parseInt(localStorage.getItem('SOCIAL.PHINEX_used')) || 0
+            },
+            "FRIENDS.PHINEX": {
+                maxUses: null, // Unlimited
+                used: parseInt(localStorage.getItem('FRIENDS.PHINEX_used')) || 0
+            },
+        };
+
+        // Initialize localStorage for code usage
+        function initializeStorage() {
+            for (const code in redeemCodes) {
+                if (!localStorage.getItem(code + '_used')) {
+                    localStorage.setItem(code + '_used', '0');
+                }
             }
         }
+
+        // Create confetti animation
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            container.style.display = 'block';
+            
+            // Clear any existing confetti
+            container.innerHTML = '';
+            
+            // Create 100 confetti pieces
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random colors
+                const colors = ['#2ecc71', '#3498db', '#e74c3c', '#f1c40f', '#9b59b6', '#1abc9c'];
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random position and size
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                
+                // Random animation
+                confetti.style.animation = `confettiRain ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 1 + 's';
+                
+                container.appendChild(confetti);
+            }
+            
+            // Hide after animation
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 3000);
+        }
+
+        // Show message with animation
+        function showMessage(elementId) {
+            // Hide all messages first
+            document.querySelectorAll('.message').forEach(msg => {
+                msg.classList.remove('show');
+            });
+            document.getElementById('code-stats').style.display = 'none';
+            document.getElementById('discord-invite').style.display = 'none';
+            
+            // Show the selected message
+            const message = document.getElementById(elementId);
+            message.classList.add('show');
+            
+            // Auto-hide after 5 seconds (except success)
+            if (elementId !== 'message-success') {
+                setTimeout(() => {
+                    message.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Update code usage stats display
+        function updateStatsDisplay(code, codeData) {
+            const statsDiv = document.getElementById('code-stats');
+            const usageFill = document.getElementById('usage-fill');
+            const statsText = document.getElementById('stats-text');
+            
+            if (codeData.maxUses === null) {
+                statsText.textContent = `Code: ${code} - Unlimited uses (${codeData.used} redeemed)`;
+                usageFill.style.width = '100%';
+                usageFill.style.background = 'linear-gradient(90deg, #2ecc71, #1abc9c)';
+            } else {
+                const percentage = (codeData.used / codeData.maxUses) * 100;
+                usageFill.style.width = percentage + '%';
+                
+                if (percentage < 50) {
+                    usageFill.style.background = 'linear-gradient(90deg, #2ecc71, #3498db)';
+                } else if (percentage < 80) {
+                    usageFill.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                } else {
+                    usageFill.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                }
+                
+                statsText.textContent = `Code: ${code} - ${codeData.used}/${codeData.maxUses} uses (${Math.round(percentage)}% used)`;
+            }
+            
+            statsDiv.style.display = 'block';
+        }
+
+        // Update status indicators
+        function updateStatusIndicators() {
+            for (const code in redeemCodes) {
+                const codeData = redeemCodes[code];
+                if (code === 'SOCIAL.PHINEX') {
+                    const statusElement = document.getElementById('social-status');
+                    if (statusElement) {
+                        const remaining = codeData.maxUses - codeData.used;
+                        statusElement.textContent = `${remaining} uses left`;
+                        if (remaining === 0) {
+                            statusElement.classList.add('expired');
+                            statusElement.textContent = 'Expired';
+                        }
+                    }
+                }
+            }
+        }
+
+        // Main redeem function
+        function redeemCode() {
+            const codeInput = document.getElementById('code-input');
+            const userInput = codeInput.value.trim().toUpperCase();
+            const redeemBtn = document.querySelector('.redeem-btn');
+            
+            // Button click animation
+            redeemBtn.classList.add('clicked');
+            setTimeout(() => {
+                redeemBtn.classList.remove('clicked');
+            }, 200);
+            
+            // Input validation
+            if (!userInput) {
+                codeInput.classList.add('invalid');
+                setTimeout(() => codeInput.classList.remove('invalid'), 1000);
+                showMessage('message-error');
+                return;
+            }
+            
+            // Check if code exists
+            if (!redeemCodes[userInput]) {
+                codeInput.classList.add('invalid');
+                setTimeout(() => codeInput.classList.remove('invalid'), 1000);
+                showMessage('message-error');
+                return;
+            }
+            
+            const codeData = redeemCodes[userInput];
+            
+            // Check if code has reached its limit
+            if (codeData.maxUses !== null && codeData.used >= codeData.maxUses) {
+                codeInput.classList.add('invalid');
+                setTimeout(() => codeInput.classList.remove('invalid'), 1000);
+                showMessage('message-warning');
+                updateStatsDisplay(userInput, codeData);
+                return;
+            }
+            
+            // Code is valid - redeem it
+            codeData.used++;
+            localStorage.setItem(userInput + '_used', codeData.used.toString());
+            
+            // Success animation
+            codeInput.classList.add('valid');
+            setTimeout(() => codeInput.classList.remove('valid'), 1000);
+            
+            // Show success message and confetti
+            showMessage('message-success');
+            createConfetti();
+            
+            // Update stats display
+            updateStatsDisplay(userInput, codeData);
+            
+            // Show Discord invite
+            setTimeout(() => {
+                document.getElementById('discord-invite').style.display = 'block';
+            }, 1000);
+            
+            // Update status indicators
+            updateStatusIndicators();
+            
+            // Store redemption in user's history
+            const redemptionHistory = JSON.parse(localStorage.getItem('redemptionHistory') || '[]');
+            redemptionHistory.push({
+                code: userInput,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('redemptionHistory', JSON.stringify(redemptionHistory));
+            
+            // Clear input after successful redemption
+            setTimeout(() => {
+                codeInput.value = '';
+            }, 1500);
+        }
+
+        // Enter key support
+        document.getElementById('code-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                redeemCode();
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStorage();
+            updateStatusIndicators();
+            });
     </script>
-      <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="footer-content">
-      <!-- Left Section: Logo and description -->
-      <div class="footer-section">
-        <div class="logo">
-          <i class="fas fa-dragon"></i>
-          <span>PhineX</span>
-        </div>
-        <p>Group of senior programmers</p>
-      </div>
-      
-      <!-- Middle Section: Quick Links -->
-      <div class="footer-section">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="hiring.html">Join Us</a></li>
-          <li><a href="x-academy.html">X-Academy</a></li>
-          <li><a href="aboutus.html">About Us</a></li>
-          <li><a href="redeemcode.html">Redeem Code</a></li>
-        </ul>
-      </div>
-      
-      <!-- Right Section: Social Links -->
-      <div class="footer-section">
-        <h4>Connect</h4>
-        <div class="social-links">
-          <a href="https://discord.gg/V2NDkCmhEm" class="discordlink"><i class="fab fa-discord"></i></a>
-          <a href="https://PhineX.github.io" class="githublink"><i class="fab fa-github"></i></a>
-          <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" class="youtubelink"><i class="fab fa-youtube"></i></a>
-          <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" class="whatsapplink"><i class="fab fa-whatsapp"></i></a>
-          <a href="https://www.facebook.com/profile.php?id=61584765330775" class="btn-facebooklink"><i class="fab fa-facebook"></i></a>
-        </div>
-      </div>
-    </div>
     
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-      <div class="footer-bottom-content">
-        <div class="copyright">
-          <p>&copy; 2025 PhineX. All rights reserved.</p>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-dragon"></i>
+                        <span>PhineX</span>
+                    </div>
+                    <p>Group of senior programmers</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hiring.html">Join Us</a></li>
+                        <li><a href="x-academy.html">X-Academy</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="redeemcode.html">Redeem Code</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="https://discord.gg/V2NDkCmhEm" class="discordlink"><i class="fab fa-discord"></i></a>
+                        <a href="https://PhineX.github.io" class="githublink"><i class="fab fa-github"></i></a>
+                        <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" class="youtubelink"><i class="fab fa-youtube"></i></a>
+                        <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" class="whatsapplink"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61584765330775" class="btn-facebooklink"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        <p>&copy; 2025 PhineX. All rights reserved.</p>
+                    </div>
+                    <div class="made-by">
+                        <p>Made with <i class="fas fa-heart"></i> By : 
+                            <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink">
+                                <i class="fas fa-laptop-code" style="margin-right: 10px;"></i> @Ahmed Al Gohary
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="made-by">
-          <p>Made with <i class="fas fa-heart"></i> By : 
-            <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink">
-              <i class="fas fa-laptop-code" style="margin-right: 10px;"></i> @Ahmed Al Gohary
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+    </footer>
 </body>
 </html>
