@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Error Report System | PhineX</title>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="style.css"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #8b5cf6;
+    --primary-dark: #7c3aed;
+    --primary-light: #a78bfa;
+    --secondary: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --dark-bg: #0f172a;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --hover-bg: #2d3748;
+    --success: #10b981;
+    --glass: rgba(30, 41, 59, 0.7);
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    --radius: 12px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+.card-switcher [data-card="view"] {
+  display: none !important;
+}
+
+
+
+  /* Main Container */
+  .page-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  /* Card Switcher */
+  .card-switcher {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--card-border);
+  }
+
+  .switcher-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .switcher-btn.btn-secondary {
+    background: var(--hover-bg);
+    color: var(--text-secondary);
+  }
+
+  .switcher-btn.btn-secondary:hover,
+  .switcher-btn.btn-secondary.active {
+    background: var(--primary);
+    color: white;
+  }
+
+  .switcher-btn.btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+
+  /* Cards */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+
+  .card h2 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card h2 i {
+    color: var(--primary);
+  }
+
+  /* Form Styles */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 0.875rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 2px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  /* File Upload Area */
+  .file-area {
+    border: 2px dashed var(--card-border);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(15, 23, 42, 0.3);
+  }
+
+  .file-area:hover,
+  .file-area.dragover {
+    border-color: var(--primary);
+    background: rgba(139, 92, 246, 0.05);
+  }
+
+  .file-area p {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .file-area span {
+    color: var(--primary);
+    font-size: 0.9rem;
+  }
+
+  .file-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .file-item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+  }
+
+  .file-item img,
+  .file-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+  }
+
+  /* Messages */
+  .message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .message.show {
+    display: flex;
+    animation: slideIn 0.3s ease;
+  }
+
+  .message.success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    color: var(--success);
+  }
+
+  .message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1.5rem;
+  }
+
+  th {
+    background: rgba(15, 23, 42, 0.5);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text-primary);
+  }
+
+  tr:hover {
+    background: rgba(15, 23, 42, 0.3);
+  }
+
+  /* Status Badges */
+  .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .status-pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+  }
+
+  .status-resolved {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+  }
+
+  /* Action Buttons */
+  .action-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  .action-btn.resolve {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+  }
+
+  .action-btn.resolve:hover {
+    background: var(--success);
+    color: white;
+  }
+
+  .action-btn.delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    margin-left: 0.5rem;
+  }
+
+  .action-btn.delete:hover {
+    background: var(--danger);
+    color: white;
+  }
+
+  /* Hidden class */
+  .hidden {
+    display: none;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .nav-menu {
+      display: none;
+    }
+    
+    .nav-container {
+      padding: 0 1rem;
+    }
+    
+    .page-container {
+      padding: 0 1rem;
+    }
+    
+    .card-switcher {
+      flex-direction: column;
+    }
+    
+    .switcher-btn {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .card {
+      padding: 1.5rem;
+    }
+    
+    table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+</style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <i class="fas fa-dragon"></i>
+      <span>PhineX</span>
+    </div>
+    <ul class="nav-menu" id="primary-navigation">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="hiring.html"><i class="fas fa-laptop-code"></i> Join Us</a></li>
+      <li><a href="x-academy.html"><i class="fas fa-graduation-cap"></i> X-Academy</a></li>
+      <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="bugreport.html"><i class="fas fa-exclamation-triangle"></i> Report Error</a></li>
+      <li><a href="redeemcode.html"><i class="fas fa-key"></i> Redeem Code</a></li>
+      <li><button id="logoutBtn" class="btn-outline hidden">Logout</button></li>
+    </ul>
+  </div>
+</nav>
+ <!-- Mobile menu toggle -->
+  <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <style>
+    /* Mobile menu toggle styles */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 9999;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    /* small-screen layout: hide nav-menu by default, show toggle */
+    @media (max-width: 900px) {
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+
+      .nav-menu {
+        display: none !important;
+        position: absolute;
+        top: 64px;
+        right: 12px;
+        background: rgba(0,0,0,0.9);
+        padding: 12px;
+        border-radius: 8px;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 180px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      }
+
+      .nav-menu.open {
+        display: flex !important;
+      }
+
+      .nav-menu li a, .nav-menu li button {
+        color: #fff;
+      }
+    }
+  </style>
+
+  <script>
+    // Menu toggle behavior for mobile
+    (function () {
+      const toggle = document.getElementById('menuToggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      if (!toggle || !navMenu) return;
+
+      // ensure navMenu has an id for aria-controls
+      if (!navMenu.id) navMenu.id = 'navMenu';
+
+      toggle.setAttribute('aria-controls', navMenu.id);
+
+      toggle.addEventListener('click', function (e) {
+        const opened = navMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', opened);
+      });
+
+      // Close menu when a link is clicked (mobile)
+      navMenu.addEventListener('click', function (e) {
+        const target = e.target.closest('a, button');
+        if (!target) return;
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          navMenu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (e) {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          if (!e.target.closest('.nav-container') && !e.target.closest('#menuToggle')) {
+            if (navMenu.classList.contains('open')) {
+              navMenu.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+      });
+
+      // Optional: close on escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          navMenu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+ 
+<div class="page-container">
+  <div class="card-switcher">
+    <button class="switcher-btn btn-secondary active" data-card="report">
+      <i class="fas fa-exclamation-triangle"></i> Report Error
+    </button>
+    <button class="switcher-btn btn-secondary" data-card="redeem">
+      <i class="fas fa-key"></i> Redeem Code
+    </button>
+    <button class="switcher-btn btn-primary" data-card="view" style="display:none;">
+      <i class="fas fa-list"></i> View Reports
+    </button>
+  </div>
+
+  <div class="cards">
+    <!-- Report Error Card -->
+    <div class="card" id="card-report">
+      <h2><i class="fas fa-exclamation-triangle"></i> Report an Error</h2>
+      <div class="form-group">
+        <label for="title">Error Title *</label>
+        <input type="text" id="title" placeholder="Briefly describe the issue" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Detailed Description *</label>
+        <textarea id="description" placeholder="Provide details about the error, steps to reproduce, and any relevant information..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Upload Media (Optional)</label>
+        <div class="file-area" id="fileArea">
+          <p><i class="fas fa-cloud-upload-alt"></i> Drag & Drop or Click to Upload</p>
+          <span>Supports images and videos up to 10MB</span>
+          <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display: none;">
+        </div>
+        <div class="file-preview" id="filePreview"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Contact Email (Optional)</label>
+        <input type="email" id="email" placeholder="Your email for response" />
+      </div>
+      <button id="submitReport" class="btn-primary">
+        <i class="fas fa-paper-plane"></i> Submit Error Report
+      </button>
+      <div id="message" class="message"></div>
+    </div>
+
+    <!-- Redeem Code Card -->
+    <div class="card" id="card-redeem" style="display:none;">
+      <h2><i class="fas fa-key"></i> Redeem Admin Code</h2>
+      <div class="form-group">
+        <label for="adminCode">Admin Access Code</label>
+        <input type="text" id="adminCode" placeholder="Enter admin code" />
+      </div>
+      <button id="btnRedeem" class="btn-primary">
+        <i class="fas fa-unlock"></i> Redeem Code
+      </button>
+      <div id="redeemMessage" class="message"></div>
+    </div>
+
+    <!-- View Reports Card -->
+    <div class="card" id="card-view" style="display:none;">
+      <h2><i class="fas fa-list-alt"></i> Error Reports</h2>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Media</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="reportsBody">
+            <!-- Dynamic report rows go here -->
+          </tbody>
+        </table>
+      </div>
+      <button id="clearReports" class="action-btn delete" style="margin-top: 20px;">
+        <i class="fas fa-trash"></i> Clear All Reports
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Constants and Variables
+  const STORAGE_KEY = 'phinex_reports';
+  const ADMIN_KEY = 'phinex_admin';
+  const validAdminCodes = ['ADMIN.PHINEX.2025', 'SUPPORT.PHINEX'];
+  let hasAdmin = localStorage.getItem(ADMIN_KEY) === 'true';
+  let uploadedFiles = [];
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    // Show View Reports button only if admin
+if (hasAdmin) {
+  document.querySelector('[data-card="view"]').style.display = 'flex';
+}
+    document.querySelectorAll('.switcher-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cardType = btn.getAttribute('data-card');
+    
+    // Prevent switching to View Reports without admin access
+    if (cardType === 'view' && !hasAdmin) {
+      showMessage('message', 'Admin access required to view reports', 'error');
+      return;
+    }
+    
+    // Update button states
+    document.querySelectorAll('.switcher-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Hide all cards
+    document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+    
+    // Show selected card
+    const cardId = 'card-' + cardType;
+    document.getElementById(cardId).style.display = 'block';
+  });
+});
+
+    // Show View Reports button if admin
+    if (hasAdmin) {
+      document.querySelector('[data-card="view"]').style.display = 'flex';
+    }
+
+    // File upload handling
+    const fileArea = document.getElementById('fileArea');
+    const fileInput = document.getElementById('fileInput');
+
+    fileArea.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+    
+    fileArea.addEventListener('dragover', e => {
+      e.preventDefault();
+      fileArea.classList.add('dragover');
+    });
+    
+    fileArea.addEventListener('dragleave', () => {
+      fileArea.classList.remove('dragover');
+    });
+    
+    fileArea.addEventListener('drop', e => {
+      e.preventDefault();
+      fileArea.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    // Submit report
+    document.getElementById('submitReport').addEventListener('click', submitReport);
+    
+    // Redeem code (corrected ID)
+    document.getElementById('btnRedeem').addEventListener('click', redeemCode);
+    
+    // Clear reports
+    document.getElementById('clearReports').addEventListener('click', clearAllReports);
+  });
+
+  // Functions
+  function handleFiles(files) {
+    for (let file of files) {
+      if (file.size > 10 * 1024 * 1024) {
+        showMessage('message', `File "${file.name}" exceeds 10MB limit`, 'error');
+        continue;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = () => {
+        uploadedFiles.push({
+          name: file.name,
+          type: file.type,
+          data: reader.result,
+          size: file.size
+        });
+        renderPreviews();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function renderPreviews() {
+    const container = document.getElementById('filePreview');
+    container.innerHTML = '';
+    
+    uploadedFiles.forEach((file, index) => {
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      
+      if (file.type.startsWith('image/')) {
+        div.innerHTML = `<img src="${file.data}" alt="${file.name}">`;
+      } else if (file.type.startsWith('video/')) {
+        div.innerHTML = `<video controls><source src="${file.data}" type="${file.type}"></video>`;
+      } else {
+        div.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;">
+                          <i class="fas fa-file" style="font-size:2rem;color:var(--text-secondary);"></i>
+                        </div>`;
+      }
+      
+      const delBtn = document.createElement('button');
+      delBtn.className = 'remove-btn';
+      delBtn.innerHTML = '<i class="fas fa-times"></i>';
+      delBtn.onclick = () => {
+        uploadedFiles.splice(index, 1);
+        renderPreviews();
+      };
+      
+      div.appendChild(delBtn);
+      container.appendChild(div);
+    });
+  }
+
+  function submitReport() {
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (!title || !description) {
+      showMessage('message', 'Please fill all required fields', 'error');
+      return;
+    }
+
+    const report = {
+      id: Date.now(),
+      title,
+      description,
+      email: email || 'Not provided',
+      media: [...uploadedFiles],
+      status: 'pending',
+      timestamp: new Date().toISOString()
+    };
+
+    let reports = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    reports.unshift(report); // Add to beginning
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+
+    showMessage('message', 'Report submitted successfully!', 'success');
+
+    // Reset form
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('email').value = '';
+    uploadedFiles = [];
+    renderPreviews();
+
+    // Refresh reports if admin
+    if (hasAdmin) {
+      loadReports();
+    }
+  }
+
+  function redeemCode() {
+  const code = document.getElementById('adminCode').value.trim().toUpperCase();
+  if (validAdminCodes.includes(code)) {
+    localStorage.setItem(ADMIN_KEY, 'true');
+    hasAdmin = true;
+    // Show View Reports button
+    document.querySelector('[data-card="view"]').style.display = 'flex';
+    
+    // Optional: Automatically switch to View Reports tab after successful redeem
+    document.querySelector('[data-card="view"]').classList.add('active');
+    document.querySelectorAll('.switcher-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-card="view"]').classList.add('active');
+    
+    // Hide all cards and show View Reports
+    document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+    document.getElementById('card-view').style.display = 'block';
+    
+    loadReports();
+    showMessage('redeemMessage', 'Admin access granted!', 'success');
+  } else {
+    showMessage('redeemMessage', 'Invalid code!', 'error');
+  }
+  document.getElementById('adminCode').value = '';
+}
+
+  function loadReports() {
+    const reports = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const tbody = document.getElementById('reportsBody');
+    
+    if (reports.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-secondary);">No reports yet</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = reports.map(report => {
+      // Media preview
+      let mediaHTML = '';
+      if (report.media && report.media.length > 0) {
+        report.media.slice(0, 2).forEach(m => {
+          if (m.type.startsWith('image/')) {
+            mediaHTML += `<img src="${m.data}" style="width:40px;height:40px;border-radius:4px;margin-right:5px;" title="${m.name}">`;
+          } else if (m.type.startsWith('video/')) {
+            mediaHTML += `<i class="fas fa-video" style="color:var(--primary);margin-right:5px;" title="${m.name}"></i>`;
+          }
+        });
+        if (report.media.length > 2) {
+          mediaHTML += `<span style="color:var(--text-secondary);">+${report.media.length - 2}</span>`;
+        }
+      } else {
+        mediaHTML = '<span style="color:var(--text-secondary);">None</span>';
+      }
+
+      // Format date
+      const date = new Date(report.timestamp);
+      const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+
+      return `
+        <tr>
+          <td style="font-family:monospace;color:var(--text-secondary);">${report.id.toString().slice(-6)}</td>
+          <td>${report.title}</td>
+          <td>${report.description.substring(0, 40)}${report.description.length > 40 ? '...' : ''}</td>
+          <td>${mediaHTML}</td>
+          <td><span class="status-badge status-${report.status}">${report.status}</span></td>
+          <td>
+            <button class="action-btn resolve" onclick="toggleStatus(${report.id})">
+              ${report.status === 'pending' ? 'Resolve' : 'Re-open'}
+            </button>
+            <button class="action-btn delete" onclick="deleteReport(${report.id})">
+              Delete
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function toggleStatus(id) {
+    let reports = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const index = reports.findIndex(r => r.id === id);
+    
+    if (index !== -1) {
+      reports[index].status = reports[index].status === 'pending' ? 'resolved' : 'pending';
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+      loadReports();
+    }
+  }
+
+  function deleteReport(id) {
+    if (confirm('Are you sure you want to delete this report?')) {
+      let reports = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      reports = reports.filter(r => r.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+      loadReports();
+    }
+  }
+
+  function clearAllReports() {
+    if (confirm('This will delete ALL reports. Are you sure?')) {
+      localStorage.setItem(STORAGE_KEY, '[]');
+      loadReports();
+    }
+  }
+
+  function showMessage(elementId, text, type) {
+    const el = document.getElementById(elementId);
+    const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+    
+    el.innerHTML = `<i class="fas ${icon}"></i> ${text}`;
+    el.className = `message ${type} show`;
+    
+    setTimeout(() => {
+      el.className = 'message';
+    }, 4000);
+  }
+
+  // Expose functions to global scope for button onclick handlers
+  window.toggleStatus = toggleStatus;
+  window.deleteReport = deleteReport;
+</script>
+   <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <!-- Left Section: Logo and description -->
+      <div class="footer-section">
+        <div class="logo">
+          <i class="fas fa-dragon"></i>
+          <span>PhineX</span>
+        </div>
+        <p>Group of senior programmers</p>
+      </div>
+      
+      <!-- Middle Section: Quick Links -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="hiring.html">Join Us</a></li>
+          <li><a href="x-academy.html">X-Academy</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="redeemcode.html">Redeem Code</a></li>
+        </ul>
+      </div>
+      
+      <!-- Right Section: Social Links -->
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <div class="social-links">
+          <a href="https://discord.gg/V2NDkCmhEm" class="discordlink"><i class="fab fa-discord"></i></a>
+          <a href="https://PhineX.github.io" class="githublink"><i class="fab fa-github"></i></a>
+          <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" class="youtubelink"><i class="fab fa-youtube"></i></a>
+          <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" class="whatsapplink"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61584765330775" class="btn-facebooklink"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <div class="copyright">
+          <p>&copy; 2025 PhineX. All rights reserved.</p>
+        </div>
+        <div class="made-by">
+          <p>Made with <i class="fas fa-heart"></i> By : 
+            <a href="https://www.facebook.com/ahmd.aljwhry.495523" class="btn-facebooklink">
+              <i class="fas fa-laptop-code" style="margin-right: 10px;"></i> @Ahmed Al Gohary
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
