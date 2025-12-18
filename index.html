@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" class="icon" href="Phinex.png">
   <title>PhineX</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -14,7 +15,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
-</div>
 <!-- Navigation -->
 <nav class="navbar">
   <div class="nav-container">
@@ -33,7 +33,32 @@
     </ul>
   </div>
 </nav>
+<section class="search-section" id="search-section">
+  <div class="container">
+    <div class="search-box">
+      <div class="input-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="mainSearch" placeholder="Search PhineX projects, news, or tutorials..." autocomplete="off">
+        <div id="predictionList" class="prediction-list"></div>
+      </div>
+      <div class="search-recommendations">
+        <span>Try:</span>
+        <button onclick="fillSearch('X-Academy')">X-Academy</button>
+        <button onclick="fillSearch('EG Portfolio')">EG Portfolio</button>
+        <button onclick="fillSearch('Join Us')">Join Us</button>
+        <button onclick="fillSearch('JavaScript')">JavaScript</button>
+        <button onclick="fillSearch('X-Academy test')">X-Academy test</button>
+        <button onclick="fillSearch('X-Developers')">X-Developers</button>
+        <button onclick="fillSearch('PhineX')">PhineX</button>
+        <button onclick="fillSearch('Projects')">Projects</button>
+        <button onclick="fillSearch('News')">News</button>
+      </div>
+    </div>
+  </div>
+</section>
 
+<div id="searchInfo" class="search-info container"></div>
+  <!-- Hero Section -->
   <section class="hero" style="background-image: url('Phinex.png'); background-size: cover; background-position: center;">
     <div class="redeem-icon">
       <i class="fas fa-home"></i>
@@ -51,7 +76,6 @@
       </div>
     </div>
   </section>
-
   <!-- Features Section -->
   <section class="features">
     <div class="container">
@@ -75,31 +99,90 @@
       </div>
     </div>
   </section>
+  <section class="projects-section" id="projects-section">
+  <div class="container">
+    <h2 class="section-title"><i class="fas fa-star"></i> Featured Innovation</h2>
+    
+    <div class="featured-card">
+      <div class="project-visual">
+        <div class="logo-glow"></div>
+        <img src="EG-portfolio.png" alt="EGX Logo" class="egx-logo">
+      </div>
+      
+      <div class="project-details">
+        <div class="badge">Live Production</div>
+        <h3>EG Portfolio</h3>
+        <p>A professional digital showcase featuring advanced UI/UX designs, interactive elements, and personal project highlights. Built to demonstrate high-level web development capabilities.</p>
+        
+        <ul class="tech-tags">
+          <li><i class="fab fa-html5"></i> HTML5</li>
+          <li><i class="fab fa-css3-alt"></i> CSS3</li>
+          <li><i class="fab fa-js"></i> JavaScript</li>
+          <li><i class="fab fa-github"></i> GitHub Pages</li>
+        </ul>
 
-  <!-- Stats Section -->
-  <section class="stats" style="text-align: center;">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat">
-          <h3>100+</h3>
-          <p>Developers in Demand</p>
-        </div>
-        <div class="stat">
-          <h3>200+</h3>
-          <p>Revenue Generated</p>
-        </div>
-        <div class="stat">
-          <h3>90%</h3>
-          <p>Error-Free Projects</p>
-        </div>
-        <div class="stat">
-          <h3>5</h3>
-          <p>Completed Projects</p>
-        </div>
+        <a href="https://ahmedelgoharymessi-dot.github.io/Portfolio.github.io/" target="_blank" class="project-btn">
+          Explore Project <i class="fas fa-external-link-alt"></i>
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+  <section class="news-section">
+  <div class="container">
+    <h2 class="section-title"><i class="fas fa-newspaper"></i> PhineX News</h2>
+    <div class="news-grid" id="news-container">
+      
+      <div class="news-card">
+        <img src="EG-portfolio.png" alt="New Project">
+        <div class="news-overlay">
+          <span class="news-tag">EG Portfilo project</span>
+          <h3>New Project</h3>
+          <p>PhineX has deployed a new web-site.</p>
+          <a href="#projects-section" class="read-btn">More Details</a>
+        </div>
+      </div>
 
+      <div class="news-card">
+        <img src="EG-portfolio.png" alt="Coding">
+        <div class="news-overlay">
+          <span class="news-tag">PhineX's First project</span>
+          <h3>1st project launched</h3>
+          <p>On 18-12-2025 PhineX has launched the "EG Portfolio" project to be the first project to the group.</p>
+          <a href="#projects-section" class="read-btn">More Details</a>
+        </div>
+      </div>
+
+      <div class="news-card hidden-news">
+        <img src="Phinex - Copy2.png" alt="PhineX">
+        <div class="news-overlay">
+          <span class="news-tag">PhineX updates the test system</span>
+          <h3>The new system information</h3>
+          <p>PhineX has updated the test system to be more user-friendly and easier to use for everyone ,<strong>A Timer was added to the test system</strong> and the questions are now randomized from 300 questions but don't worry , <strong>10 Questions</strong> only are the test questions, so this makes 1/30 chance of appearing same question to you.</p>
+          <a href="x-academy-pretest.html" class="read-btn">More</a>
+        </div>
+      </div>
+
+      <div class="news-card">
+  <div class="card-icon-bg">
+    <img src="https://www.svgrepo.com/show/65949/search.svg" alt="search-icon">
+  </div>
+  
+  <div class="news-overlay">
+    <span class="news-tag">New Search Engine!</span>
+    <h3>New search bar is available.</h3>
+    <p>PhineX has integrated a wide-style search engine for faster navigation.</p>
+    <a href="#search-section" class="read-btn">More</a>
+  </div>
+</div>
+    
+    <div style="text-align: center; margin-top: 40px;">
+      <button id="loadMoreBtn" class="btn-primary" onclick="loadMoreNews()">
+        <i class="fas fa-plus-circle"></i> Load More News
+      </button>
+    </div>
+  </div>
+</section>
   <!-- Footer -->
   <footer>
     <div class="container">
