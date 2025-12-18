@@ -27,7 +27,31 @@
     </ul>
   </div>
 </nav>
+  <section class="search-section" id="search-section">
+  <div class="container">
+    <div class="search-box">
+      <div class="input-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="mainSearch" placeholder="Search PhineX projects, news, or tutorials..." autocomplete="off">
+        <div id="predictionList" class="prediction-list"></div>
+      </div>
+      <div class="search-recommendations">
+        <span>Try:</span>
+        <button onclick="fillSearch('X-Academy')">X-Academy</button>
+        <button onclick="fillSearch('EG Portfolio')">EG Portfolio</button>
+        <button onclick="fillSearch('Join Us')">Join Us</button>
+        <button onclick="fillSearch('JavaScript')">JavaScript</button>
+        <button onclick="fillSearch('X-Academy test')">X-Academy test</button>
+        <button onclick="fillSearch('X-Developers')">X-Developers</button>
+        <button onclick="fillSearch('PhineX')">PhineX</button>
+        <button onclick="fillSearch('Projects')">Projects</button>
+        <button onclick="fillSearch('News')">News</button>
+      </div>
+    </div>
+  </div>
+</section>
 
+<div id="searchInfo" class="search-info container"></div>
   <section class="academy-hero">
     <div class="redeem-icon">
       <i class="fas fa-graduation-cap"></i>
@@ -39,10 +63,10 @@
         X-Academy is a premier programming academy that identifies, trains, and scouts exceptional programming talent. 
         Through rigorous training and real-world projects, we transform passionate coders into industry-ready professionals.
       </p>
-      <a href="x-academy-pretest.html" class="btn-primary" id="joinAcademyBtn">
+      <a href="x-academy-pretest.html" class="btn-primary" id="joinAcademyBtn" style="margin-bottom: 10px;">
         <i class="fas fa-laptop-code"></i> Join as a Developer
       </a>
-      <a href="https://discord.gg/Zr5CppHg" class="btn-secondary" style="margin-left: 12px;">
+      <a href="https://discord.gg/Zr5CppHg" class="btn-secondary" style="margin-left: 12px; margin-top: 10px;">
         <i class="fas fa-graduation-cap"></i> Join as a student
       </a>
     </div>
