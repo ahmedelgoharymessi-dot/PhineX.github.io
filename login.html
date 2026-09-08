@@ -11,7 +11,8 @@
   <script src="bg3d.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+<!-- Place this as the FIRST script in <head> — before any other JS -->
+<script src="phinex-settings.js"></script>
   <!-- ─── Firebase Compat SDK ─── -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
@@ -270,7 +271,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Password</label>
+        <label class="form-label"><span data-i18n="login.password">Password</span></label>
         <div class="input-wrap">
           <i class="fas fa-lock input-icon"></i>
           <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
@@ -287,7 +288,7 @@
       </div>
 
       <button class="submit-btn" id="loginBtn" onclick="doLogin()">
-        <i class="fas fa-sign-in-alt"></i> Sign In
+        <i class="fas fa-sign-in-alt"></i><span data-i18n="nav.signin">Sign In</span>
       </button>
 
       <div class="divider"><div class="divider-line"></div><span class="divider-text">or continue with</span><div class="divider-line"></div></div>
@@ -340,7 +341,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Password</label>
+        <label class="form-label"><span data-i18n="login.password">Password</span></label>
         <div class="input-wrap">
           <i class="fas fa-lock input-icon"></i>
           <input type="password" class="form-input" id="signupPassword" placeholder="8+ characters" onkeydown="if(event.key==='Enter')doSignup()">
@@ -563,7 +564,7 @@ async function doLogin() {
     setTimeout(() => window.location.href = 'index.html', 800);
   } catch (err) {
     showAlert('loginError','loginErrorText', friendlyError(err.code));
-    setLoading('loginBtn', false, '<i class="fas fa-sign-in-alt"></i> Sign In');
+    setLoading('loginBtn', false, '<i class="fas fa-sign-in-alt"></i><span data-i18n="nav.signin">Sign In</span>');
   }
 }
 
@@ -741,5 +742,37 @@ document.getElementById('pxAlertOverlay').addEventListener('click', function(e) 
   if (e.target === this) { PXAlert.hide(); if (PXAlert._resolve) PXAlert._resolve(false); }
 });
 </script>
+<style>
+  @media(max-width:360px){ .hide-xs{ display:none; } }
+
+/* ══ MOBILE OVERHAUL ══ */
+body{overflow-x:hidden!important;}
+*{min-width:0;word-break:break-word;box-sizing:border-box;}
+img,canvas,video,iframe{max-width:100%;}
+@media(max-width:768px){
+  footer{padding:28px 16px 20px!important;}
+  .footer-inner{flex-direction:column!important;gap:20px!important;align-items:center!important;text-align:center!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:10px 18px!important;}
+  .connect-grid{grid-template-columns:1fr!important;}
+  .curriculum-grid{grid-template-columns:1fr!important;}
+  .paths-grid{grid-template-columns:1fr!important;}
+  .settings-layout{grid-template-columns:1fr!important;}
+  .themes-grid{grid-template-columns:1fr 1fr!important;}
+  .lang-grid{grid-template-columns:1fr!important;}
+  .sbar{grid-template-columns:1fr 1fr!important;}
+  .hero-inner{grid-template-columns:1fr!important;}
+  .hero-inner>*:last-child{display:none!important;}
+  .wrap{grid-template-columns:1fr!important;}
+  .rp{display:none!important;}
+  .lp{padding:56px 20px 40px!important;}
+  h1,.h1{letter-spacing:-2px!important;}
+}
+@media(max-width:480px){
+  .stats-grid,.stat-grid,.stats-row{grid-template-columns:1fr 1fr!important;flex-direction:row!important;flex-wrap:wrap!important;}
+  .page-title,.hero h1{font-size:clamp(2rem,10vw,3rem)!important;}
+  nav,.nav-inner,.nw{padding-left:12px!important;padding-right:12px!important;}
+}
+
+</style>
 </body>
 </html>

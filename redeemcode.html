@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <meta name="keywords" content="PhineX, about us, developer community, senior developers, software development, mentorship, tech talent, collaborative programming, software projects">
   <meta name="author" content="AMG">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
   <meta name="revised" content="2024-06-01">
@@ -16,11 +15,13 @@
   <meta name="rating" content="General">
   <meta name="distribution" content="Global">
   <meta name="og:title" content="Redeem Code | PhineX">
-  <meta name="og:description" content="Redeem your exclusive code on PhineX to unlock special features, access premium content, or claim your rewards. Enter your code now and join the elite community of senior developers building real projects and earning real profits.">
+  <meta name="og:description" content="Redeem your exclusive code on PhineX to unlock special features, access premium content, or claim your rewards.">
   <meta name="og:image" content="PhineX (2).png">
   <link rel="icon" type="image/x-icon" href="PhineX (2).png">
-    <script src="bg3d.js"></script>
-  <meta name="description" content="Redeem your exclusive code on PhineX to unlock special features, access premium content, or claim your rewards. Enter your code now and join the elite community of senior developers building real projects and earning real profits.">
+  <!-- Place this as the FIRST script in <head> — before any other JS -->
+  <script src="phinex-settings.js"></script>
+  <script src="bg3d.js"></script>
+  <meta name="description" content="Redeem your exclusive code on PhineX to unlock special features, access premium content, or claim your rewards.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -38,8 +39,6 @@
     .logo-text{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#f0f0ff;}
     .logo-text span{color:var(--neon);}
     .nav-links{display:flex;gap:4px;margin-left:16px;}
-    .nav-link{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--muted);text-decoration:none;transition:all 0.2s;}
-    .nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,0.06);}
     .nav-link{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--muted);text-decoration:none;transition:all 0.2s;}
     .nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,0.06);}
     .btn-neon{background:var(--neon);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:8px 18px;border-radius:9px;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
@@ -110,11 +109,6 @@
     .state-msg.error{background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);color:#ff6464;}
     .state-msg.loading{background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);color:var(--gold);}
 
-    /* CODE DIVIDERS */
-    .dividers{display:flex;gap:8px;max-width:500px;margin:0 auto 20px;justify-content:center;}
-    .code-segment{width:80px;height:52px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:18px;font-weight:700;letter-spacing:2px;color:var(--text);transition:all 0.2s;}
-    .code-sep{display:flex;align-items:center;color:var(--muted);font-size:18px;}
-
     /* HOW TO GET */
     .how-section{padding:80px 24px 100px;position:relative;z-index:1;}
     .section-wrap{max-width:1000px;margin:0 auto;}
@@ -142,9 +136,7 @@
     .confetti-emoji{font-size:64px;margin-bottom:20px;display:block;animation:bounce 0.8s ease 0.2s both;}
     @keyframes bounce{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
 
-    @media(max-width:768px){.nav-links{display:none;}.code-input-box{flex-direction:column;}.methods-grid{grid-template-columns:1fr;}}
-  
-    /* ══════════ MOBILE RESPONSIVE — PhineX ══════════ */
+    /* ══════════ MOBILE RESPONSIVE ══════════ */
     *{min-width:0;}
     img,video{max-width:100%;height:auto;}
 
@@ -167,35 +159,29 @@
     .mobile-nav a{padding:12px 16px;border-radius:10px;font-size:14px;
                   color:#7070a0;text-decoration:none;transition:all .2s;
                   min-height:44px;display:flex;align-items:center;}
-    .mobile-nav a:hover,.mobile-nav a.active{color:#f0f0ff;
-      background:rgba(255,255,255,.06);}
+    .mobile-nav a:hover,.mobile-nav a.active{color:#f0f0ff;background:rgba(255,255,255,.06);}
     .mobile-nav .btn-neon{justify-content:center;margin-top:8px;}
 
-    @media(max-width:1024px){
-      .hero-inner{grid-template-columns:1fr;gap:40px;}
-      .hero-inner>*:last-child{display:none;}
-    }
     @media(max-width:768px){
       .ham{display:flex;}
       .nav-links{display:none!important;}
       .nav-inner .btn-neon,.nav-inner .nb-g{display:none;}
       body{overflow-x:hidden;}
       .hero{padding:88px 16px 48px;}
-      .hero-inner{gap:24px;}
-      .section-wrap,.page{padding-left:16px;padding-right:16px;}
-      .hero h1,.hero-h1,.h1{font-size:clamp(2.2rem,9vw,3.5rem)!important;letter-spacing:-1.5px!important;}
+      .gift-card{width:100%;max-width:320px;}
+      .code-input-box{flex-direction:column;}
+      .redeem-btn{justify-content:center;}
+      .how-section{padding:60px 16px 80px;}
+      .methods-grid{grid-template-columns:1fr;}
+      .section-title{font-size:clamp(1.6rem,6vw,2rem)!important;}
     }
     @media(max-width:480px){
       .mobile-nav a,.mobile-nav button{min-height:44px;}
       .btn-neon{min-height:44px;padding:10px 18px;}
       .hero{padding:80px 12px 40px;}
-      .hero h1,.hero-h1,.h1{font-size:clamp(1.9rem,8vw,2.8rem)!important;}
-      .cards-grid,.grid-2,.grid-3,[class*="-grid"]{grid-template-columns:1fr!important;}
-      .stats-row,.stat-row{flex-direction:column;gap:12px;}
-    }
-    @media(max-width:360px){
+      .hero-h1{font-size:clamp(2.2rem,9vw,3.5rem)!important;letter-spacing:-1.5px!important;}
+      .redeem-success-card{padding:32px 20px;}
       nav,.nav-inner{padding-left:12px!important;padding-right:12px!important;}
-      .hero{padding-left:8px;padding-right:8px;}
     }
     @media(hover:none){
       [class*="float"],[class*="Float"]{animation:none!important;}
@@ -203,7 +189,7 @@
     @media(orientation:landscape) and (max-height:500px){
       .hero{min-height:auto;padding-top:80px;}
     }
-    </style>
+  </style>
 </head>
 <body>
 <div class="grid-bg"></div>
@@ -221,28 +207,35 @@ for(let i=0;i<30;i++){
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><div class="logo-icon"><i class="fas fa-dragon"></i></div><span class="logo-text">Phine<span>X</span></span></a>
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+      <span class="logo-text">Phine<span>X</span></span>
+    </a>
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="hiring.html" class="nav-link">Join Us</a>
-      <a href="x-academy.html" class="nav-link">X-Academy</a>
-      <a href="aboutus.html" class="nav-link">About</a>
+      <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+      <a href="hiring.html" class="nav-link" data-i18n="nav.joinus">Join Us</a>
+      <a href="x-academy.html" class="nav-link" data-i18n="nav.academy">X-Academy</a>
+      <a href="aboutus.html" class="nav-link" data-i18n="nav.about">About</a>
     </div>
-    
     <!-- ⌕ Search Bar -->
-    <button class="pxs-trigger" aria-label="Open search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Search</button>
-    <div style="margin-left:auto;"><a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> Sign In</a></div>
+    <button class="pxs-trigger" aria-label="Open search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span data-i18n="common.search">Search</span>
+    </button>
+    <div style="margin-left:auto;">
+      <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> <span data-i18n="common.signin">Sign In</span></a>
+    </div>
     <button class="ham" id="hamBtn" onclick="this.classList.toggle('open');document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-nav" id="mobileNav">
-<a href="index.html" class="nav-link">Home</a>
-      <a href="hiring.html" class="nav-link">Join Us</a>
-      <a href="x-academy.html" class="nav-link">X-Academy</a>
-      <a href="aboutus.html" class="nav-link">About</a>
-<a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+  <a href="index.html" data-i18n="nav.home">Home</a>
+  <a href="hiring.html" data-i18n="nav.joinus">Join Us</a>
+  <a href="x-academy.html" data-i18n="nav.academy">X-Academy</a>
+  <a href="aboutus.html" data-i18n="nav.about">About</a>
+  <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> <span data-i18n="common.signin">Sign In</span></a>
 </div>
 
 <!-- HERO -->
@@ -255,26 +248,29 @@ for(let i=0;i<30;i++){
       <div class="gift-card">
         <div class="gift-shine"></div>
         <div class="gift-card-inner">
-          <div class="gift-logo"><i class="fas fa-dragon"></i></div>
-          <div class="gift-card-title">PhineX X-Developer Access</div>
-          <div class="gift-card-sub">EXCLUSIVE MEMBERSHIP CODE</div>
+          <div class="gift-logo"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+          <div class="gift-card-title" data-i18n="redeem.card.title">PhineX X-Developer Access</div>
+          <div class="gift-card-sub" data-i18n="redeem.card.sub">EXCLUSIVE MEMBERSHIP CODE</div>
           <div class="gift-code-preview">XXXX-XXXX-XXXX</div>
         </div>
       </div>
     </div>
 
-    <div class="hero-tag"><span class="pulse-dot"></span> Exclusive Access</div>
-    <h1 class="hero-h1">Redeem Your<br><span>Code</span></h1>
-    <p class="hero-sub">Enter your exclusive X-Developer code below to skip the entry test and join the PhineX programming team instantly.</p>
+    <div class="hero-tag"><span class="pulse-dot"></span> <span data-i18n="redeem.tag">Exclusive Access</span></div>
+    <h1 class="hero-h1" data-i18n="redeem.title">Redeem Your<br><span>Code</span></h1>
+    <p class="hero-sub" data-i18n="redeem.sub">Enter your exclusive X-Developer code below to skip the entry test and join the PhineX programming team instantly.</p>
 
     <!-- CODE INPUT -->
     <div class="code-input-wrap">
       <div class="code-input-box">
-        <input type="text" class="code-input" id="codeInput" placeholder="Enter your redeem code" maxlength="19" oninput="formatCode(this)" onkeydown="if(event.key==='Enter') redeemCode()">
-        <button class="redeem-btn" onclick="redeemCode()"><i class="fas fa-gift"></i> Redeem</button>
+        <input type="text" class="code-input" id="codeInput"
+          data-i18n-ph="redeem.ph" placeholder="Enter your redeem code"
+          maxlength="19" oninput="formatCode(this)" onkeydown="if(event.key==='Enter') redeemCode()">
+        <button class="redeem-btn" onclick="redeemCode()">
+          <i class="fas fa-gift"></i> <span data-i18n="redeem.btn">Redeem</span>
+        </button>
       </div>
-      <div class="redeem-hint">Don't have a code? <a href="hiring.html">Pass the test instead</a> or <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank">contact the founder</a></div>
-
+      <div class="redeem-hint" data-i18n="redeem.hint">Don't have a code? <a href="hiring.html">Pass the test instead</a> or <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank">contact the founder</a></div>
       <div class="state-msg" id="stateMsg"></div>
     </div>
   </div>
@@ -284,24 +280,24 @@ for(let i=0;i<30;i++){
 <section class="how-section" id="how-section">
   <div class="section-wrap">
     <div class="reveal">
-      <div class="section-tag">Get a Code</div>
-      <h2 class="section-title">How to Get a Redeem Code</h2>
+      <div class="section-tag" data-i18n="redeem.getcode.tag">Get a Code</div>
+      <h2 class="section-title" data-i18n="redeem.getcode.title">How to Get a Redeem Code</h2>
     </div>
     <div class="methods-grid">
       <div class="method-card reveal" style="transition-delay:0.1s;">
         <span class="method-icon">🏆</span>
-        <div class="method-title">Win a Competition</div>
-        <p class="method-desc">PhineX hosts regular coding competitions and hackathons. Top performers receive exclusive redeem codes as prizes.</p>
+        <div class="method-title" data-i18n="redeem.method1.title">Win a Competition</div>
+        <p class="method-desc" data-i18n="redeem.method1.desc">PhineX hosts regular coding competitions and hackathons. Top performers receive exclusive redeem codes as prizes.</p>
       </div>
       <div class="method-card reveal" style="transition-delay:0.2s;">
         <span class="method-icon">🤝</span>
-        <div class="method-title">Partner Programs</div>
-        <p class="method-desc">Partner organizations, bootcamps, and coding schools can distribute codes to their outstanding graduates.</p>
+        <div class="method-title" data-i18n="redeem.method2.title">Partner Programs</div>
+        <p class="method-desc" data-i18n="redeem.method2.desc">Partner organizations, bootcamps, and coding schools can distribute codes to their outstanding graduates.</p>
       </div>
       <div class="method-card reveal" style="transition-delay:0.3s;">
         <span class="method-icon">👑</span>
-        <div class="method-title">Founder's Invite</div>
-        <p class="method-desc">Senior developers can reach out to the PhineX founder directly. If your portfolio is strong enough, a code may come your way.</p>
+        <div class="method-title" data-i18n="redeem.method3.title">Founder's Invite</div>
+        <p class="method-desc" data-i18n="redeem.method3.desc">Senior developers can reach out to the PhineX founder directly. If your portfolio is strong enough, a code may come your way.</p>
       </div>
     </div>
   </div>
@@ -311,20 +307,30 @@ for(let i=0;i<30;i++){
 <div class="redeem-success" id="redeemSuccess">
   <div class="redeem-success-card">
     <span class="confetti-emoji">🎉</span>
-    <h2 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:10px;">Welcome to PhineX!</h2>
-    <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:8px;">Your redeem code has been accepted. You are now officially an <strong style="color:var(--neon);">X-Developer</strong>.</p>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">Join our Discord to connect with the team and get your first project assignment.</p>
+    <h2 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:10px;" data-i18n="redeem.success.title">Welcome to PhineX!</h2>
+    <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:8px;" data-i18n="redeem.success.msg">Your redeem code has been accepted. You are now officially an <strong style="color:var(--neon);">X-Developer</strong>.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:28px;" data-i18n="redeem.success.discord">Join our Discord to connect with the team and get your first project assignment.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="https://discord.gg/V9yr3AxBFr" class="btn-neon" style="padding:12px 22px;" target="_blank"><i class="fab fa-discord"></i> Join Discord</a>
-      <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:12px 22px;border-radius:10px;text-decoration:none;">Go Home</a>
+      <a href="https://discord.gg/MEKZHYBC3b" class="btn-neon" style="padding:12px 22px;" target="_blank">
+        <i class="fab fa-discord"></i> <span data-i18n="redeem.success.join">Join Discord</span>
+      </a>
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:12px 22px;border-radius:10px;text-decoration:none;" data-i18n="common.gohome">Go Home</a>
     </div>
   </div>
 </div>
 
 <footer>
   <div class="footer-inner">
-    <a href="index.html" class="nav-logo" style="text-decoration:none;"><div class="logo-icon"><i class="fas fa-dragon"></i></div><span class="logo-text">Phine<span>X</span></span></a>
-    <div class="footer-links"><a href="index.html">Home</a><a href="hiring.html">Join Us</a><a href="x-academy.html">X-Academy</a><a href="aboutus.html">About</a></div>
+    <a href="index.html" class="nav-logo" style="text-decoration:none;">
+      <div class="logo-icon"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+      <span class="logo-text">Phine<span>X</span></span>
+    </a>
+    <div class="footer-links">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="hiring.html" data-i18n="nav.joinus">Join Us</a>
+      <a href="x-academy.html" data-i18n="nav.academy">X-Academy</a>
+      <a href="aboutus.html" data-i18n="nav.about">About</a>
+    </div>
     <p style="font-size:12px;color:var(--muted);">&copy; 2026 PhineX</p>
   </div>
 </footer>
@@ -351,7 +357,6 @@ function redeemCode() {
 
   showMsg('loading','<i class="fas fa-spinner fa-spin"></i> &nbsp;Verifying code...');
   setTimeout(() => {
-    // Simulate code check
     const validCodes = ['PHINEX','X-DEV-2025','FOUNDER','VIP-ACCESS'];
     const clean = code.replace(/-/g,'');
     if (validCodes.includes(clean) || code.startsWith('PX-')) {
@@ -384,8 +389,19 @@ function showMsg(type, html) {
 #pxAlertOverlay.show{display:flex;}
 #pxAlertOverlay.show #pxAlertCard{transform:scale(1);opacity:1;}
 
-
-
+/* ══ MOBILE FOOTER OVERHAUL ══ */
+@media(max-width:768px){
+  footer{padding:28px 16px 20px!important;}
+  .footer-inner{flex-direction:column!important;gap:20px!important;align-items:center!important;text-align:center!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:10px 18px!important;}
+}
+</style>
+<script>
+window.PXAlert={_resolve:null,show({icon='<i class="fas fa-circle-info"></i>',title='',message='',type='info',buttons=[{label:'OK',value:true,primary:true}]}={}){return new Promise(resolve=>{this._resolve=resolve;const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');document.getElementById('pxAlertIcon').innerHTML=icon;document.getElementById('pxAlertTitle').textContent=title;document.getElementById('pxAlertMsg').innerHTML=message;const cols={info:'rgba(57,255,20,0.25)',error:'rgba(255,68,68,0.25)',warning:'rgba(255,215,0,0.25)',success:'rgba(57,255,20,0.3)'};c.style.borderColor=cols[type]||cols.info;const be=document.getElementById('pxAlertBtns');be.innerHTML='';buttons.forEach(btn=>{const b=document.createElement('button');b.textContent=btn.label;const ip=btn.primary;b.style.cssText=ip?'background:#39ff14;color:#050508;font-family:Syne,sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border-radius:11px;border:none;cursor:pointer;transition:all 0.2s;':'background:transparent;color:#f0f0ff;font-family:Syne,sans-serif;font-weight:600;font-size:14px;padding:11px 28px;border-radius:11px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;transition:all 0.2s;';b.onmouseenter=()=>{b.style.transform='translateY(-1px)';if(ip)b.style.boxShadow='0 0 20px rgba(57,255,20,0.3)';};b.onmouseleave=()=>{b.style.transform='';b.style.boxShadow='';};b.onclick=()=>{this.hide();resolve(btn.value);};be.appendChild(b);});o.classList.add('show');document.addEventListener('keydown',this._keyHandler=(e)=>{if(e.key==='Escape'){this.hide();resolve(false);}});})},hide(){const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');c.style.transform='scale(0.88)';c.style.opacity='0';setTimeout(()=>o.classList.remove('show'),300);document.removeEventListener('keydown',this._keyHandler);},info(t,m){return this.show({icon:'<i class="fas fa-circle-info"></i>',title:t,message:m,type:'info'})},success(t,m){return this.show({icon:'<i class="fas fa-circle-check"></i>',title:t,message:m,type:'success'})},error(t,m){return this.show({icon:'<i class="fas fa-circle-xmark"></i>',title:t,message:m,type:'error'})},warning(t,m){return this.show({icon:'<i class="fas fa-triangle-exclamation"></i>',title:t,message:m,type:'warning'})},confirm(t,m){return this.show({icon:'<i class="fas fa-circle-question"></i>',title:t,message:m,type:'warning',buttons:[{label:'Cancel',value:false,primary:false},{label:'Confirm',value:true,primary:true}]})}};
+document.getElementById('pxAlertOverlay').addEventListener('click',function(e){if(e.target===this){PXAlert.hide();if(PXAlert._resolve)PXAlert._resolve(false);}});
+</script>
+<style>
+  @media(max-width:360px){ .hide-xs{ display:none; } }
 
 /* ══ MOBILE OVERHAUL ══ */
 body{overflow-x:hidden!important;}
@@ -416,11 +432,6 @@ img,canvas,video,iframe{max-width:100%;}
 }
 
 </style>
-<script>
-window.PXAlert={_resolve:null,show({icon='<i class="fas fa-circle-info"></i>',title='',message='',type='info',buttons=[{label:'OK',value:true,primary:true}]}={}){return new Promise(resolve=>{this._resolve=resolve;const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');document.getElementById('pxAlertIcon').innerHTML=icon;document.getElementById('pxAlertTitle').textContent=title;document.getElementById('pxAlertMsg').innerHTML=message;const cols={info:'rgba(57,255,20,0.25)',error:'rgba(255,68,68,0.25)',warning:'rgba(255,215,0,0.25)',success:'rgba(57,255,20,0.3)'};c.style.borderColor=cols[type]||cols.info;const be=document.getElementById('pxAlertBtns');be.innerHTML='';buttons.forEach(btn=>{const b=document.createElement('button');b.textContent=btn.label;const ip=btn.primary;b.style.cssText=ip?'background:#39ff14;color:#050508;font-family:Syne,sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border-radius:11px;border:none;cursor:pointer;transition:all 0.2s;':'background:transparent;color:#f0f0ff;font-family:Syne,sans-serif;font-weight:600;font-size:14px;padding:11px 28px;border-radius:11px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;transition:all 0.2s;';b.onmouseenter=()=>{b.style.transform='translateY(-1px)';if(ip)b.style.boxShadow='0 0 20px rgba(57,255,20,0.3)';};b.onmouseleave=()=>{b.style.transform='';b.style.boxShadow='';};b.onclick=()=>{this.hide();resolve(btn.value);};be.appendChild(b);});o.classList.add('show');document.addEventListener('keydown',this._keyHandler=(e)=>{if(e.key==='Escape'){this.hide();resolve(false);}});})},hide(){const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');c.style.transform='scale(0.88)';c.style.opacity='0';setTimeout(()=>o.classList.remove('show'),300);document.removeEventListener('keydown',this._keyHandler);},info(t,m){return this.show({icon:'<i class="fas fa-circle-info"></i>',title:t,message:m,type:'info'})},success(t,m){return this.show({icon:'<i class="fas fa-circle-check"></i>',title:t,message:m,type:'success'})},error(t,m){return this.show({icon:'<i class="fas fa-circle-xmark"></i>',title:t,message:m,type:'error'})},warning(t,m){return this.show({icon:'<i class="fas fa-triangle-exclamation"></i>',title:t,message:m,type:'warning'})},confirm(t,m){return this.show({icon:'<i class="fas fa-circle-question"></i>',title:t,message:m,type:'warning',buttons:[{label:'Cancel',value:false,primary:false},{label:'Confirm',value:true,primary:true}]})}};
-document.getElementById('pxAlertOverlay').addEventListener('click',function(e){if(e.target===this){PXAlert.hide();if(PXAlert._resolve)PXAlert._resolve(false);}});
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
 <script src="app.js"></script>
 <script src="phinex-search.js"></script>

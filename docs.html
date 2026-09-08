@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — PhineX</title>
+  <link rel="icon" type="image/x-icon" href="PhineX (2).png">
+  <meta name="author" content="AMG">
+  <meta name="description" content="PhineX documentation — what every PhineX project does, and step-by-step fixes for common problems.">
+  <meta name="og:title" content="Docs | PhineX">
+  <meta name="og:description" content="Everything PhineX has built, and how to fix common problems across our projects.">
+  <meta name="og:image" content="PhineX (2).png">
+
+  <!-- Place this as the FIRST script in <head> — before any other JS -->
+  <script src="phinex-settings.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+  <script src="phinex-search.js"></script>
+  <script src="bg3d.js"></script>
+
+  <style>
+    :root {
+      --neon:#39ff14;--neon-dim:#39ff1440;--void:#050508;
+      --surface:#0d0d14;--card:#13131e;--border:#ffffff10;
+      --text:#f0f0ff;--muted:#7070a0;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--void);color:var(--text);overflow-x:hidden;}
+    h1,h2,h3,h4,.logo-text{font-family:'Syne',sans-serif;}
+    code, .mono{font-family:'Share Tech Mono',monospace;}
+    a{color:inherit;}
+
+    .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:1;background-image:linear-gradient(rgba(57,255,20,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,20,0.018) 1px,transparent 1px);background-size:60px 60px;}
+
+    /* ============ NAVBAR (shared PhineX pattern) ============ */
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;background:rgba(5,5,8,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.3s ease;}
+    #navbar.scrolled{border-bottom-color:var(--neon-dim);box-shadow:0 0 30px rgba(57,255,20,0.05);}
+    .nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;gap:20px;}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+    .logo-icon-wrap{width:38px;height:38px;background:linear-gradient(135deg,#39ff14,#00cc88);border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(57,255,20,0.3);}
+    .logo-icon-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.15));}
+    .logo-text{font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#f0f0ff;}
+    .logo-text span{color:var(--neon);}
+    .pxs-trigger{flex-shrink:0;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;padding:0 14px;height:40px;cursor:pointer;transition:all 0.2s;}
+    .pxs-trigger:hover{border-color:var(--neon);color:var(--neon);background:rgba(57,255,20,0.05);}
+    #pagesBtn{flex-shrink:0;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:0 14px;height:40px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+    #pagesBtn:hover{border-color:var(--neon);color:var(--neon);background:rgba(57,255,20,0.05);}
+    #pagesPanel{position:absolute;top:calc(100% + 8px);right:24px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;width:300px;box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 0 1px rgba(57,255,20,0.1);display:none;z-index:200;}
+    #pagesPanel.active{display:block;animation:dropIn 0.2s ease;}
+    @keyframes dropIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+    .pages-header{padding:4px 8px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border);margin-bottom:8px;}
+    .page-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer;text-decoration:none;color:var(--text);transition:all 0.15s;}
+    .page-item:hover{background:rgba(57,255,20,0.07);color:var(--neon);}
+    .page-item i{width:28px;text-align:center;font-size:14px;color:var(--muted);transition:color 0.15s;}
+    .page-item:hover i{color:var(--neon);}
+    .page-item span{font-size:13px;font-weight:500;}
+    .page-item.current{background:rgba(57,255,20,0.06);}
+    .page-item.current i, .page-item.current span{color:var(--neon);}
+    .nav-login{flex-shrink:0;display:flex;align-items:center;gap:7px;background:var(--neon);border:none;border-radius:10px;color:#050508;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:0 16px;height:40px;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 0 20px rgba(57,255,20,0.2);}
+    .nav-login:hover{background:#50ff28;box-shadow:0 0 30px rgba(57,255,20,0.4);transform:translateY(-1px);}
+    #mobileToggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:8px;cursor:pointer;color:var(--text);}
+
+    /* ============ DOCS HERO ============ */
+    #docsHero{position:relative;z-index:2;padding:150px 24px 60px;max-width:1400px;margin:0 auto;text-align:center;}
+    .docs-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--neon);letter-spacing:0.5px;margin-bottom:24px;}
+    .docs-badge span.dot{width:6px;height:6px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);}
+    .docs-h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;letter-spacing:-2px;line-height:1.05;}
+    .docs-h1 span{color:var(--neon);}
+    .docs-sub{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:640px;margin:20px auto 32px;line-height:1.7;}
+    .docs-search-box{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;cursor:pointer;transition:all 0.25s;text-align:left;}
+    .docs-search-box:hover{border-color:rgba(57,255,20,0.35);box-shadow:0 0 30px rgba(57,255,20,0.08);}
+    .docs-search-box i{color:var(--muted);font-size:15px;}
+    .docs-search-box span{color:var(--muted);font-size:14px;flex:1;}
+    .docs-search-box kbd{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;padding:3px 7px;}
+
+    /* ============ DOCS LAYOUT ============ */
+    #docsBody{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:20px 24px 120px;display:grid;grid-template-columns:260px 1fr;gap:56px;align-items:start;}
+    .docs-sidebar{position:sticky;top:88px;max-height:calc(100vh - 108px);overflow-y:auto;padding-right:8px;}
+    .docs-sidebar::-webkit-scrollbar{width:4px;}
+    .docs-sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+    .docs-nav-group{margin-bottom:26px;}
+    .docs-nav-label{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding:0 12px;}
+    .docs-nav-link{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:9px;font-size:13.5px;color:var(--muted);text-decoration:none;transition:all 0.15s;border-left:2px solid transparent;}
+    .docs-nav-link:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+    .docs-nav-link.sub{padding-left:28px;font-size:12.5px;}
+    .docs-nav-link.active{color:var(--neon);background:rgba(57,255,20,0.06);border-left-color:var(--neon);font-weight:600;}
+    .docs-nav-link i{width:16px;font-size:11px;text-align:center;}
+
+    .docs-content{min-width:0;}
+    .doc-section{scroll-margin-top:88px;padding-bottom:64px;border-bottom:1px solid var(--border);margin-bottom:64px;}
+    .doc-section:last-child{border-bottom:none;margin-bottom:0;}
+    .doc-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:14px;}
+    .doc-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--neon);}
+    .doc-h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+    .doc-icon-badge{width:44px;height:44px;border-radius:12px;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+    .doc-p{font-size:15px;color:var(--muted);line-height:1.85;max-width:760px;}
+    .doc-p + .doc-p{margin-top:14px;}
+    .doc-p strong{color:var(--text);}
+
+    .doc-meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0;}
+    .doc-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+    .doc-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:10px;text-decoration:none;transition:all 0.2s;}
+    .doc-btn-primary{background:var(--neon);color:#050508;box-shadow:0 0 20px rgba(57,255,20,0.2);}
+    .doc-btn-primary:hover{background:#50ff28;box-shadow:0 0 25px rgba(57,255,20,0.35);}
+    .doc-btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+    .doc-btn-outline:hover{border-color:var(--neon);color:var(--neon);}
+
+    .doc-feature-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:24px;}
+    .doc-feature{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+    .doc-feature i{color:var(--neon);font-size:15px;margin-bottom:10px;display:block;}
+    .doc-feature-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:6px;}
+    .doc-feature-desc{font-size:12.5px;color:var(--muted);line-height:1.6;}
+
+    .doc-callout{display:flex;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-top:24px;max-width:760px;}
+    .doc-callout.tip{border-color:rgba(57,255,20,0.2);background:rgba(57,255,20,0.04);}
+    .doc-callout.warn{border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.04);}
+    .doc-callout i{font-size:16px;flex-shrink:0;margin-top:2px;}
+    .doc-callout.tip i{color:var(--neon);}
+    .doc-callout.warn i{color:#fbbf24;}
+    .doc-callout-title{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:4px;}
+    .doc-callout-body{font-size:13px;color:var(--muted);line-height:1.7;}
+
+    /* Sub-project card (JMS inside ElJasus) */
+    .doc-subcard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;margin-top:28px;}
+    .doc-subcard-tag{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+
+    /* Level pills for JMS */
+    .level-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0;}
+    .level-pill{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px;border:1px solid var(--border);background:rgba(255,255,255,0.02);}
+    .level-dot{width:7px;height:7px;border-radius:50%;}
+
+    /* Troubleshooting */
+    .fix-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px 26px;margin-top:20px;}
+    .fix-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+    .fix-card-title i{color:var(--neon);font-size:14px;}
+    .fix-steps{list-style:none;counter-reset:fixstep;}
+    .fix-steps li{counter-increment:fixstep;display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);}
+    .fix-steps li:first-child{border-top:none;padding-top:0;}
+    .fix-steps li::before{content:counter(fixstep);flex-shrink:0;width:24px;height:24px;border-radius:7px;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);color:var(--neon);font-family:'Syne',sans-serif;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;}
+    .fix-step-text{font-size:13.5px;color:var(--muted);line-height:1.7;padding-top:2px;}
+    .fix-step-text strong{color:var(--text);}
+
+    /* ============ FOOTER (shared PhineX pattern) ============ */
+    footer{position:relative;z-index:2;padding:80px 24px 32px;border-top:1px solid var(--border);margin-top:40px;}
+    .footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
+    .footer-brand p{font-size:13px;color:var(--muted);margin:14px 0 20px;max-width:320px;line-height:1.7;}
+    .social-row{display:flex;gap:10px;flex-wrap:wrap;}
+    .social-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);text-decoration:none;transition:all 0.2s;}
+    .social-btn:hover{border-color:var(--neon);color:var(--neon);background:rgba(57,255,20,0.07);}
+    .footer-col h4{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .footer-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:10px;transition:color 0.2s;}
+    .footer-col a:hover{color:var(--neon);}
+    .footer-bottom{max-width:1400px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+    .footer-bottom p{font-size:12px;color:var(--muted);}
+    .footer-bottom a{color:var(--neon);text-decoration:none;}
+    #backToTop{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:12px;background:transparent;color:var(--neon);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(57,255,20,0.3);opacity:0;transform:translateY(10px);transition:all 0.3s;z-index:500;}
+    #backToTop.visible{opacity:1;transform:translateY(0);}
+    #backToTop:hover{box-shadow:0 0 30px rgba(57,255,20,0.5);transform:translateY(-3px);}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal-delay-1{transition-delay:0.1s;}.reveal-delay-2{transition-delay:0.2s;}.reveal-delay-3{transition-delay:0.3s;}
+
+    /* Mobile sidebar → horizontal pill bar */
+    .docs-mobile-jump{display:none;}
+
+    @media(max-width:1024px){
+      #docsBody{grid-template-columns:1fr;}
+      .docs-sidebar{position:static;max-height:none;display:none;}
+      .docs-mobile-jump{display:block;position:sticky;top:68px;z-index:50;background:rgba(5,5,8,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:14px 20px;margin:0 -24px 32px;overflow-x:auto;white-space:nowrap;}
+      .docs-mobile-jump a{display:inline-block;font-size:12.5px;color:var(--muted);text-decoration:none;padding:7px 13px;border:1px solid var(--border);border-radius:100px;margin-right:8px;}
+      .docs-mobile-jump a.active{color:var(--neon);border-color:rgba(57,255,20,0.3);background:rgba(57,255,20,0.06);}
+      .footer-inner{grid-template-columns:1fr 1fr;}
+    }
+    @media(max-width:768px){
+      #mobileToggle{display:flex;}
+      #docsHero{padding:130px 20px 40px;}
+      #docsBody{padding:16px 20px 100px;}
+      .footer-inner{grid-template-columns:1fr 1fr;gap:28px;}
+    }
+    @media(max-width:480px){
+      .footer-inner{grid-template-columns:1fr!important;gap:20px!important;text-align:center;}
+      .social-row{justify-content:center;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="logo-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div><span class="logo-text">Phine<span>X</span></span></a>
+    <button class="pxs-trigger" aria-label="Open search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Search</button>
+    <div style="flex:1;"></div>
+    <div style="position:relative;">
+      <button id="pagesBtn"><i class="fas fa-th-large" style="font-size:12px;"></i> Pages <i class="fas fa-chevron-down" id="pagesBtnChevron" style="font-size:10px;transition:transform 0.2s;"></i></button>
+      <div id="pagesPanel">
+        <div class="pages-header">All Pages</div>
+        <a href="index.html" class="page-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="hiring.html" class="page-item"><i class="fas fa-laptop-code"></i><span>Join Us</span></a>
+        <a href="x-academy.html" class="page-item"><i class="fas fa-graduation-cap"></i><span>X-Academy</span></a>
+        <a href="docs.html" class="page-item current"><i class="fas fa-book"></i><span>Docs</span></a>
+        <a href="community.html" class="page-item"><i class="fas fa-users"></i><span>Community</span></a>
+        <a href="bugreport.html" class="page-item"><i class="fas fa-bug"></i><span>Report Bug</span></a>
+        <a href="redeemcode.html" class="page-item"><i class="fas fa-gift"></i><span>Redeem Code</span></a>
+        <a href="aboutus.html" class="page-item"><i class="fas fa-info-circle"></i><span>About Us</span></a>
+        <a href="settings.html" class="page-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+      </div>
+    </div>
+    <a href="login.html" class="nav-login"><i class="fas fa-sign-in-alt" style="font-size:13px;"></i><span>Sign In</span></a>
+    <button id="mobileToggle"><i class="fas fa-bars"></i></button>
+  </div>
+  <div id="mobileMenu" style="display:none;background:var(--surface);border-top:1px solid var(--border);padding:16px 24px;">
+    <a href="hiring.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Join Us</a>
+    <a href="x-academy.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">X-Academy</a>
+    <a href="docs.html" style="display:block;padding:10px 0;color:var(--neon);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Docs</a>
+    <a href="community.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Community</a>
+    <a href="bugreport.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Report Bug</a>
+    <a href="redeemcode.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Redeem Code</a>
+    <a href="aboutus.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;">About Us</a>
+  </div>
+</nav>
+
+<!-- DOCS HERO -->
+<section id="docsHero">
+  <div class="docs-badge"><span class="dot"></span>5 Projects Documented</div>
+  <h1 class="docs-h1">Phine<span>X</span> Docs</h1>
+  <p class="docs-sub">What every PhineX project actually does, and clear steps to fix the problems people run into most. If something's still broken after these steps, our team is one click away.</p>
+  <button class="pxs-trigger docs-search-box" aria-label="Search the docs">
+    <i class="fas fa-search"></i>
+    <span>Search projects, features, fixes…</span>
+    <kbd>⌘K</kbd>
+  </button>
+</section>
+
+<!-- DOCS BODY -->
+<div id="docsBody">
+
+  <div class="docs-mobile-jump" id="mobileJump">
+    <a href="#overview">Overview</a>
+    <a href="#eljasus">ElJasus</a>
+    <a href="#jms">JMS</a>
+    <a href="#x-code">X-Code</a>
+    <a href="#solvex">SolveX</a>
+    <a href="#x-academy">Academy</a>
+    <a href="#amg-portfolio">Portfolio</a>
+    <a href="#fix-eljasus">Fix: ElJasus</a>
+    <a href="#fix-x-code">Fix: X-Code</a>
+    <a href="#fix-solvex">Fix: SolveX</a>
+    <a href="#fix-academy">Fix: Academy</a>
+    <a href="#fix-account">Fix: Account</a>
+    <a href="#get-help">Get Help</a>
+  </div>
+
+  <aside class="docs-sidebar" id="docsSidebar">
+    <div class="docs-nav-group">
+      <div class="docs-nav-label">Overview</div>
+      <a href="#overview" class="docs-nav-link"><i class="fas fa-compass"></i>Welcome</a>
+    </div>
+    <div class="docs-nav-group">
+      <div class="docs-nav-label">Projects</div>
+      <a href="#eljasus" class="docs-nav-link"><i class="fas fa-user-secret"></i>ElJasus</a>
+      <a href="#jms" class="docs-nav-link sub"><i class="fas fa-shield-alt"></i>JMS</a>
+      <a href="#x-code" class="docs-nav-link"><i class="fas fa-code"></i>X-Code</a>
+      <a href="#solvex" class="docs-nav-link"><i class="fas fa-square-root-alt"></i>SolveX</a>
+      <a href="#x-academy" class="docs-nav-link"><i class="fas fa-graduation-cap"></i>X-Academy &amp; XLibrary</a>
+      <a href="#amg-portfolio" class="docs-nav-link"><i class="fas fa-briefcase"></i>AMG Portfolio</a>
+    </div>
+    <div class="docs-nav-group">
+      <div class="docs-nav-label">Troubleshooting</div>
+      <a href="#fix-eljasus" class="docs-nav-link"><i class="fas fa-wrench"></i>ElJasus &amp; JMS</a>
+      <a href="#fix-x-code" class="docs-nav-link"><i class="fas fa-wrench"></i>X-Code</a>
+      <a href="#fix-solvex" class="docs-nav-link"><i class="fas fa-wrench"></i>SolveX</a>
+      <a href="#fix-academy" class="docs-nav-link"><i class="fas fa-wrench"></i>X-Academy</a>
+      <a href="#fix-account" class="docs-nav-link"><i class="fas fa-wrench"></i>Account &amp; Access</a>
+    </div>
+    <div class="docs-nav-group">
+      <div class="docs-nav-label">Support</div>
+      <a href="#get-help" class="docs-nav-link"><i class="fas fa-life-ring"></i>Still stuck?</a>
+    </div>
+  </aside>
+
+  <div class="docs-content">
+
+    <!-- OVERVIEW -->
+    <section class="doc-section reveal" id="overview">
+      <div class="doc-eyebrow">Getting Started</div>
+      <h2 class="doc-h2">Welcome to PhineX Docs</h2>
+      <p class="doc-p">
+        PhineX started on <strong>November 13, 2025</strong>, founded by <strong>@A.Elgohary</strong> on a simple idea: building software alone takes months, building it with a team of senior developers takes weeks. Instead of developers working in isolation, PhineX runs a community-first model — senior programmers collaborate, mentor newcomers through <strong>X-Academy</strong>, and split profits fairly across every shipped project.
+      </p>
+      <p class="doc-p">
+        This page covers two things: <strong>what each PhineX project actually does</strong>, and <strong>how to fix the problems people run into most</strong> — organized the way you'd expect from any product docs, grouped by project in the sidebar.
+      </p>
+      <div class="doc-callout tip">
+        <i class="fas fa-lightbulb"></i>
+        <div>
+          <div class="doc-callout-title">Fastest way to find something</div>
+          <div class="doc-callout-body">Use the search box at the top of this page (or press the search icon in the navbar) — it's wired into every section here, including the fix guides.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ELJASUS -->
+    <section class="doc-section reveal" id="eljasus">
+      <div class="doc-eyebrow">Project</div>
+      <h2 class="doc-h2"><span class="doc-icon-badge">🕵️</span> ElJasus</h2>
+      <div class="doc-meta-row">
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">Firebase</span>
+        <span class="stack-tag">Tailwind CSS</span>
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </div>
+      <p class="doc-p">
+        ElJasus is a real-time multiplayer party game for friends and family — a mix of acting and detective work built entirely on JavaScript and Firebase, so rounds play out live with no page refresh needed.
+      </p>
+      <p class="doc-p">
+        Each round, the game randomly assigns <strong>one player as the Spy</strong>; everyone else is an Innocent. The host picks a category, and the system randomly chooses a secret word from it — only the Innocents get to see it. Nobody, Spy or Innocent, knows who holds which role.
+      </p>
+      <p class="doc-p">
+        Players take turns asking each other questions about the secret word without saying it outright. Innocents answer naturally since they know the word; the Spy has to bluff convincingly while trying to piece together what the word is from everyone else's answers. After enough rounds of discussion, the group votes on who they think the Spy is.
+      </p>
+      <p class="doc-p">
+        If the group's vote lands on the real Spy, the Spy gets one last chance — guess the secret word correctly and the Spy still wins despite being caught. If the vote lands on an innocent player instead, the Spy wins outright.
+      </p>
+      <div class="doc-links">
+        <a href="https://phinex-org.github.io/ElJasus/" target="_blank" class="doc-btn doc-btn-primary"><i class="fas fa-external-link-alt"></i>Play ElJasus</a>
+        <a href="https://github.com/PhineX-org/ElJasus" target="_blank" class="doc-btn doc-btn-outline"><i class="fab fa-github"></i>Source</a>
+      </div>
+
+      <!-- JMS sub-card -->
+      <div class="doc-subcard" id="jms">
+        <div class="doc-subcard-tag">Built into ElJasus</div>
+        <h3 class="doc-h2" style="font-size:1.4rem;margin-bottom:12px;"><span class="doc-icon-badge" style="width:36px;height:36px;font-size:16px;">🛡️</span> JMS — El Jasus Moderation System</h3>
+        <p class="doc-p">
+          JMS is the chat filter running behind every ElJasus room. It scans messages for profanity, harassment, spam, and threats, and escalates through five severity levels — from a quiet warning up to an instant, non-appealable ban for genuine threats.
+        </p>
+        <div class="level-pill-row">
+          <span class="level-pill"><span class="level-dot" style="background:#fbbf24;"></span>Lvl 1 · Minor</span>
+          <span class="level-pill"><span class="level-dot" style="background:#fb923c;"></span>Lvl 2 · Harassment</span>
+          <span class="level-pill"><span class="level-dot" style="background:#f87171;"></span>Lvl 3 · Severe profanity</span>
+          <span class="level-pill"><span class="level-dot" style="background:#c084fc;"></span>Lvl 4 · Hate speech</span>
+          <span class="level-pill"><span class="level-dot" style="background:#ef4444;"></span>Lvl 5 · Threats (permanent)</span>
+        </div>
+        <p class="doc-p">
+          The current version (<strong>v4.0</strong>) rebuilt the detection engine around whole-word matching instead of raw substring scanning, which fixes a common false-positive class — ordinary words like "hello" or "class" no longer get flagged just because they contain "hell" or "ass". It also removed rules that used to flag religious symbols, pride/trans flags, and neutral identity words (like "gay" or "autistic") as violations — only genuine slurs and harassment are caught now. Deliberately obfuscated text (spaced-out letters, symbol substitutions like "id10t") is still caught by a dedicated evasion check.
+        </p>
+        <div class="doc-callout tip">
+          <i class="fas fa-shield-halved"></i>
+          <div>
+            <div class="doc-callout-title">Multi-language aware</div>
+            <div class="doc-callout-body">JMS reads Arabic, English, and Franco-Arabic (Arabic written with Latin letters and numbers, e.g. "5ara") in the same pass, so switching languages mid-message doesn't slip past it.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- X-CODE -->
+    <section class="doc-section reveal" id="x-code">
+      <div class="doc-eyebrow">Project</div>
+      <h2 class="doc-h2"><span class="doc-icon-badge">🌐</span> X-Code</h2>
+      <div class="doc-meta-row">
+        <span class="stack-tag">HTML5</span>
+        <span class="stack-tag">CSS3</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">GitHub Pages</span>
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </div>
+      <p class="doc-p">
+        X-Code is a browser-based code editor built for web development — a lighter, simpler alternative to VS Code that runs entirely in the browser, no install required. It's also the practice environment used inside XLibrary's course exercises.
+      </p>
+      <div class="doc-feature-grid">
+        <div class="doc-feature"><i class="fas fa-robot"></i><div class="doc-feature-title">Free AI Assistance</div><div class="doc-feature-desc">Built-in AI chat for help while you code, no subscription needed.</div></div>
+        <div class="doc-feature"><i class="fas fa-language"></i><div class="doc-feature-title">Multi-language Support</div><div class="doc-feature-desc">Syntax highlighting and tooling across web languages.</div></div>
+        <div class="doc-feature"><i class="fas fa-folder-tree"></i><div class="doc-feature-title">File Explorer</div><div class="doc-feature-desc">Full project view alongside the editor pane.</div></div>
+        <div class="doc-feature"><i class="fas fa-magnifying-glass"></i><div class="doc-feature-title">Collaborative Search</div><div class="doc-feature-desc">Search across files quickly while working with others.</div></div>
+        <div class="doc-feature"><i class="fas fa-pen-ruler"></i><div class="doc-feature-title">Drawing Tools</div><div class="doc-feature-desc">Sketch out layouts and ideas without leaving the editor.</div></div>
+        <div class="doc-feature"><i class="fas fa-expand"></i><div class="doc-feature-title">Ratio &amp; Zoom Setup</div><div class="doc-feature-desc">Adjust your workspace ratio and zoom for visual clarity.</div></div>
+        <div class="doc-feature"><i class="fas fa-palette"></i><div class="doc-feature-title">Theme Customization</div><div class="doc-feature-desc">Make the editor match how you like to work.</div></div>
+      </div>
+      <div class="doc-links">
+        <a href="https://phinex-org.github.io/X-Code/" target="_blank" class="doc-btn doc-btn-primary"><i class="fas fa-external-link-alt"></i>Open X-Code</a>
+        <a href="https://github.com/PhineX-org/X-Code" target="_blank" class="doc-btn doc-btn-outline"><i class="fab fa-github"></i>Source</a>
+      </div>
+    </section>
+
+    <!-- SOLVEX -->
+    <section class="doc-section reveal" id="solvex">
+      <div class="doc-eyebrow">Project</div>
+      <h2 class="doc-h2"><span class="doc-icon-badge">📐</span> ΣolveX</h2>
+      <div class="doc-meta-row">
+        <span class="stack-tag">Firebase</span>
+        <span class="stack-tag">Tailwind CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">GitHub Pages</span>
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </div>
+      <p class="doc-p">
+        SolveX is a free, AI-powered math solver built to handle a wide range of problem types with accurate, worked-through answers rather than just a final number.
+      </p>
+      <div class="doc-feature-grid">
+        <div class="doc-feature"><i class="fas fa-list-ol"></i><div class="doc-feature-title">Step-by-step Solutions</div><div class="doc-feature-desc">See the working, not just the answer.</div></div>
+        <div class="doc-feature"><i class="fas fa-camera"></i><div class="doc-feature-title">Photo &amp; Video Upload</div><div class="doc-feature-desc">Snap a problem instead of typing it out.</div></div>
+        <div class="doc-feature"><i class="fas fa-earth-africa"></i><div class="doc-feature-title">Arabic Support</div><div class="doc-feature-desc">Works with Arabic-language problems and input.</div></div>
+      </div>
+      <div class="doc-links">
+        <a href="https://phinex-org.github.io/SolveX/" target="_blank" class="doc-btn doc-btn-primary"><i class="fas fa-external-link-alt"></i>Open SolveX</a>
+        <a href="https://github.com/PhineX-org/SolveX" target="_blank" class="doc-btn doc-btn-outline"><i class="fab fa-github"></i>Source</a>
+      </div>
+    </section>
+
+    <!-- X-ACADEMY / XLIBRARY -->
+    <section class="doc-section reveal" id="x-academy">
+      <div class="doc-eyebrow">Project</div>
+      <h2 class="doc-h2"><span class="doc-icon-badge">🎓</span> X-Academy &amp; XLibrary</h2>
+      <div class="doc-meta-row">
+        <span class="stack-tag">Firebase</span>
+        <span class="stack-tag">Tailwind CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">X-Code</span>
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </div>
+      <p class="doc-p">
+        X-Academy is PhineX's training ground, launched December 2025. It runs two tracks side by side:
+      </p>
+      <div class="doc-feature-grid">
+        <div class="doc-feature"><i class="fas fa-graduation-cap"></i><div class="doc-feature-title">Student Track — Free</div><div class="doc-feature-desc">Self-paced HTML/CSS/JS curriculum, a Discord learning community, and senior-developer mentorship. Open to any skill level.</div></div>
+        <div class="doc-feature"><i class="fas fa-bolt"></i><div class="doc-feature-title">Developer Track — Assessment required</div><div class="doc-feature-desc">Pass a pretest and practical assessment to join the paid X-Developers team, with revenue sharing on real projects.</div></div>
+      </div>
+      <p class="doc-p" style="margin-top:22px;">
+        The curriculum runs from foundations to deployment: <strong>HTML &amp; Semantics</strong>, <strong>CSS &amp; Animations</strong>, <strong>JavaScript ES6+</strong>, <strong>Firebase &amp; Backend</strong>, <strong>Mobile Development</strong>, and <strong>Deploy &amp; DevOps</strong>. <strong>XLibrary</strong> is the free, public version of that beginner curriculum — same material, paired with hands-on projects you build and debug directly inside X-Code.
+      </p>
+      <div class="doc-links">
+        <a href="x-academy.html" class="doc-btn doc-btn-primary"><i class="fas fa-arrow-right"></i>Visit X-Academy</a>
+        <a href="https://phinex-org.github.io/XLibrary/" target="_blank" class="doc-btn doc-btn-outline"><i class="fas fa-book"></i>Open XLibrary</a>
+      </div>
+    </section>
+
+    <!-- AMG PORTFOLIO -->
+    <section class="doc-section reveal" id="amg-portfolio">
+      <div class="doc-eyebrow">Project</div>
+      <h2 class="doc-h2"><span class="doc-icon-badge">🐉</span> AMG Portfolio</h2>
+      <div class="doc-meta-row">
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </div>
+      <p class="doc-p">
+        A personal portfolio site for PhineX's founder, <strong>Ahmed Al Gohary (AMG)</strong>, showcasing his own creative and professional work. It's one of PhineX's first shipped projects (originally "EG Portfolio", January 2026) — not an interactive product with its own accounts, so it isn't covered in the troubleshooting section below.
+      </p>
+      <div class="doc-links">
+        <a href="https://phinex-org.github.io/Portfolio/" target="_blank" class="doc-btn doc-btn-outline"><i class="fas fa-external-link-alt"></i>View Portfolio</a>
+      </div>
+    </section>
+
+    <!-- ============ TROUBLESHOOTING ============ -->
+
+    <!-- FIX: ELJASUS & JMS -->
+    <section class="doc-section reveal" id="fix-eljasus">
+      <div class="doc-eyebrow">Troubleshooting</div>
+      <h2 class="doc-h2"><i class="fas fa-wrench" style="font-size:0.75em;color:var(--muted);"></i> ElJasus &amp; JMS</h2>
+      <p class="doc-p">Common problems in-game, and what they usually mean.</p>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-comment-slash"></i>My message didn't send, or I got warned unexpectedly</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">A warning means <strong>JMS</strong> flagged something in your message as profanity, harassment, or spam — the ban screen or toast tells you which level. Re-read your message for anything that could match, including l33tspeak spellings.</span></li>
+          <li><span class="fix-step-text">Check your <strong>connection</strong> — a message that looks like it didn't send may just be a slow Firebase round-trip. Wait a few seconds before resending.</span></li>
+          <li><span class="fix-step-text">If you're confident the message was clean, it's worth reporting — JMS v4.0 fixed a lot of false positives, but new dialect-specific ones can still slip through.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-ban"></i>I think I was banned by mistake</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">The ban screen shows the <strong>level</strong> and <strong>duration</strong> — Levels 1–4 are temporary (hours to weeks); Level 5 (direct threats) is permanent and isn't lifted.</span></li>
+          <li><span class="fix-step-text">Repeat offenses shorten the warning threshold before the next ban, so a second flag can escalate faster than the first.</span></li>
+          <li><span class="fix-step-text">For temporary bans you believe were wrong, reach out on <strong>Discord</strong> with the room code and roughly when it happened — the team can check the flagged message.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-plug-circle-xmark"></i>Round got stuck, or a player disconnected</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Refresh the page — ElJasus syncs game state through Firebase, so rejoining the same room code puts you right back in.</span></li>
+          <li><span class="fix-step-text">If the whole room is frozen, ask the <strong>host</strong> to restart the round — only the host can force a new round.</span></li>
+          <li><span class="fix-step-text">Still stuck after a refresh and a new round? It's likely a real bug — please report it (see <a href="#get-help">Get Help</a> below).</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FIX: X-CODE -->
+    <section class="doc-section reveal" id="fix-x-code">
+      <div class="doc-eyebrow">Troubleshooting</div>
+      <h2 class="doc-h2"><i class="fas fa-wrench" style="font-size:0.75em;color:var(--muted);"></i> X-Code</h2>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-file-circle-exclamation"></i>My files or code disappeared after refreshing</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Make sure you're not in <strong>private/incognito</strong> mode — local storage is wiped when that window closes.</span></li>
+          <li><span class="fix-step-text">Check your browser hasn't blocked site storage/cookies for X-Code specifically (site settings → permissions).</span></li>
+          <li><span class="fix-step-text">If autosave genuinely dropped your work, report it with your browser and OS — that's the fastest way to trace it.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-robot"></i>The AI assistant isn't responding</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Check your internet connection, then retry — free AI access can be rate-limited under heavy load.</span></li>
+          <li><span class="fix-step-text">Refresh the page once if it's been stuck for more than a minute.</span></li>
+          <li><span class="fix-step-text">Still nothing? It's likely a provider-side outage rather than your setup — try again shortly.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-gauge-high"></i>Editor feels laggy on large files</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Close unused tabs in the file explorer — each open tab keeps state in memory.</span></li>
+          <li><span class="fix-step-text">Lower the workspace zoom/ratio setting — heavier visual themes cost more on large documents.</span></li>
+          <li><span class="fix-step-text">Split very large files where you can; the editor is tuned for typical web-project file sizes.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FIX: SOLVEX -->
+    <section class="doc-section reveal" id="fix-solvex">
+      <div class="doc-eyebrow">Troubleshooting</div>
+      <h2 class="doc-h2"><i class="fas fa-wrench" style="font-size:0.75em;color:var(--muted);"></i> SolveX</h2>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-image"></i>Photo upload isn't solving correctly</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Make sure the shot is <strong>well-lit, in focus, and cropped</strong> to just the problem — stray handwriting or glare is the most common cause of misreads.</span></li>
+          <li><span class="fix-step-text">Straighten the photo if it was taken at an angle; skewed text is harder to parse than upside-down text.</span></li>
+          <li><span class="fix-step-text">For handwritten problems, write digits and symbols (especially ×, ÷, √) clearly and separated.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-calculator"></i>The steps skip ahead, or the final answer looks wrong</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Double-check how you typed the problem — ambiguous notation (missing parentheses, unclear exponents) is the usual culprit.</span></li>
+          <li><span class="fix-step-text">Try rephrasing or retyping the problem instead of re-uploading the same photo.</span></li>
+          <li><span class="fix-step-text">If it's consistently wrong for a specific problem type, that's worth reporting as an edge case.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-earth-africa"></i>Arabic input isn't being recognized</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Confirm the language toggle is actually set to Arabic before submitting.</span></li>
+          <li><span class="fix-step-text">Avoid mixing Arabic and English digits/symbols in the same expression where possible.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FIX: X-ACADEMY -->
+    <section class="doc-section reveal" id="fix-academy">
+      <div class="doc-eyebrow">Troubleshooting</div>
+      <h2 class="doc-h2"><i class="fas fa-wrench" style="font-size:0.75em;color:var(--muted);"></i> X-Academy</h2>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-hourglass-half"></i>The pretest or developer test froze, or won't submit</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Use an up-to-date <strong>Chrome, Edge, or Firefox</strong> — older browser versions are the most common cause of a stuck test screen.</span></li>
+          <li><span class="fix-step-text">Stay on a stable connection for the whole test; don't refresh mid-test, since that can reset your progress and timer.</span></li>
+          <li><span class="fix-step-text">If it genuinely froze partway through, note the question number and message the team on Discord rather than retrying repeatedly.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-envelope-circle-check"></i>I haven't heard back about my Developer Track results</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Results and next steps are usually shared through <strong>Discord</strong>, not email — make sure you've joined the server and DMs are open.</span></li>
+          <li><span class="fix-step-text">Give it a few days during busy assessment periods before following up.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FIX: ACCOUNT -->
+    <section class="doc-section reveal" id="fix-account">
+      <div class="doc-eyebrow">Troubleshooting</div>
+      <h2 class="doc-h2"><i class="fas fa-wrench" style="font-size:0.75em;color:var(--muted);"></i> Account &amp; Access</h2>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-gift"></i>My redeem code isn't working</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Copy the code exactly — extra spaces or a stray character at the start/end is the most common issue.</span></li>
+          <li><span class="fix-step-text">Codes are <strong>one-time use</strong>; if someone else already redeemed it, it won't work a second time.</span></li>
+          <li><span class="fix-step-text">Expired or already-used codes need to be reissued — ask in Discord with where you originally got the code.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-key"></i>I can't log in, or forgot my password</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Use <strong>Forgot Password</strong> on the sign-in page to get a reset link by email.</span></li>
+          <li><span class="fix-step-text">If you originally signed up with <strong>Google</strong>, use the Google button instead of typing a password — those accounts don't have one.</span></li>
+          <li><span class="fix-step-text">Check spam/junk folders for the reset email before requesting another one.</span></li>
+        </ul>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-title"><i class="fas fa-envelope"></i>Verification email never arrived</div>
+        <ul class="fix-steps">
+          <li><span class="fix-step-text">Check spam/promotions folders first — this is by far the most common cause.</span></li>
+          <li><span class="fix-step-text">Confirm the email address was typed correctly during sign-up before requesting a resend.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- GET HELP -->
+    <section class="doc-section reveal" id="get-help" style="border-bottom:none;">
+      <div class="doc-eyebrow">Support</div>
+      <h2 class="doc-h2">Still stuck?</h2>
+      <p class="doc-p">These guides cover the problems people hit most, but they won't cover everything. Two ways to reach an actual human:</p>
+      <div class="doc-links">
+        <a href="https://discord.gg/wk4xtQVRzm" target="_blank" class="doc-btn doc-btn-primary"><i class="fab fa-discord"></i>Ask on Discord</a>
+        <a href="bugreport.html" class="doc-btn doc-btn-outline"><i class="fas fa-bug"></i>Report a Bug</a>
+      </div>
+      <div class="doc-callout warn" style="margin-top:28px;">
+        <i class="fas fa-triangle-exclamation"></i>
+        <div>
+          <div class="doc-callout-title">Heads up</div>
+          <div class="doc-callout-body">These fix guides are a first pass based on how each project is built, not a log of confirmed reported bugs — if a step doesn't match what you're actually seeing, Discord is the fastest way to get a real answer.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="text-decoration:none;"><div class="logo-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div><span class="logo-text">Phine<span>X</span></span></a>
+      <p>A community of senior programmers building innovative solutions together since 2025.</p>
+      <div class="social-row">
+        <a href="https://discord.gg/wk4xtQVRzm" class="social-btn" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://www.github.com/PhineX-org" class="social-btn" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/phinex_group/" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.notion.so/invite/d6d9824c6e712e4f95d8cc14b8e93467cadea20e" class="social-btn" target="_blank"><i class="fab fa-notion"></i></a>
+        <a href="https://www.linkedin.com/groups/18865045/" class="social-btn" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" class="social-btn" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61584765330775" class="social-btn" target="_blank"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Platform</h4><a href="index.html">Home</a><a href="hiring.html">Join Us</a><a href="x-academy.html">X-Academy</a><a href="aboutus.html">About Us</a></div>
+    <div class="footer-col"><h4>Docs</h4><a href="#eljasus">ElJasus &amp; JMS</a><a href="#x-code">X-Code</a><a href="#solvex">SolveX</a><a href="#get-help">Get Help</a></div>
+    <div class="footer-col"><h4>Community</h4><a href="https://discord.gg/wk4xtQVRzm" target="_blank">Discord Server</a><a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" target="_blank">WhatsApp Group</a><a href="https://www.facebook.com/profile.php?id=61584765330775" target="_blank">Facebook Page</a><a href="https://www.github.com/PhineX-org" target="_blank">Github Account</a></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 PhineX. All rights reserved.</p><p>Made with ❤️ by <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank">Ahmed Al Gohary</a></p></div>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+  // PAGES PANEL
+  const pBtn=document.getElementById('pagesBtn'),pPanel=document.getElementById('pagesPanel'),chv=document.getElementById('pagesBtnChevron');
+  pBtn.addEventListener('click',e=>{e.stopPropagation();const a=pPanel.classList.toggle('active');chv.style.transform=a?'rotate(180deg)':'';});
+  document.addEventListener('click',e=>{if(!e.target.closest('#pagesBtn')&&!e.target.closest('#pagesPanel')){pPanel.classList.remove('active');chv.style.transform='';}});
+
+  // SCROLL EFFECTS
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backToTop').classList.toggle('visible',window.scrollY>300);});
+
+  // MOBILE MENU
+  document.getElementById('mobileToggle').addEventListener('click',()=>{const m=document.getElementById('mobileMenu');m.style.display=m.style.display==='none'?'block':'none';});
+
+  // REVEAL ON SCROLL
+  const revealObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+  // SCROLL-SPY — highlight the active sidebar link + mobile pill as you scroll
+  (function(){
+    const sections = document.querySelectorAll('.doc-section[id]');
+    const sidebarLinks = document.querySelectorAll('.docs-nav-link');
+    const jumpLinks = document.querySelectorAll('.docs-mobile-jump a');
+
+    function setActive(id) {
+      sidebarLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      jumpLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    }
+
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(s => spy.observe(s));
+
+    // JMS lives inside the ElJasus section but has its own sidebar link —
+    // give it its own (smaller) observer so it can take over the highlight
+    // once you've actually scrolled down into it.
+    const jmsCard = document.getElementById('jms');
+    if (jmsCard) {
+      const jmsSpy = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) setActive('jms'); });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      jmsSpy.observe(jmsCard);
+    }
+  })();
+</script>
+
+</body>
+</html>

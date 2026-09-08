@@ -3,23 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Report a Bug | PhineX</title>
-  <link rel="icon" type="image/x-icon" href="Phinex - Copy2.png">
+  <title>Redeem Code | PhineX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="keywords" content="PhineX, about us, developer community, senior developers, software development, mentorship, tech talent, collaborative programming, software projects">
+  <meta name="author" content="AMG">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revised" content="2024-06-01">
+  <meta name="category" content="Technology, Community, Software Development">
+  <meta name="coverage" content="Worldwide">
+  <meta name="rating" content="General">
+  <meta name="distribution" content="Global">
+  <meta name="og:title" content="Redeem Code | PhineX">
+  <meta name="og:description" content="Redeem your exclusive code on PhineX to unlock special features, access premium content, or claim your rewards.">
+  <meta name="og:image" content="PhineX (2).png">
+  <link rel="icon" type="image/x-icon" href="PhineX (2).png">
+  <script src="phinex-settings.js"></script>
+  <script src="bg3d.js"></script>
+  <meta name="description" content="Redeem your exclusive code on PhineX to unlock special features, access premium content, or claim your rewards.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="bg3d.js"></script>
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
-
   <style>
-    :root{--neon:#39ff14;--void:#050508;--card:#13131e;--border:#ffffff10;--text:#f0f0ff;--muted:#7070a0;--red:#ff4444;--orange:#ff9632;--yellow:#ffd700;}
+    :root{--neon:#39ff14;--void:#050508;--card:#13131e;--border:#ffffff10;--text:#f0f0ff;--muted:#7070a0;--gold:#ffd700;--gold-dim:rgba(255,215,0,0.08);}
     *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
     body{font-family:'DM Sans',sans-serif;background:var(--void);color:var(--text);overflow-x:hidden;min-height:100vh;}
-    h1,h2,h3,h4{font-family:'Syne',sans-serif;}
+    h1,h2,h3,.syne{font-family:'Syne',sans-serif;}
     .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(57,255,20,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,20,0.03) 1px,transparent 1px);background-size:60px 60px;}
+
     nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
     .nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;gap:16px;}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
@@ -36,141 +46,96 @@
     @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
-    .reveal-delay-1{transition-delay:0.1s;}.reveal-delay-2{transition-delay:0.2s;}
-    .hero{min-height:52vh;display:flex;align-items:center;padding:100px 24px 60px;position:relative;overflow:hidden;}
-    .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-    .bug-scene{perspective:900px;display:flex;justify-content:flex-end;}
-    .bug-card{width:260px;background:linear-gradient(145deg,#1a0808,#210f0f);border:1px solid rgba(255,68,68,0.2);border-radius:22px;padding:28px 24px;box-shadow:0 40px 80px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.04);animation:bugFloat 5s ease-in-out infinite;}
-    @keyframes bugFloat{0%,100%{transform:rotateY(-10deg) rotateX(3deg) translateY(0);}50%{transform:rotateY(-7deg) rotateX(1deg) translateY(-14px);}}
-    .bug-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-    .bug-severity{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 8px rgba(255,68,68,0.6);animation:blink 1.5s infinite;}
-    .bug-card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
-    .bug-meta{font-size:11px;color:var(--muted);}
-    .bug-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
-    .bug-item:last-child{border-bottom:none;}
-    .bug-item i{width:16px;text-align:center;}
-    .bug-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:auto;}
-    .tag-critical{background:rgba(255,68,68,0.12);border:1px solid rgba(255,68,68,0.2);color:var(--red);}
-    .tag-resolved{background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.15);color:var(--neon);}
-    .tag-pending{background:rgba(255,150,50,0.08);border:1px solid rgba(255,150,50,0.15);color:var(--orange);}
-    .form-section{padding:60px 24px 100px;position:relative;z-index:1;}
-    .form-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
-    .form-card{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;}
-    .form-card-header{padding:24px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
-    .form-card-body{padding:32px;}
-    .form-group{margin-bottom:22px;}
-    .form-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-    .required-dot{color:var(--red);font-size:14px;line-height:1;}
-    .form-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);transition:all 0.2s;outline:none;}
-    .form-input:focus{border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.03);box-shadow:0 0 0 3px rgba(57,255,20,0.08);}
-    .form-input::placeholder{color:rgba(112,112,160,0.6);}
-    select.form-input option{background:#13131e;}
-    textarea.form-input{resize:vertical;min-height:130px;}
-    #pagesBtn{flex-shrink:0;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:0 14px;height:40px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
-    #pagesBtn:hover{border-color:var(--neon);color:var(--neon);background:rgba(57,255,20,0.05);}
-    #pagesPanel{position:absolute;top:calc(100% + 8px);right:24px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;width:300px;box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 0 1px rgba(57,255,20,0.1);display:none;z-index:200;}
-    #pagesPanel.active{display:block;animation:dropIn 0.2s ease;}
-    .pages-header{padding:4px 8px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border);margin-bottom:8px;}
-    .page-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer;text-decoration:none;color:var(--text);transition:all 0.15s;}
-    .page-item:hover{background:rgba(57,255,20,0.07);color:var(--neon);}
-    .page-item i{width:28px;text-align:center;font-size:14px;color:var(--muted);transition:color 0.15s;}
-    .page-item:hover i{color:var(--neon);}
-    .page-item span{font-size:13px;font-weight:500;}
-    .severity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-    .severity-btn{padding:10px 8px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-    .severity-btn:hover{border-color:rgba(255,255,255,0.2);}
-    .severity-btn.selected{border-width:2px;}
-    .severity-btn.critical.selected{border-color:var(--red);background:rgba(255,68,68,0.08);}
-    .severity-btn.high.selected{border-color:var(--orange);background:rgba(255,150,50,0.08);}
-    .severity-btn.medium.selected{border-color:var(--yellow);background:rgba(255,215,0,0.08);}
-    .severity-btn.low.selected{border-color:var(--neon);background:rgba(57,255,20,0.08);}
-    .severity-emoji{font-size:22px;display:block;margin-bottom:4px;}
-    .severity-label{font-size:11px;font-weight:600;}
-    .file-drop{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all 0.2s;}
-    .file-drop:hover,.file-drop.over{border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.03);}
-    .file-drop i{font-size:28px;color:var(--muted);margin-bottom:10px;display:block;}
-    .file-drop p{font-size:13px;color:var(--muted);}
-    .file-drop span{color:var(--neon);}
-    .submit-btn{width:100%;padding:14px;border-radius:12px;background:var(--neon);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;}
-    .submit-btn:hover{background:#50ff28;box-shadow:0 0 40px rgba(57,255,20,0.35);transform:translateY(-2px);}
-    .submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-    .info-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;margin-bottom:20px;}
-    .info-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-    .info-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:flex-start;}
-    .info-item:last-child{border-bottom:none;}
-    .info-item i{color:var(--neon);margin-top:2px;font-size:12px;width:14px;flex-shrink:0;}
-    .info-item-text{color:var(--muted);line-height:1.6;}
-    .bug-row{padding:14px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:13px;}
-    .bug-row:last-child{border-bottom:none;}
-    .bug-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-    .bug-row-title{flex:1;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
-    .bug-row-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;white-space:nowrap;}
-    .success-overlay{position:fixed;inset:0;background:rgba(5,5,8,0.92);z-index:200;display:none;align-items:center;justify-content:center;}
-    .success-card{background:var(--card);border:1px solid rgba(57,255,20,0.3);border-radius:28px;padding:56px 48px;text-align:center;max-width:480px;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
-    @keyframes popIn{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
-    .success-icon{font-size:56px;margin-bottom:20px;display:block;}
 
-    /* ─── AUTH WALL ─── */
-    .auth-wall{
-      position:fixed;inset:0;z-index:500;
-      background:rgba(5,5,8,0.97);
-      backdrop-filter:blur(20px);
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 24px;position:relative;overflow:hidden;}
+
+    /* Particle stars */
+    .star{position:absolute;border-radius:50%;pointer-events:none;animation:twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s);}
+    @keyframes twinkle{0%,100%{opacity:0.15;transform:scale(1);}50%{opacity:0.8;transform:scale(1.4);}}
+
+    /* 3D Gift Card */
+    .gift-scene{perspective:1000px;margin-bottom:48px;animation:fadeUp 0.5s ease 0.2s both;}
+    .gift-card{
+      width:360px;height:220px;margin:0 auto;
+      background:linear-gradient(135deg,#1a1400,#2a2000);
+      border-radius:20px;
+      border:1px solid rgba(255,215,0,0.3);
+      box-shadow:0 40px 80px rgba(0,0,0,0.7),0 0 60px rgba(255,215,0,0.08),inset 0 1px 0 rgba(255,215,0,0.1);
+      animation:giftFloat 6s ease-in-out infinite;
+      position:relative;overflow:hidden;
       display:flex;align-items:center;justify-content:center;
-      padding:20px;
+      transform-style:preserve-3d;
     }
-    .auth-wall-card{
-      background:var(--card);
-      border:1px solid rgba(255,68,68,0.25);
-      border-radius:28px;padding:56px 48px;
-      text-align:center;max-width:480px;width:100%;
-      animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-      box-shadow:0 40px 80px rgba(0,0,0,0.7);
+    @keyframes giftFloat{
+      0%,100%{transform:rotateY(-8deg) rotateX(4deg) translateY(0);}
+      50%{transform:rotateY(-5deg) rotateX(2deg) translateY(-18px);}
     }
-    .auth-wall-card .icon{font-size:60px;margin-bottom:20px;display:block;}
-    .auth-wall-card h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:10px;}
-    .auth-wall-card p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px;}
-    .user-chip{
-      display:inline-flex;align-items:center;gap:8px;
-      background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);
-      border-radius:100px;padding:6px 14px;
-      font-size:13px;color:var(--neon);font-weight:600;
-      margin-bottom:24px;
-    }
-    .user-chip i{font-size:11px;}
+    .gift-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(255,215,0,0.04),transparent,rgba(255,215,0,0.04),transparent);animation:rotateSheen 8s linear infinite;}
+    @keyframes rotateSheen{to{transform:rotate(360deg);}}
+    .gift-card-inner{position:relative;z-index:1;text-align:center;padding:28px;}
+    .gift-logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--neon),#00cc88);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;}
+    .gift-logo i{color:#050508;font-size:22px;}
+    .gift-card-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#ffd700;margin-bottom:4px;}
+    .gift-card-sub{font-size:11px;color:rgba(255,215,0,0.5);}
+    .gift-code-preview{font-family:monospace;font-size:15px;color:rgba(255,215,0,0.6);letter-spacing:4px;margin-top:16px;padding:8px 16px;background:rgba(0,0,0,0.3);border-radius:8px;}
+    .gift-shine{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.06),transparent);animation:shine 4s ease-in-out infinite;}
+    @keyframes shine{0%{left:-100%;}60%,100%{left:150%;}}
 
-    /* ─── REDEEM CODE MODAL ─── */
-    .redeem-modal-overlay{position:fixed;inset:0;z-index:600;background:rgba(5,5,8,0.92);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;}
-    .redeem-modal-overlay.show{display:flex;animation:fadeIn 0.3s ease;}
-    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-    .redeem-modal-card{background:var(--card);border:1px solid rgba(255,215,0,0.25);border-radius:24px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,0.8);transform:scale(0.9);opacity:0;transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275),opacity 0.3s;}
-    .redeem-modal-overlay.show .redeem-modal-card{transform:scale(1);opacity:1;}
-    .redeem-modal-card h2{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:10px;color:#ffd700;}
-    .redeem-modal-card p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
-    .redeem-modal-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,215,0,0.25);border-radius:11px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all 0.2s;margin-bottom:16px;text-transform:uppercase;letter-spacing:2px;text-align:center;}
-    .redeem-modal-input:focus{border-color:rgba(255,215,0,0.5);background:rgba(255,215,0,0.04);box-shadow:0 0 0 3px rgba(255,215,0,0.08);}
-    .redeem-modal-input::placeholder{color:rgba(112,112,160,0.5);}
-    .redeem-msg{font-size:12px;line-height:1.6;padding:12px 14px;border-radius:10px;margin-bottom:16px;display:none;align-items:flex-start;gap:8px;}
-    .redeem-msg.show{display:flex;}
-    .redeem-msg i{flex-shrink:0;font-size:13px;margin-top:2px;}
-    .redeem-msg.error{background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);color:#ff6464;}
-    .redeem-msg.success{background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);color:var(--neon);}
-    .redeem-msg.info{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);color:#ffd700;}
-    .redeem-modal-btns{display:flex;gap:10px;justify-content:center;}
-    .redeem-modal-cancel{background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--muted);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:11px 24px;border-radius:10px;cursor:pointer;transition:all 0.2s;}
-    .redeem-modal-cancel:hover{border-color:rgba(255,255,255,0.25);color:var(--text);}
-    .redeem-modal-btn{background:linear-gradient(135deg,#ffd700,#ffb300);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:11px 24px;border-radius:10px;border:none;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
-    .redeem-modal-btn:hover{box-shadow:0 0 30px rgba(255,215,0,0.3);transform:translateY(-1px);}
-    .redeem-modal-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+    /* HERO CONTENT */
+    .hero-content{text-align:center;max-width:600px;position:relative;z-index:2;}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:1px;margin-bottom:28px;animation:fadeUp 0.5s ease both;}
+    .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s infinite;display:block;}
+    .hero-h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-2px;animation:fadeUp 0.5s 0.1s ease both;}
+    .hero-h1 span{color:var(--gold);}
+    .hero-sub{font-size:15px;color:var(--muted);line-height:1.8;margin:20px 0 36px;animation:fadeUp 0.5s 0.15s ease both;}
+
+    /* CODE INPUT */
+    .code-input-wrap{animation:fadeUp 0.5s 0.2s ease both;}
+    .code-input-box{display:flex;gap:12px;max-width:500px;margin:0 auto 16px;}
+    .code-input{flex:1;background:rgba(255,255,255,0.04);border:2px solid rgba(255,215,0,0.2);border-radius:14px;padding:16px 20px;font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:4px;text-align:center;color:var(--gold);transition:all 0.3s;outline:none;text-transform:uppercase;}
+    .code-input:focus{border-color:rgba(255,215,0,0.5);background:rgba(255,215,0,0.04);box-shadow:0 0 0 4px rgba(255,215,0,0.08);}
+    .code-input::placeholder{font-size:14px;letter-spacing:2px;color:rgba(112,112,160,0.4);font-weight:400;}
+    .redeem-btn{background:linear-gradient(135deg,var(--gold),#ffb300);color:#050508;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;padding:16px 28px;border-radius:14px;border:none;cursor:pointer;transition:all 0.3s;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+    .redeem-btn:hover{box-shadow:0 0 40px rgba(255,215,0,0.3);transform:translateY(-2px);}
+    .redeem-hint{font-size:12px;color:var(--muted);text-align:center;}
+    .redeem-hint a{color:var(--neon);text-decoration:none;}
+    .redeem-hint a:hover{text-decoration:underline;}
+
+    /* STATE MESSAGES */
+    .state-msg{display:none;margin-top:20px;padding:16px 20px;border-radius:14px;font-size:14px;text-align:center;animation:fadeUp 0.3s ease;}
+    .state-msg.success{background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);color:var(--neon);}
+    .state-msg.error{background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);color:#ff6464;}
+    .state-msg.loading{background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);color:var(--gold);}
+
+    /* HOW TO GET */
+    .how-section{padding:80px 24px 100px;position:relative;z-index:1;}
+    .section-wrap{max-width:1000px;margin:0 auto;}
+    .section-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:12px;}
+    .section-tag::before{content:'';display:block;width:20px;height:2px;background:var(--neon);}
+    .section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-1px;margin-bottom:48px;}
+
+    .methods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    .method-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;text-align:center;transition:all 0.3s;}
+    .method-card:hover{border-color:rgba(255,215,0,0.2);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+    .method-icon{font-size:36px;margin-bottom:16px;display:block;}
+    .method-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;}
+    .method-desc{font-size:13px;color:var(--muted);line-height:1.7;}
 
     footer{border-top:1px solid var(--border);padding:40px 24px;position:relative;z-index:1;}
     .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
     .footer-links{display:flex;gap:24px;}
     .footer-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
     .footer-links a:hover{color:var(--neon);}
-    @media(max-width:1024px){.hero-inner{grid-template-columns:1fr;}.bug-scene{display:none;}.form-wrap{grid-template-columns:1fr;}}
-    @media(max-width:768px){.nav-links{display:none;}.severity-grid{grid-template-columns:repeat(2,1fr);}}
-  
-    /* ══════════ MOBILE RESPONSIVE — PhineX ══════════ */
+
+    /* Success full screen */
+    .redeem-success{position:fixed;inset:0;background:rgba(5,5,8,0.95);z-index:300;display:none;align-items:center;justify-content:center;}
+    .redeem-success-card{background:var(--card);border:2px solid rgba(57,255,20,0.3);border-radius:28px;padding:56px;text-align:center;max-width:480px;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
+    @keyframes popIn{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
+    .confetti-emoji{font-size:64px;margin-bottom:20px;display:block;animation:bounce 0.8s ease 0.2s both;}
+    @keyframes bounce{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+    /* ══════════ MOBILE RESPONSIVE ══════════ */
     *{min-width:0;}
     img,video{max-width:100%;height:auto;}
 
@@ -193,35 +158,29 @@
     .mobile-nav a{padding:12px 16px;border-radius:10px;font-size:14px;
                   color:#7070a0;text-decoration:none;transition:all .2s;
                   min-height:44px;display:flex;align-items:center;}
-    .mobile-nav a:hover,.mobile-nav a.active{color:#f0f0ff;
-      background:rgba(255,255,255,.06);}
+    .mobile-nav a:hover,.mobile-nav a.active{color:#f0f0ff;background:rgba(255,255,255,.06);}
     .mobile-nav .btn-neon{justify-content:center;margin-top:8px;}
 
-    @media(max-width:1024px){
-      .hero-inner{grid-template-columns:1fr;gap:40px;}
-      .hero-inner>*:last-child{display:none;}
-    }
     @media(max-width:768px){
       .ham{display:flex;}
       .nav-links{display:none!important;}
       .nav-inner .btn-neon,.nav-inner .nb-g{display:none;}
       body{overflow-x:hidden;}
       .hero{padding:88px 16px 48px;}
-      .hero-inner{gap:24px;}
-      .section-wrap,.page{padding-left:16px;padding-right:16px;}
-      .hero h1,.hero-h1,.h1{font-size:clamp(2.2rem,9vw,3.5rem)!important;letter-spacing:-1.5px!important;}
+      .gift-card{width:100%;max-width:320px;}
+      .code-input-box{flex-direction:column;}
+      .redeem-btn{justify-content:center;}
+      .how-section{padding:60px 16px 80px;}
+      .methods-grid{grid-template-columns:1fr;}
+      .section-title{font-size:clamp(1.6rem,6vw,2rem)!important;}
     }
     @media(max-width:480px){
       .mobile-nav a,.mobile-nav button{min-height:44px;}
       .btn-neon{min-height:44px;padding:10px 18px;}
       .hero{padding:80px 12px 40px;}
-      .hero h1,.hero-h1,.h1{font-size:clamp(1.9rem,8vw,2.8rem)!important;}
-      .cards-grid,.grid-2,.grid-3,[class*="-grid"]{grid-template-columns:1fr!important;}
-      .stats-row,.stat-row{flex-direction:column;gap:12px;}
-    }
-    @media(max-width:360px){
+      .hero-h1{font-size:clamp(2.2rem,9vw,3.5rem)!important;letter-spacing:-1.5px!important;}
+      .redeem-success-card{padding:32px 20px;}
       nav,.nav-inner{padding-left:12px!important;padding-right:12px!important;}
-      .hero{padding-left:8px;padding-right:8px;}
     }
     @media(hover:none){
       [class*="float"],[class*="Float"]{animation:none!important;}
@@ -229,49 +188,41 @@
     @media(orientation:landscape) and (max-height:500px){
       .hero{min-height:auto;padding-top:80px;}
     }
-    </style>
+  </style>
 </head>
 <body>
 <div class="grid-bg"></div>
 
-<!-- ─── AUTH WALL (shown until logged in) ─── -->
-<div class="auth-wall" id="authWall">
-  <div class="auth-wall-card">
-    <span class="icon">🔐</span>
-    <h2>Sign In Required</h2>
-    <p>You must be signed in to submit a bug report. Your report will be linked to your account.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> Sign In</a>
-      <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:10px 20px;border-radius:10px;text-decoration:none;">Back to Home</a>
-    </div>
-  </div>
-</div>
+<!-- Stars -->
+<script>
+for(let i=0;i<30;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const size=Math.random()*3+1;
+  s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;background:rgba(255,215,0,${Math.random()*0.3+0.1});--dur:${Math.random()*3+2}s;--delay:${Math.random()*3}s;`;
+  document.body.appendChild(s);
+}
+</script>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><div class="logo-icon"><i class="fas fa-dragon"></i></div><span class="logo-text">Phine<span>X</span></span></a>
-    <button id="pagesBtn"><i class="fas fa-th-large" style="font-size:12px;"></i> Pages <i class="fas fa-chevron-down" id="pagesBtnChevron" style="font-size:10px;transition:transform 0.2s;"></i></button>
-      <div id="pagesPanel">
-        <div class="pages-header">All Pages</div>
-        <a href="index.html" class="page-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="hiring.html" class="page-item"><i class="fas fa-laptop-code"></i><span>Join Us</span></a>
-        <a href="x-academy.html" class="page-item"><i class="fas fa-graduation-cap"></i><span>X-Academy</span></a>
-        <a href="bugreport.html" class="page-item"><i class="fas fa-bug"></i><span>Report Bug</span></a>
-        <a href="redeemcode.html" class="page-item"><i class="fas fa-gift"></i><span>Redeem Code</span></a>
-        <a href="aboutus.html" class="page-item"><i class="fas fa-info-circle"></i><span>About Us</span></a>
-        <a href="settings.html" class="page-item"><i class="fas fa-cog"></i><span>Settings</span></a>
-      </div>
-    
-    <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
-      <button class="pxs-trigger" aria-label="Open search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Search</button>
-      <!-- Logged-in user chip -->
-      <div id="navUserChip" style="display:none;align-items:center;gap:7px;background:rgba(57,255,20,0.06);border:1px solid rgba(57,255,20,0.15);border-radius:100px;padding:5px 13px;font-size:12px;color:var(--neon);">
-        <i class="fas fa-circle-user" style="font-size:11px;"></i>
-        <span id="navUserEmail" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-      </div>
-      <button onclick="openRedeemModal()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:12px;font-family:'Syne',sans-serif;font-weight:700;color:var(--muted);border:1px solid var(--border);background:transparent;cursor:pointer;transition:all 0.2s;" id="redeemCodeBtn" title="Redeem invite code"><i class="fas fa-gift"></i> Redeem</button>
-      <a href="admin.html" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:12px;font-family:'Syne',sans-serif;font-weight:700;color:var(--muted);border:1px solid var(--border);text-decoration:none;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(57,255,20,0.3)';this.style.color='var(--neon)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><i class="fas fa-shield-halved"></i> Admin</a>
-      <a href="login.html" class="btn-neon" id="signInBtn"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+      <span class="logo-text"><span data-i18n="nav.brand">Phine</span><span><span data-i18n="nav.brand">X</span></span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link" data-i18n="nav.home"><span data-i18n="nav.home">Home</span></a>
+      <a href="hiring.html" class="nav-link" data-i18n="nav.joinus"><span data-i18n="nav.joinus">Join Us</span></a>
+      <a href="x-academy.html" class="nav-link" data-i18n="nav.academy"><span data-i18n="nav.academy">X-Academy</span></a>
+      <a href="aboutus.html" class="nav-link" data-i18n="nav.about"><span data-i18n="nav.about">About</span></a>
+    </div>
+    <!-- ⌕ Search Bar -->
+    <button class="pxs-trigger" aria-label="Open search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span data-i18n="common.search"><span data-i18n="common.search">Search</span></span>
+    </button>
+    <div style="margin-left:auto;">
+      <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> <span data-i18n="common.signin">Sign In</span></a>
     </div>
     <button class="ham" id="hamBtn" onclick="this.classList.toggle('open');document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -279,214 +230,177 @@
   </div>
 </nav>
 <div class="mobile-nav" id="mobileNav">
-<a href="index.html" class="nav-link">Home</a>
-      <a href="hiring.html" class="nav-link">Join Us</a>
-      <a href="x-academy.html" class="nav-link">X-Academy</a>
-      <a href="aboutus.html" class="nav-link">About</a>
-      <a href="bugreport.html" class="nav-link active">Report Bug</a>
-<a href="login.html" class="btn-neon" id="signInBtn"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+  <a href="index.html" data-i18n="nav.home">Home</a>
+  <a href="hiring.html" data-i18n="nav.joinus">Join Us</a>
+  <a href="x-academy.html" data-i18n="nav.academy">X-Academy</a>
+  <a href="aboutus.html" data-i18n="nav.about">About</a>
+  <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> <span data-i18n="common.signin">Sign In</span></a>
 </div>
 
-<section class="hero" style="z-index:1;">
-  <div style="position:absolute;top:40%;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,68,68,0.05),transparent);border-radius:50%;pointer-events:none;"></div>
-  <div class="hero-inner" style="position:relative;z-index:2;">
-    <div>
-      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:24px;animation:fadeUp 0.5s ease both;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.5s infinite;display:block;"></span>Bug Tracker Active</div>
-      <h1 style="font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.0;letter-spacing:-2px;animation:fadeUp 0.5s 0.1s ease both;">Found a<br><span style="color:var(--red);">Bug</span>?<br>Report It.</h1>
-      <p style="font-size:15px;color:var(--muted);line-height:1.8;margin:22px 0;max-width:480px;animation:fadeUp 0.5s 0.2s ease both;">Help us improve PhineX. Every bug report is saved to our tracker and reviewed by the dev team. We take every report seriously.</p>
-    </div>
-    <div class="bug-scene">
-      <div class="bug-card">
-        <div class="bug-header"><div class="bug-severity"></div><div><div class="bug-card-title">Bug Tracker</div><div class="bug-meta">Live Reports</div></div></div>
-        <div class="bug-item"><i class="fas fa-tag" style="color:var(--red);"></i><span>Nav dropdown broken on Safari</span><span class="bug-tag tag-critical">CRITICAL</span></div>
-        <div class="bug-item"><i class="fas fa-tag" style="color:var(--orange);"></i><span>News carousel stutter</span><span class="bug-tag tag-pending">PENDING</span></div>
-        <div class="bug-item"><i class="fas fa-tag" style="color:var(--neon);"></i><span>Login redirect loop fixed</span><span class="bug-tag tag-resolved">RESOLVED</span></div>
-        <div style="margin-top:16px;background:rgba(57,255,20,0.05);border:1px solid rgba(57,255,20,0.15);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;"><i class="fas fa-database" style="color:var(--neon);"></i>Reports saved to Firebase</div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(255,215,0,0.04),transparent);border-radius:50%;pointer-events:none;animation:pulse 4s ease-in-out infinite;"></div>
 
-<section class="form-section" id="form-section">
-  <div class="form-wrap">
-    <div class="form-card reveal">
-      <div class="form-card-header">
-        <i class="fas fa-bug" style="color:var(--red);font-size:18px;"></i>
-        <div>
-          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;">Submit Bug Report</div>
-          <div style="font-size:12px;color:var(--muted);">Fields marked <span style="color:var(--red);">*</span> are required</div>
-        </div>
-        <!-- User badge inside form -->
-        <div id="formUserBadge" style="margin-left:auto;display:none;align-items:center;gap:6px;background:rgba(57,255,20,0.06);border:1px solid rgba(57,255,20,0.15);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--neon);max-width:220px;overflow:hidden;">
-          <i class="fas fa-circle-user" style="font-size:10px;flex-shrink:0;"></i>
-          <span id="formUserEmail" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+  <div class="hero-content">
+    <!-- 3D Gift Card -->
+    <div class="gift-scene">
+      <div class="gift-card">
+        <div class="gift-shine"></div>
+        <div class="gift-card-inner">
+          <div class="gift-logo"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+          <div class="gift-card-title" data-i18n="redeem.card.title">PhineX X-Developer Access</div>
+          <div class="gift-card-sub" data-i18n="redeem.card.sub">EXCLUSIVE MEMBERSHIP CODE</div>
+          <div class="gift-code-preview">XXXX-XXXX-XXXX</div>
         </div>
       </div>
-      <div class="form-card-body">
-        <div class="form-group">
-          <label class="form-label"><span class="required-dot">*</span> Bug Title</label>
-          <input type="text" id="bugTitle" class="form-input" placeholder="Brief description of the issue">
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div class="form-group">
-            <label class="form-label"><span class="required-dot">*</span> Affected Page</label>
-            <select class="form-input" id="affectedPage">
-              <option value="" disabled selected>Select page</option>
-              <option>Homepage (index.html)</option><option>Login (login.html)</option>
-              <option>Sign Up</option><option>X-Academy</option><option>Join Us (hiring)</option>
-              <option>Redeem Code</option><option>Settings</option><option>Bug Report</option>
-              <option>About Us</option><option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your Browser</label>
-            <select class="form-input" id="browserSelect">
-              <option value="" disabled selected>Select browser</option>
-              <option>Chrome</option><option>Firefox</option><option>Safari</option>
-              <option>Edge</option><option>Opera</option><option>Other</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label"><span class="required-dot">*</span> Severity</label>
-          <div class="severity-grid">
-            <button class="severity-btn critical" onclick="selectSeverity(this,'Critical')"><span class="severity-emoji">🔴</span><span class="severity-label" style="color:var(--red);">Critical</span></button>
-            <button class="severity-btn high" onclick="selectSeverity(this,'High')"><span class="severity-emoji">🟠</span><span class="severity-label" style="color:var(--orange);">High</span></button>
-            <button class="severity-btn medium selected" onclick="selectSeverity(this,'Medium')"><span class="severity-emoji">🟡</span><span class="severity-label" style="color:var(--yellow);">Medium</span></button>
-            <button class="severity-btn low" onclick="selectSeverity(this,'Low')"><span class="severity-emoji">🟢</span><span class="severity-label" style="color:var(--neon);">Low</span></button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label"><span class="required-dot">*</span> Steps to Reproduce</label>
-          <textarea class="form-input" id="stepsToReproduce" rows="5" placeholder="1. Go to...&#10;2. Click on...&#10;3. Scroll to...&#10;4. See error"></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Expected vs Actual Behavior</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <textarea class="form-input" id="expectedBehavior" rows="3" placeholder="What should happen..."></textarea>
-            <textarea class="form-input" id="actualBehavior" rows="3" placeholder="What actually happens..."></textarea>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Screenshot / Recording</label>
-          <div class="file-drop" id="fileDrop" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('over');" ondragleave="this.classList.remove('over');" ondrop="handleDrop(event)">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <p>Drag & drop a file here, or <span>browse</span></p>
-            <p style="font-size:11px;margin-top:6px;">PNG, JPG, GIF, MP4 · Max 10MB</p>
-          </div>
-          <input type="file" id="fileInput" style="display:none;" accept="image/*,video/*" onchange="showFile(this)">
-          <div id="filePreview" style="display:none;margin-top:10px;background:rgba(57,255,20,0.05);border:1px solid rgba(57,255,20,0.15);border-radius:10px;padding:12px 16px;font-size:13px;align-items:center;gap:10px;"></div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Additional Notes (optional)</label>
-          <input type="text" id="additionalNotes" class="form-input" placeholder="Any other details...">
-        </div>
-        <button class="submit-btn" id="submitBtn" onclick="submitReport()">
-          <i class="fas fa-paper-plane"></i> Submit Bug Report
+    </div>
+
+    <div class="hero-tag"><span class="pulse-dot"></span> <span data-i18n="redeem.tag">Exclusive Access</span></div>
+    <h1 class="hero-h1">Redeem Your<br><span>Code</span></h1>
+    <p class="hero-sub" data-i18n="redeem.sub">Enter your exclusive X-Developer code below to skip the entry test and join the PhineX programming team instantly.</p>
+
+    <!-- CODE INPUT -->
+    <div class="code-input-wrap">
+      <div class="code-input-box">
+        <input type="text" class="code-input" id="codeInput"
+          data-i18n-ph="redeem.ph" placeholder="Enter your redeem code"
+          maxlength="19" oninput="formatCode(this)" onkeydown="if(event.key==='Enter') redeemCode()">
+        <button class="redeem-btn" onclick="redeemCode()">
+          <i class="fas fa-gift"></i> <span data-i18n="redeem.btn">Redeem</span>
         </button>
       </div>
+      <div class="redeem-hint" data-i18n="redeem.hint">Don't have a code? <a href="hiring.html">Pass the test instead</a> or <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank">contact the founder</a></div>
+      <div class="state-msg" id="stateMsg"></div>
     </div>
+  </div>
+</section>
 
-    <div>
-      <div class="info-card reveal reveal-delay-1">
-        <div class="info-title"><i class="fas fa-lightbulb" style="color:var(--yellow);"></i> Tips for Good Reports</div>
-        <div class="info-item"><i class="fas fa-check"></i><div class="info-item-text">Be specific about steps — more detail = faster fix.</div></div>
-        <div class="info-item"><i class="fas fa-check"></i><div class="info-item-text">Add a screenshot or recording if possible — speeds up resolution by 10×.</div></div>
-        <div class="info-item"><i class="fas fa-check"></i><div class="info-item-text">Note your device and browser version.</div></div>
-        <div class="info-item"><i class="fas fa-check"></i><div class="info-item-text">Check existing reports to avoid duplicates.</div></div>
+<!-- HOW TO GET -->
+<section class="how-section" id="how-section">
+  <div class="section-wrap">
+    <div class="reveal">
+      <div class="section-tag" data-i18n="redeem.getcode.tag">Get a Code</div>
+      <h2 class="section-title" data-i18n="redeem.getcode.title">How to Get a Redeem Code</h2>
+    </div>
+    <div class="methods-grid">
+      <div class="method-card reveal" style="transition-delay:0.1s;">
+        <span class="method-icon">🏆</span>
+        <div class="method-title" data-i18n="redeem.method1.title">Win a Competition</div>
+        <p class="method-desc" data-i18n="redeem.method1.desc">PhineX hosts regular coding competitions and hackathons. Top performers receive exclusive redeem codes as prizes.</p>
       </div>
-
-      <div class="info-card reveal reveal-delay-2">
-        <div class="info-title"><i class="fas fa-clock-rotate-left" style="color:var(--neon);"></i> Your Recent Reports</div>
-        <div id="recentReportsList"><div style="font-size:13px;color:var(--muted);text-align:center;padding:16px 0;"><i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Loading...</div></div>
+      <div class="method-card reveal" style="transition-delay:0.2s;">
+        <span class="method-icon">🤝</span>
+        <div class="method-title" data-i18n="redeem.method2.title">Partner Programs</div>
+        <p class="method-desc" data-i18n="redeem.method2.desc">Partner organizations, bootcamps, and coding schools can distribute codes to their outstanding graduates.</p>
       </div>
-
-      <div class="info-card reveal">
-        <div class="info-title"><i class="fas fa-shield-halved" style="color:var(--neon);"></i> Admin Dashboard</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;">View all submitted reports, manage statuses, and track every bug in the admin panel.</p>
-        <a href="admin.html" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(57,255,20,0.07);border:1px solid rgba(57,255,20,0.2);border-radius:10px;padding:11px;font-size:13px;font-weight:700;color:var(--neon);text-decoration:none;transition:all 0.2s;font-family:'Syne',sans-serif;" onmouseenter="this.style.background='rgba(57,255,20,0.12)'" onmouseleave="this.style.background='rgba(57,255,20,0.07)'">
-          <i class="fas fa-chart-bar"></i> Open Admin Dashboard
-        </a>
-      </div>
-
-      <div class="info-card reveal">
-        <div class="info-title"><i class="fab fa-discord" style="color:#5865f2;"></i> Report via Discord</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;">For urgent bugs, reach us directly in the #bug-reports channel.</p>
-        <a href="https://discord.gg/xBQ3ewVVHk" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(88,101,242,0.1);border:1px solid rgba(88,101,242,0.25);border-radius:10px;padding:11px;font-size:13px;font-weight:700;color:#7289da;text-decoration:none;font-family:'Syne',sans-serif;">
-          <i class="fab fa-discord"></i> Join Discord
-        </a>
+      <div class="method-card reveal" style="transition-delay:0.3s;">
+        <span class="method-icon">👑</span>
+        <div class="method-title" data-i18n="redeem.method3.title">Founder's Invite</div>
+        <p class="method-desc" data-i18n="redeem.method3.desc">Senior developers can reach out to the PhineX founder directly. If your portfolio is strong enough, a code may come your way.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ REDEEM CODE MODAL ═══════ -->
-<div class="redeem-modal-overlay" id="redeemModal">
-  <div class="redeem-modal-card">
-    <div style="text-align:center;margin-bottom:20px;font-size:40px;">🎁</div>
-    <h2>Redeem Invite Code</h2>
-    <p>Enter your exclusive PhineX invite code to unlock admin status and join the elite developer network.</p>
-    
-    <div class="redeem-msg error" id="redeemErrorMsg"><i class="fas fa-exclamation-circle"></i><span id="redeemErrorText"></span></div>
-    <div class="redeem-msg success" id="redeemSuccessMsg"><i class="fas fa-check-circle"></i><span id="redeemSuccessText"></span></div>
-    <div class="redeem-msg info" id="redeemInfoMsg"><i class="fas fa-info-circle"></i><span id="redeemInfoText"></span></div>
-    
-    <input type="text" class="redeem-modal-input" id="redeemCodeInput" placeholder="XXXX-XXXX-XXXX" oninput="formatRedeemCode(this)" onkeydown="if(event.key==='Enter')submitRedeemCode()">
-    
-    <div class="redeem-modal-btns">
-      <button class="redeem-modal-cancel" onclick="closeRedeemModal()">Cancel</button>
-      <button class="redeem-modal-btn" id="redeemSubmitBtn" onclick="submitRedeemCode()"><i class="fas fa-check"></i> Redeem</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════ REDEEM SUCCESS OVERLAY ═══════ -->
-<div class="success-overlay" id="redeemSuccessOverlay" style="display:none;">
-  <div class="success-card">
-    <span class="success-icon">🎉</span>
-    <h2 style="font-size:26px;font-weight:800;margin-bottom:10px;">Admin Status Unlocked!</h2>
-    <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:14px;">Congratulations! Your code has been verified and your account has been upgraded to <strong style="color:var(--neon);">Admin</strong> status.</p>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">You can now access the admin dashboard and exclusive features.</p>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <a href="admin.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--neon);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:12px 22px;border-radius:10px;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;" onmouseenter="this.style.boxShadow='0 0 30px rgba(57,255,20,0.4)'" onmouseleave="this.style.boxShadow=''"><i class="fas fa-chart-bar"></i> Open Admin Dashboard</a>
-      <button onclick="document.getElementById('redeemSuccessOverlay').style.display='none'" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:12px 22px;border-radius:10px;cursor:pointer;">Back</button>
-    </div>
-  </div>
-</div>
-
-<!-- SUCCESS OVERLAY -->
-<div class="success-overlay" id="successOverlay">
-  <div class="success-card">
-    <span class="success-icon">🐛✅</span>
-    <h2 style="font-size:26px;font-weight:800;margin-bottom:10px;">Bug Reported!</h2>
-    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:6px;">Report saved to our database. The dev team will investigate and track it to resolution.</p>
-    <p style="font-size:14px;color:var(--neon);font-family:'Syne',sans-serif;font-weight:700;margin-bottom:28px;">ID: <span id="newReportId"></span></p>
+<!-- SUCCESS -->
+<div class="redeem-success" id="redeemSuccess">
+  <div class="redeem-success-card">
+    <span class="confetti-emoji">🎉</span>
+    <h2 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:10px;" data-i18n="redeem.success.title">Welcome to PhineX!</h2>
+    <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:8px;" data-i18n="redeem.success.msg">Your redeem code has been accepted. You are now officially an <strong style="color:var(--neon);">X-Developer</strong>.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:28px;" data-i18n="redeem.success.discord">Join our Discord to connect with the team and get your first project assignment.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn-neon" style="padding:11px 20px;" onclick="resetForm()">Submit Another</button>
-      <a href="admin.html" style="display:inline-flex;align-items:center;gap:7px;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);color:var(--neon);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:11px 20px;border-radius:10px;text-decoration:none;"><i class="fas fa-chart-bar"></i> Admin</a>
-      <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:11px 20px;border-radius:10px;text-decoration:none;">Home</a>
+      <a href="https://discord.gg/wk4xtQVRzm" class="btn-neon" style="padding:12px 22px;" target="_blank">
+        <i class="fab fa-discord"></i> <span data-i18n="redeem.success.join">Join Discord</span>
+      </a>
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:13px;padding:12px 22px;border-radius:10px;text-decoration:none;" data-i18n="common.gohome">Go Home</a>
     </div>
   </div>
 </div>
 
 <footer>
   <div class="footer-inner">
-    <a href="index.html" class="nav-logo" style="text-decoration:none;"><div class="logo-icon"><i class="fas fa-dragon"></i></div><span class="logo-text">Phine<span>X</span></span></a>
-    <div class="footer-links"><a href="index.html">Home</a><a href="hiring.html">Join Us</a><a href="x-academy.html">X-Academy</a><a href="aboutus.html">About</a></div>
+    <a href="index.html" class="nav-logo" style="text-decoration:none;">
+      <div class="logo-icon"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+      <span class="logo-text"><span data-i18n="nav.brand">Phine</span><span><span data-i18n="nav.brand">X</span></span></span>
+    </a>
+    <div class="footer-links">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="hiring.html" data-i18n="nav.joinus">Join Us</a>
+      <a href="x-academy.html" data-i18n="nav.academy">X-Academy</a>
+      <a href="aboutus.html" data-i18n="nav.about">About</a>
+    </div>
     <p style="font-size:12px;color:var(--muted);">&copy; 2026 PhineX</p>
   </div>
 </footer>
 
-<!-- UI ALERT SYSTEM -->
+<script>
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+function formatCode(input) {
+  let val = input.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+  let formatted = '';
+  for (let i = 0; i < val.length; i++) {
+    if (i > 0 && i % 4 === 0 && i < 12) formatted += '-';
+    formatted += val[i];
+  }
+  input.value = formatted;
+}
+
+function redeemCode() {
+  const code = document.getElementById('codeInput').value.trim();
+  const msg = document.getElementById('stateMsg');
+  if (!code) { showMsg('error','Please enter a redeem code.'); return; }
+  if (code.length < 4) { showMsg('error','Code is too short. Valid codes are 4–14 characters.'); return; }
+
+  showMsg('loading','<i class="fas fa-spinner fa-spin"></i> &nbsp;Verifying code...');
+  setTimeout(() => {
+    const validCodes = ['PHINEX','X-DEV-2025','FOUNDER','VIP-ACCESS'];
+    const clean = code.replace(/-/g,'');
+    if (validCodes.includes(clean) || code.startsWith('PX-')) {
+      msg.style.display = 'none';
+      document.getElementById('redeemSuccess').style.display = 'flex';
+    } else {
+      showMsg('error','<i class="fas fa-times-circle"></i> &nbsp;Invalid or expired code. <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank" style="color:var(--neon);">Contact the founder</a> if you believe this is an error.');
+    }
+  }, 1600);
+}
+
+function showMsg(type, html) {
+  const msg = document.getElementById('stateMsg');
+  msg.className = 'state-msg ' + type;
+  msg.innerHTML = html;
+  msg.style.display = 'block';
+}
+</script>
+
+<!-- ═══════════════ GLOBAL UI ALERT ═══════════════ -->
 <div id="pxAlertOverlay" style="position:fixed;inset:0;z-index:99999;background:rgba(5,5,8,0.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;">
-  <div id="pxAlertCard" style="background:#13131e;border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:40px 36px;max-width:420px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.7);transform:scale(0.88);opacity:0;transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275),opacity 0.3s ease;">
-    <div id="pxAlertIcon" style="font-size:48px;margin-bottom:16px;"></div>
+  <div id="pxAlertCard" style="background:#13131e;border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:40px 36px;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 40px 80px rgba(0,0,0,0.7);transform:scale(0.88);opacity:0;transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275),opacity 0.3s ease;">
+    <div id="pxAlertIcon" style="font-size:48px;margin-bottom:16px;line-height:1;"></div>
     <div id="pxAlertTitle" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#f0f0ff;margin-bottom:8px;"></div>
     <div id="pxAlertMsg" style="font-size:14px;color:#7070a0;line-height:1.7;margin-bottom:28px;"></div>
     <div id="pxAlertBtns" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"></div>
   </div>
 </div>
 <style>
+#pxAlertOverlay.show{display:flex;}
+#pxAlertOverlay.show #pxAlertCard{transform:scale(1);opacity:1;}
+
+/* ══ MOBILE FOOTER OVERHAUL ══ */
+@media(max-width:768px){
+  footer{padding:28px 16px 20px!important;}
+  .footer-inner{flex-direction:column!important;gap:20px!important;align-items:center!important;text-align:center!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:10px 18px!important;}
+}
+</style>
+<script>
+window.PXAlert={_resolve:null,show({icon='<i class="fas fa-circle-info"></i>',title='',message='',type='info',buttons=[{label:'OK',value:true,primary:true}]}={}){return new Promise(resolve=>{this._resolve=resolve;const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');document.getElementById('pxAlertIcon').innerHTML=icon;document.getElementById('pxAlertTitle').textContent=title;document.getElementById('pxAlertMsg').innerHTML=message;const cols={info:'rgba(57,255,20,0.25)',error:'rgba(255,68,68,0.25)',warning:'rgba(255,215,0,0.25)',success:'rgba(57,255,20,0.3)'};c.style.borderColor=cols[type]||cols.info;const be=document.getElementById('pxAlertBtns');be.innerHTML='';buttons.forEach(btn=>{const b=document.createElement('button');b.textContent=btn.label;const ip=btn.primary;b.style.cssText=ip?'background:#39ff14;color:#050508;font-family:Syne,sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border-radius:11px;border:none;cursor:pointer;transition:all 0.2s;':'background:transparent;color:#f0f0ff;font-family:Syne,sans-serif;font-weight:600;font-size:14px;padding:11px 28px;border-radius:11px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;transition:all 0.2s;';b.onmouseenter=()=>{b.style.transform='translateY(-1px)';if(ip)b.style.boxShadow='0 0 20px rgba(57,255,20,0.3)';};b.onmouseleave=()=>{b.style.transform='';b.style.boxShadow='';};b.onclick=()=>{this.hide();resolve(btn.value);};be.appendChild(b);});o.classList.add('show');document.addEventListener('keydown',this._keyHandler=(e)=>{if(e.key==='Escape'){this.hide();resolve(false);}});})},hide(){const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');c.style.transform='scale(0.88)';c.style.opacity='0';setTimeout(()=>o.classList.remove('show'),300);document.removeEventListener('keydown',this._keyHandler);},info(t,m){return this.show({icon:'<i class="fas fa-circle-info"></i>',title:t,message:m,type:'info'})},success(t,m){return this.show({icon:'<i class="fas fa-circle-check"></i>',title:t,message:m,type:'success'})},error(t,m){return this.show({icon:'<i class="fas fa-circle-xmark"></i>',title:t,message:m,type:'error'})},warning(t,m){return this.show({icon:'<i class="fas fa-triangle-exclamation"></i>',title:t,message:m,type:'warning'})},confirm(t,m){return this.show({icon:'<i class="fas fa-circle-question"></i>',title:t,message:m,type:'warning',buttons:[{label:'Cancel',value:false,primary:false},{label:'Confirm',value:true,primary:true}]})}};
+document.getElementById('pxAlertOverlay').addEventListener('click',function(e){if(e.target===this){PXAlert.hide();if(PXAlert._resolve)PXAlert._resolve(false);}});
+</script>
+<style>
+  @media(max-width:360px){ .hide-xs{ display:none; } }
 
 /* ══ MOBILE OVERHAUL ══ */
 body{overflow-x:hidden!important;}
@@ -517,429 +431,8 @@ img,canvas,video,iframe{max-width:100%;}
 }
 
 </style>
-
-<!-- firebase-config.js MUST init Firebase before this script -->
-<script src="firebase-config.js"></script>
-
-<script>
-// ═══════════════════════════════════════
-//  FIREBASE REFS
-// ═══════════════════════════════════════
-const db   = firebase.database();
-const auth = firebase.auth();
-let currentUser = null;
-let selectedSeverity = 'Medium';
-let attachedFileName = '';
-
-// ═══════════════════════════════════════
-//  AUTH STATE OBSERVER
-// ═══════════════════════════════════════
-auth.onAuthStateChanged(user => {
-  if (user) {
-    currentUser = user;
-    // Hide auth wall
-    document.getElementById('authWall').style.display = 'none';
-    // Show user chip in nav
-    const chip = document.getElementById('navUserChip');
-    chip.style.display = 'flex';
-    document.getElementById('navUserEmail').textContent = user.email;
-    // Show user badge in form header
-    const badge = document.getElementById('formUserBadge');
-    badge.style.display = 'flex';
-    document.getElementById('formUserEmail').textContent = user.email;
-    // Update sign-in button
-    const btn = document.getElementById('signInBtn');
-    btn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sign Out';
-    btn.onclick = () => auth.signOut().then(() => location.href = 'login.html');
-    
-    // Check admin status and manage redeem button
-    const redeemBtn = document.getElementById('redeemCodeBtn');
-    db.ref('users/' + user.uid + '/admin').once('value', snap => {
-      const isAdmin = snap.val() === true;
-      if (isAdmin) {
-        redeemBtn.style.display = 'none';
-      } else {
-        redeemBtn.style.display = 'inline-flex';
-        redeemBtn.style.borderColor = 'rgba(255,215,0,0.3)';
-        redeemBtn.style.color = '#ffd700';
-        redeemBtn.onmouseenter = function() { this.style.borderColor = 'rgba(255,215,0,0.5)'; this.style.background = 'rgba(255,215,0,0.04)'; };
-        redeemBtn.onmouseleave = function() { this.style.borderColor = 'rgba(255,215,0,0.3)'; this.style.background = 'transparent'; };
-      }
-    });
-    
-    // Load this user's recent reports
-    loadMyRecentReports(user.uid);
-  } else {
-    currentUser = null;
-    document.getElementById('authWall').style.display = 'flex';
-    document.getElementById('redeemCodeBtn').style.display = 'none';
-    document.getElementById('recentReportsList').innerHTML =
-      '<div style="font-size:13px;color:var(--muted);text-align:center;padding:16px 0;">Sign in to see your reports</div>';
-  }
-});
-
-// ═══════════════════════════════════════
-//  LOAD USER'S OWN RECENT REPORTS
-// ═══════════════════════════════════════
-function loadMyRecentReports(uid) {
-  // Safety timeout — clear "Loading..." after 8 s if Firebase never responds
-  const loadingTimeout = setTimeout(() => {
-    const el = document.getElementById('recentReportsList');
-    if (el && el.querySelector('.fa-spinner')) {
-      el.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:16px 0;">No reports found</div>';
-    }
-  }, 8000);
-
-  db.ref('bugReports')
-    .orderByChild('uid')
-    .equalTo(uid)
-    .limitToLast(4)
-    .on('value', snap => {
-      clearTimeout(loadingTimeout);
-      const el = document.getElementById('recentReportsList');
-      if (!snap.exists()) {
-        el.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:16px 0;">No reports submitted yet</div>';
-        return;
-      }
-      const cols = { Critical:'var(--red)', High:'var(--orange)', Medium:'var(--yellow)', Low:'var(--neon)' };
-      const tagCls = { Open:'tag-pending', Resolved:'tag-resolved', Closed:'tag-resolved', Investigating:'tag-pending' };
-      const reports = [];
-      snap.forEach(child => reports.unshift({ id: child.key, ...child.val() }));
-      el.innerHTML = reports.slice(0, 4).map(r => `
-        <div class="bug-row">
-          <div class="bug-dot" style="background:${cols[r.severity]||'var(--muted)'};"></div>
-          <div class="bug-row-title">${esc(r.title)}</div>
-          <span class="bug-row-tag ${tagCls[r.status]||'tag-pending'}">${r.status}</span>
-        </div>`).join('');
-    }, err => {
-      // Firebase error (e.g. permission denied or missing index) — stop the spinner
-      clearTimeout(loadingTimeout);
-      const el = document.getElementById('recentReportsList');
-      console.warn('loadMyRecentReports error:', err);
-      el.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:16px 0;">Could not load reports</div>';
-    });
-}
-
-// PAGES PANEL
-const pBtn=document.getElementById('pagesBtn'),pPanel=document.getElementById('pagesPanel'),chv=document.getElementById('pagesBtnChevron');
-pBtn.addEventListener('click',e=>{e.stopPropagation();const a=pPanel.classList.toggle('active');chv.style.transform=a?'rotate(180deg)':'';});
-document.addEventListener('click',e=>{if(!e.target.closest('#pagesBtn')&&!e.target.closest('#pagesPanel')){pPanel.classList.remove('active');chv.style.transform='';}});
-
-// SCROLL
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backToTop').classList.toggle('visible',window.scrollY>300);});
-
-
-// ═══════════════════════════════════════
-//  SEVERITY & FILE HELPERS
-// ═══════════════════════════════════════
-function selectSeverity(btn, sev) {
-  document.querySelectorAll('.severity-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedSeverity = sev;
-}
-
-function showFile(input) {
-  const file = input.files[0]; if (!file) return;
-  attachedFileName = file.name;
-  const p = document.getElementById('filePreview');
-  p.style.display = 'flex';
-  p.innerHTML = `<i class="fas fa-file-image" style="color:var(--neon);"></i><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${file.name}</span><span style="font-size:11px;color:var(--muted);flex-shrink:0;">${(file.size/1024/1024).toFixed(1)}MB</span><i class="fas fa-times" style="cursor:pointer;color:var(--muted);flex-shrink:0;" onclick="document.getElementById('filePreview').style.display='none';document.getElementById('fileInput').value='';attachedFileName='';"></i>`;
-}
-
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('fileDrop').classList.remove('over');
-  const file = e.dataTransfer.files[0];
-  if (file) { const dt = new DataTransfer(); dt.items.add(file); document.getElementById('fileInput').files = dt.files; showFile(document.getElementById('fileInput')); }
-}
-
-// Auto-detect browser
-const ua = navigator.userAgent;
-const bsel = document.getElementById('browserSelect');
-if (ua.includes('Edg')) bsel.value = 'Edge';
-else if (ua.includes('OPR')) bsel.value = 'Opera';
-else if (ua.includes('Chrome')) bsel.value = 'Chrome';
-else if (ua.includes('Firefox')) bsel.value = 'Firefox';
-else if (ua.includes('Safari')) bsel.value = 'Safari';
-
-// ═══════════════════════════════════════
-//  SUBMIT TO FIREBASE
-// ═══════════════════════════════════════
-async function submitReport() {
-  if (!currentUser) {
-    PXAlert.warning('Not Signed In', 'You must be signed in to submit a bug report.');
-    return;
-  }
-
-  const title  = document.getElementById('bugTitle').value.trim();
-  const page   = document.getElementById('affectedPage').value;
-  const steps  = document.getElementById('stepsToReproduce').value.trim();
-
-  if (!title) { PXAlert.warning('Missing Title', 'Please enter a brief bug title before submitting.'); return; }
-  if (!page)  { PXAlert.warning('Missing Page', 'Please select the affected page.'); return; }
-  if (!steps) { PXAlert.warning('Missing Steps', 'Please describe the steps to reproduce the bug.'); return; }
-
-  const submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-
-  try {
-    // Generate sequential-style ID from push key
-    const newRef = db.ref('bugReports').push();
-    const reportId = 'BUG-' + newRef.key.slice(-6).toUpperCase();
-
-    const report = {
-      id:           reportId,
-      title,
-      page,
-      browser:      document.getElementById('browserSelect').value || 'Unknown',
-      severity:     selectedSeverity,
-      steps,
-      expected:     document.getElementById('expectedBehavior').value.trim(),
-      actual:       document.getElementById('actualBehavior').value.trim(),
-      notes:        document.getElementById('additionalNotes').value.trim(),
-      attachment:   attachedFileName || null,
-      status:       'Open',
-      timestamp:    new Date().toISOString(),
-      // ── User identity ──
-      uid:          currentUser.uid,
-      reporterEmail: currentUser.email,
-      displayName:  currentUser.displayName || null,
-      userAgent:    navigator.userAgent,
-    };
-
-    await newRef.set(report);
-
-    document.getElementById('newReportId').textContent = reportId;
-    document.getElementById('successOverlay').style.display = 'flex';
-
-  } catch (err) {
-    console.error(err);
-    PXAlert.error('Submission Failed', 'Could not save the report: ' + err.message);
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Bug Report';
-  }
-}
-
-function resetForm() {
-  document.getElementById('successOverlay').style.display = 'none';
-  ['bugTitle','stepsToReproduce','expectedBehavior','actualBehavior','additionalNotes'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('affectedPage').selectedIndex = 0;
-  document.getElementById('filePreview').style.display = 'none';
-  document.getElementById('fileInput').value = '';
-  attachedFileName = ''; selectedSeverity = 'Medium';
-  document.querySelectorAll('.severity-btn').forEach(b => b.classList.remove('selected'));
-  document.querySelector('.severity-btn.medium').classList.add('selected');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ═══════════════════════════════════════
-//  SCROLL REVEAL
-// ═══════════════════════════════════════
-const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); }), { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ═══════════════════════════════════════
-//  PXALERT SYSTEM
-// ═══════════════════════════════════════
-window.PXAlert = {
-  _resolve: null,
-  show({ icon='ℹ️', title='', message='', type='info', buttons=[{label:'OK',value:true,primary:true}] } = {}) {
-    return new Promise(resolve => {
-      this._resolve = resolve;
-      const o = document.getElementById('pxAlertOverlay'), c = document.getElementById('pxAlertCard');
-      document.getElementById('pxAlertIcon').innerHTML = icon;
-      document.getElementById('pxAlertTitle').textContent = title;
-      document.getElementById('pxAlertMsg').innerHTML = message;
-      const cols = { info:'rgba(57,255,20,0.25)', error:'rgba(255,68,68,0.25)', warning:'rgba(255,215,0,0.25)', success:'rgba(57,255,20,0.3)' };
-      c.style.borderColor = cols[type] || cols.info;
-      const be = document.getElementById('pxAlertBtns'); be.innerHTML = '';
-      buttons.forEach(btn => {
-        const b = document.createElement('button'); b.textContent = btn.label;
-        const ip = btn.primary;
-        b.style.cssText = ip ? 'background:#39ff14;color:#050508;font-family:Syne,sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border-radius:11px;border:none;cursor:pointer;' : 'background:transparent;color:#f0f0ff;font-family:Syne,sans-serif;font-weight:600;font-size:14px;padding:11px 28px;border-radius:11px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;';
-        b.onclick = () => { this.hide(); resolve(btn.value); };
-        be.appendChild(b);
-      });
-      o.classList.add('show');
-      document.addEventListener('keydown', this._keyHandler = e => { if (e.key === 'Escape') { this.hide(); resolve(false); } });
-    });
-  },
-  hide() { const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard'); c.style.transform='scale(0.88)'; c.style.opacity='0'; setTimeout(()=>o.classList.remove('show'),300); document.removeEventListener('keydown',this._keyHandler); },
-  info(t,m) { return this.show({icon:'<i class="fas fa-circle-info"></i>',title:t,message:m,type:'info'}); },
-  success(t,m) { return this.show({icon:'<i class="fas fa-circle-check"></i>',title:t,message:m,type:'success'}); },
-  error(t,m) { return this.show({icon:'<i class="fas fa-circle-xmark"></i>',title:t,message:m,type:'error'}); },
-  warning(t,m) { return this.show({icon:'<i class="fas fa-triangle-exclamation"></i>',title:t,message:m,type:'warning'}); },
-};
-document.getElementById('pxAlertOverlay').addEventListener('click', function(e) { if (e.target===this) { PXAlert.hide(); if(PXAlert._resolve) PXAlert._resolve(false); } });
-
-// ═══════════════════════════════════════
-//  REDEEM CODE SYSTEM
-// ═══════════════════════════════════════
-
-function formatRedeemCode(input) {
-  let val = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-  let formatted = '';
-  for (let i = 0; i < val.length; i++) {
-    if (i > 0 && i % 4 === 0) formatted += '-';
-    formatted += val[i];
-  }
-  input.value = formatted;
-}
-
-function openRedeemModal() {
-  if (!currentUser) {
-    PXAlert.error('Not Signed In', 'Please sign in first to redeem a code.');
-    return;
-  }
-  document.getElementById('redeemModal').classList.add('show');
-  document.getElementById('redeemCodeInput').focus();
-  clearRedeemMessages();
-}
-
-function closeRedeemModal() {
-  document.getElementById('redeemModal').classList.remove('show');
-  document.getElementById('redeemCodeInput').value = '';
-  clearRedeemMessages();
-}
-
-function clearRedeemMessages() {
-  document.getElementById('redeemErrorMsg').classList.remove('show');
-  document.getElementById('redeemSuccessMsg').classList.remove('show');
-  document.getElementById('redeemInfoMsg').classList.remove('show');
-}
-
-function showRedeemMessage(type, text) {
-  clearRedeemMessages();
-  const msgEl = document.getElementById('redeem' + type.charAt(0).toUpperCase() + type.slice(1) + 'Msg');
-  const textEl = document.getElementById('redeem' + type.charAt(0).toUpperCase() + type.slice(1) + 'Text');
-  textEl.textContent = text;
-  msgEl.classList.add('show');
-}
-
-async function submitRedeemCode() {
-  const code = document.getElementById('redeemCodeInput').value.trim().replace(/-/g, '').toUpperCase();
-  
-  if (!code) {
-    showRedeemMessage('error', 'Please enter a code.');
-    return;
-  }
-  
-  if (!currentUser) {
-    showRedeemMessage('error', 'You must be signed in.');
-    return;
-  }
-
-  // Check if already admin
-  const userRef = db.ref('users/' + currentUser.uid);
-  const userSnap = await userRef.once('value');
-  const userData = userSnap.val() || {};
-  
-  if (userData.admin === true) {
-    showRedeemMessage('info', 'Your account is already upgraded to Admin status.');
-    setTimeout(closeRedeemModal, 2000);
-    return;
-  }
-
-  const btn = document.getElementById('redeemSubmitBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
-
-  try {
-    // Read the redeemCodes node — supports both:
-    //   string:  redeemCodes = "ADMIN26"
-    //   object:  redeemCodes = { ADMIN26: { used: false, ... } }
-    const codesSnap = await db.ref('redeemCodes').once('value');
-
-    if (!codesSnap.exists()) {
-      showRedeemMessage('error', 'Invalid or expired code. <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank" style="color:var(--neon);text-decoration:underline;">Contact support</a> if this is an error.');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-check"></i> Redeem';
-      return;
-    }
-
-    const codesVal = codesSnap.val();
-    let codeValid = false;
-    let codeRef = null;
-    let codeData = null;
-
-    if (typeof codesVal === 'string') {
-      // Simple string: redeemCodes = "ADMIN26"
-      codeValid = (codesVal.toUpperCase() === code);
-    } else if (typeof codesVal === 'object' && codesVal !== null) {
-      // Object map: redeemCodes/ADMIN26 = { used: false, ... }
-      if (codesVal[code] !== undefined) {
-        codeValid = true;
-        codeRef = db.ref('redeemCodes/' + code);
-        codeData = codesVal[code];
-      }
-    }
-
-    if (!codeValid) {
-      showRedeemMessage('error', 'Invalid or expired code. <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank" style="color:var(--neon);text-decoration:underline;">Contact support</a> if this is an error.');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-check"></i> Redeem';
-      return;
-    }
-
-    // If it's an object entry, check used/expiry flags
-    if (codeData && typeof codeData === 'object') {
-      if (codeData.used === true) {
-        showRedeemMessage('error', 'This code has already been redeemed by another user.');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-check"></i> Redeem';
-        return;
-      }
-      if (codeData.expiresAt && new Date(codeData.expiresAt) < new Date()) {
-        showRedeemMessage('error', 'This code has expired.');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-check"></i> Redeem';
-        return;
-      }
-      // Mark code as used
-      await codeRef.update({
-        used: true,
-        usedBy: currentUser.uid,
-        usedByEmail: currentUser.email,
-        redeemedAt: new Date().toISOString()
-      });
-    }
-
-    // Grant admin
-    await userRef.update({
-      admin: true,
-      upgradedAt: new Date().toISOString(),
-      upgradedVia: 'redeem_code'
-    });
-
-    btn.innerHTML = '<i class="fas fa-check"></i> Redeemed!';
-    showRedeemMessage('success', 'Code verified! Your account is now updated to Admin.');
-    
-    setTimeout(() => {
-      closeRedeemModal();
-      document.getElementById('redeemSuccessOverlay').style.display = 'flex';
-      auth.currentUser.reload();
-    }, 1500);
-
-  } catch (err) {
-    console.error('Redeem error:', err);
-    showRedeemMessage('error', 'An error occurred: ' + err.message);
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-check"></i> Redeem';
-  }
-}
-
-// Close redeem modal on overlay click
-document.getElementById('redeemModal').addEventListener('click', function(e) {
-  if (e.target === this) closeRedeemModal();
-});
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
-<script src="phinex-search.js"></script>
 <script src="app.js"></script>
+<script src="phinex-search.js"></script>
 </body>
 </html>

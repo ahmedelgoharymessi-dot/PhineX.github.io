@@ -1,12 +1,4 @@
-/**
- * PhineX 3D Background Animation — Mobile-Ready Edition
- * Drop-in script: <script src="bg3d.js"></script> anywhere in <head> or <body>
- * ✓ Works when loaded from <head> (waits for DOM)
- * ✓ Three.js multi-CDN fallback (cdnjs → jsdelivr → unpkg)
- * ✓ Touch + gyroscope camera follow on mobile
- * ✓ Reduced particle/shape count on low-power devices
- * ✓ Responsive resize handler
- */
+/* PhineX 3D Background Animation — Mobile-Ready Edition */
 (function () {
   'use strict';
 

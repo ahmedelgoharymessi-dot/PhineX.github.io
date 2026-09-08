@@ -20,6 +20,8 @@
   <meta name="og:description" content="Interested in joining the PhineX team? We're hiring passionate developers to help build and maintain our platform. Check out our open positions and apply today to be part of our mission to create a vibrant community of senior developers.">
   <meta name="og:image" content="PhineX (2).png">
     <script src="bg3d.js"></script>
+    <!-- Place this as the FIRST script in <head> — before any other JS -->
+<script src="phinex-settings.js"></script>
   <meta name="description" content="Interested in joining the PhineX team? We're hiring passionate developers to help build and maintain our platform. Check out our open positions and apply today to be part of our mission to create a vibrant community of senior developers.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -265,20 +267,20 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="logo-icon"><i class="fas fa-dragon"></i></div>
-      <span class="logo-text">Phine<span>X</span></span>
+      <div class="logo-icon"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+      <span class="logo-text"><span data-i18n="nav.brand">Phine</span><span><span data-i18n="nav.brand">X</span></span></span>
     </a>
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="hiring.html" class="nav-link active">Join Us</a>
-      <a href="x-academy.html" class="nav-link">X-Academy</a>
-      <a href="aboutus.html" class="nav-link">About</a>
-      <a href="bugreport.html" class="nav-link">Report Bug</a>
+      <a href="index.html" class="nav-link"><span data-i18n="nav.home">Home</span></a>
+      <a href="hiring.html" class="nav-link active"><span data-i18n="nav.joinus">Join Us</span></a>
+      <a href="x-academy.html" class="nav-link"><span data-i18n="nav.academy">X-Academy</span></a>
+      <a href="aboutus.html" class="nav-link"><span data-i18n="nav.about">About</span></a>
+      <a href="bugreport.html" class="nav-link"><span data-i18n="nav.bug">Report Bug</span></a>
     </div>
     <button class="pxs-trigger" aria-label="Open search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Search</button>
     <div class="nav-cta">
       <a href="redeemcode.html" class="btn-outline" style="padding:7px 16px;font-size:12px;"><i class="fas fa-gift"></i> Redeem Code</a>
-      <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+      <a href="login.html" class="btn-neon"><i class="fas fa-sign-in-alt"></i><span data-i18n="nav.signin">Sign In</span></a>
     </div>
   </div>
 </nav>
@@ -454,8 +456,8 @@
 <footer>
   <div class="footer-inner">
     <a href="index.html" class="nav-logo" style="text-decoration:none;">
-      <div class="logo-icon"><i class="fas fa-dragon"></i></div>
-      <span class="logo-text">Phine<span>X</span></span>
+      <div class="logo-icon"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
+      <span class="logo-text"><span data-i18n="nav.brand">Phine</span><span><span data-i18n="nav.brand">X</span></span></span>
     </a>
     <div class="footer-links">
       <a href="index.html">Home</a>
@@ -492,6 +494,38 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 window.PXAlert={_resolve:null,show({icon='ℹ️',title='',message='',type='info',buttons=[{label:'OK',value:true,primary:true}]}={}){return new Promise(resolve=>{this._resolve=resolve;const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');document.getElementById('pxAlertIcon').textContent=icon;document.getElementById('pxAlertTitle').textContent=title;document.getElementById('pxAlertMsg').innerHTML=message;const cols={info:'rgba(57,255,20,0.25)',error:'rgba(255,68,68,0.25)',warning:'rgba(255,215,0,0.25)',success:'rgba(57,255,20,0.3)'};c.style.borderColor=cols[type]||cols.info;const be=document.getElementById('pxAlertBtns');be.innerHTML='';buttons.forEach(btn=>{const b=document.createElement('button');b.textContent=btn.label;const ip=btn.primary;b.style.cssText=ip?'background:#39ff14;color:#050508;font-family:Syne,sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border-radius:11px;border:none;cursor:pointer;transition:all 0.2s;':'background:transparent;color:#f0f0ff;font-family:Syne,sans-serif;font-weight:600;font-size:14px;padding:11px 28px;border-radius:11px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;transition:all 0.2s;';b.onmouseenter=()=>{b.style.transform='translateY(-1px)';if(ip)b.style.boxShadow='0 0 20px rgba(57,255,20,0.3)';};b.onmouseleave=()=>{b.style.transform='';b.style.boxShadow='';};b.onclick=()=>{this.hide();resolve(btn.value);};be.appendChild(b);});o.classList.add('show');document.addEventListener('keydown',this._keyHandler=(e)=>{if(e.key==='Escape'){this.hide();resolve(false);}});})},hide(){const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');c.style.transform='scale(0.88)';c.style.opacity='0';setTimeout(()=>o.classList.remove('show'),300);document.removeEventListener('keydown',this._keyHandler);},info(t,m){return this.show({icon:'ℹ️',title:t,message:m,type:'info'})},success(t,m){return this.show({icon:'✅',title:t,message:m,type:'success'})},error(t,m){return this.show({icon:'❌',title:t,message:m,type:'error'})},warning(t,m){return this.show({icon:'⚠️',title:t,message:m,type:'warning'})},confirm(t,m){return this.show({icon:'🤔',title:t,message:m,type:'warning',buttons:[{label:'Cancel',value:false,primary:false},{label:'Confirm',value:true,primary:true}]})}};
 document.getElementById('pxAlertOverlay').addEventListener('click',function(e){if(e.target===this){PXAlert.hide();if(PXAlert._resolve)PXAlert._resolve(false);}});
 </script>
+<style>
+  @media(max-width:360px){ .hide-xs{ display:none; } }
+
+/* ══ MOBILE OVERHAUL ══ */
+body{overflow-x:hidden!important;}
+*{min-width:0;word-break:break-word;box-sizing:border-box;}
+img,canvas,video,iframe{max-width:100%;}
+@media(max-width:768px){
+  footer{padding:28px 16px 20px!important;}
+  .footer-inner{flex-direction:column!important;gap:20px!important;align-items:center!important;text-align:center!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:10px 18px!important;}
+  .connect-grid{grid-template-columns:1fr!important;}
+  .curriculum-grid{grid-template-columns:1fr!important;}
+  .paths-grid{grid-template-columns:1fr!important;}
+  .settings-layout{grid-template-columns:1fr!important;}
+  .themes-grid{grid-template-columns:1fr 1fr!important;}
+  .lang-grid{grid-template-columns:1fr!important;}
+  .sbar{grid-template-columns:1fr 1fr!important;}
+  .hero-inner{grid-template-columns:1fr!important;}
+  .hero-inner>*:last-child{display:none!important;}
+  .wrap{grid-template-columns:1fr!important;}
+  .rp{display:none!important;}
+  .lp{padding:56px 20px 40px!important;}
+  h1,.h1{letter-spacing:-2px!important;}
+}
+@media(max-width:480px){
+  .stats-grid,.stat-grid,.stats-row{grid-template-columns:1fr 1fr!important;flex-direction:row!important;flex-wrap:wrap!important;}
+  .page-title,.hero h1{font-size:clamp(2rem,10vw,3rem)!important;}
+  nav,.nav-inner,.nw{padding-left:12px!important;padding-right:12px!important;}
+}
+
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
 <script src="phinex-search.js"></script>
 <script src="app.js"></script>

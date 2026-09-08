@@ -1,6 +1,9 @@
 /**
  * PhineX Search Engine v2.0
  * Cross-page search with section navigation, word highlighting & glow effects
+ * the best way to find anything across the entire PhineX platform
+ * Author: PhineX Programming team
+ * Made with ❤️ for the PhineX developer community by AMG
  */
 
 (function () {
@@ -255,6 +258,86 @@
       section: 'Connect With Us', sectionId: 'connect',
       text: 'Connect with PhineX on Discord, GitHub, Twitter/X, Instagram, LinkedIn, and YouTube. Join our community server, follow our repositories, and stay updated on the latest PhineX developments.',
       keywords: ['connect', 'social', 'discord', 'github', 'twitter', 'instagram', 'linkedin', 'youtube', 'follow', 'community server']
+    },
+
+    /* ── docs.html ── */
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Welcome', sectionId: 'overview',
+      text: 'PhineX documentation overview. What every PhineX project does and how to fix common problems, organized by project.',
+      keywords: ['docs', 'documentation', 'overview', 'welcome', 'guide', 'help']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'ElJasus', sectionId: 'eljasus',
+      text: 'ElJasus is a real-time multiplayer spy and word-guessing party game. One player is secretly the Spy, everyone else are Innocents who know the secret word. Players ask questions, the Spy bluffs, then the group votes on who they think the Spy is. Built with JavaScript, Firebase, and Tailwind CSS.',
+      keywords: ['eljasus', 'el jasus', 'spy game', 'party game', 'multiplayer', 'word game', 'firebase', 'roles', 'voting', 'secret word']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'JMS', sectionId: 'jms',
+      text: 'JMS, the El Jasus Moderation System, is the chat filter built into ElJasus. Five severity levels from minor warnings to permanent bans for threats. Version 4.0 fixed false positives like hello and class getting flagged, and removed rules that blocked religious symbols, pride flags, and neutral identity words.',
+      keywords: ['jms', 'moderation', 'el jasus moderation system', 'ban', 'warning', 'chat filter', 'profanity', 'levels', 'v4', 'fairness']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'X-Code', sectionId: 'x-code',
+      text: 'X-Code is a browser-based code editor: free AI assistance, multi-language support, file explorer, collaborative search, drawing tools, ratio and zoom controls, theme customization. No install required.',
+      keywords: ['x-code', 'xcode', 'code editor', 'ide', 'browser editor', 'ai assistant', 'file explorer', 'themes']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'SolveX', sectionId: 'solvex',
+      text: 'SolveX is a free AI-powered math solver with step-by-step solutions, photo and video upload, and Arabic language support.',
+      keywords: ['solvex', 'math solver', 'ai math', 'step by step', 'photo upload', 'arabic math']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'X-Academy & XLibrary', sectionId: 'x-academy',
+      text: 'X-Academy is PhineX training ground with a free Student Track (curriculum, Discord community, mentorship) and an assessment-gated Developer Track into the paid X-Developers team with revenue sharing. XLibrary is the free public beginner curriculum paired with X-Code practice.',
+      keywords: ['x-academy', 'xlibrary', 'student track', 'developer track', 'curriculum', 'mentorship', 'assessment', 'x-developers', 'learn to code']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'AMG Portfolio', sectionId: 'amg-portfolio',
+      text: 'AMG Portfolio is the personal portfolio site for PhineX founder Ahmed Al Gohary, one of the first PhineX projects shipped.',
+      keywords: ['amg', 'portfolio', 'ahmed al gohary', 'founder']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Fix: ElJasus & JMS', sectionId: 'fix-eljasus',
+      text: 'Troubleshooting ElJasus and JMS: messages not sending, unexpected warnings, bans that seem wrong, stuck rounds, and disconnected players.',
+      keywords: ['fix', 'troubleshoot', 'eljasus problem', 'jms problem', 'banned', 'warning', 'disconnected', 'stuck round']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Fix: X-Code', sectionId: 'fix-x-code',
+      text: 'Troubleshooting X-Code: files disappearing after refresh, the AI assistant not responding, and lag on large files.',
+      keywords: ['fix', 'troubleshoot', 'x-code problem', 'files lost', 'ai not working', 'lag', 'slow editor']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Fix: SolveX', sectionId: 'fix-solvex',
+      text: 'Troubleshooting SolveX: photo uploads not solving correctly, skipped or wrong steps, and Arabic input not recognized.',
+      keywords: ['fix', 'troubleshoot', 'solvex problem', 'photo upload', 'wrong answer', 'arabic not working']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Fix: X-Academy', sectionId: 'fix-academy',
+      text: 'Troubleshooting X-Academy: the pretest or developer test freezing, and not hearing back about Developer Track results.',
+      keywords: ['fix', 'troubleshoot', 'x-academy problem', 'test frozen', 'pretest stuck', 'no response']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Fix: Account & Access', sectionId: 'fix-account',
+      text: 'Troubleshooting account and access: redeem codes not working, login and password reset problems, and verification emails never arriving.',
+      keywords: ['fix', 'troubleshoot', 'redeem code not working', 'login problem', 'forgot password', 'verification email', 'account access']
+    },
+    {
+      page: 'docs.html', pageTitle: 'Docs',
+      section: 'Get Help', sectionId: 'get-help',
+      text: 'Still stuck after the docs? Ask on the PhineX Discord server or report a bug directly.',
+      keywords: ['help', 'support', 'discord', 'report bug', 'contact']
     },
   ];
 
@@ -715,6 +798,7 @@
     'redeemcode.html': `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     'settings.html': `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`,
     'aboutus.html': `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>`,
+    'docs.html': `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
   };
 
   function highlightQuery(text, query) {

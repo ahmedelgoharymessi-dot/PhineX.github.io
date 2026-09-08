@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bug Admin Dashboard | PhineX</title>
-<link rel="icon" type="image/x-icon" href="Phinex - Copy2.png">
+<link rel="icon" type="image/x-icon" href="PhineX (2).png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="bg3d.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="phinex-settings.js"></script>
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
@@ -319,7 +320,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
       <h2 class="gate-title">Admin Access</h2>
       <p class="gate-sub">You must be signed in with a verified PhineX account to access the admin dashboard.</p>
       <a href="login.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--g);color:#04040a;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;padding:13px 28px;border-radius:12px;text-decoration:none;margin-bottom:12px;">
-        <i class="fas fa-sign-in-alt"></i> Sign In to Continue
+        <i class="fas fa-sign-in-alt"></i><span data-i18n="nav.signin">Sign In</span> to Continue
       </a><br>
       <a href="index.html" class="gate-link">← Back to Home</a>
     </div>
@@ -338,7 +339,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
           type="text"
           id="gateRedeemInput"
           class="gate-input"
-          placeholder="Enter code e.g. ADMIN26"
+          placeholder="Enter code e.g."
           maxlength="30"
           autocomplete="off"
           style="letter-spacing:3px;text-transform:uppercase;font-size:15px;"
@@ -389,7 +390,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 ════════════════════════════════════ -->
 <div class="topbar">
   <div class="tw">
-    <a href="index.html" class="logo"><div class="lb"><i class="fas fa-dragon"></i></div><span class="ln">Phine<b>X</b></span></a>
+    <a href="index.html" class="logo"><div class="lb"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div><span class="ln">Phine<b>X</b></span></a>
     <span class="admin-badge">ADMIN</span>
     <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mu);"><div class="live-dot"></div> Live Dashboard</div>
     <div class="tb-right">
@@ -1218,5 +1219,37 @@ backdrop-filter:blur(8px);
   <div id="viewerContent" style="max-width:90%;max-height:90%;"></div>
 
 </div>
+<style>
+  @media(max-width:360px){ .hide-xs{ display:none; } }
+
+/* ══ MOBILE OVERHAUL ══ */
+body{overflow-x:hidden!important;}
+*{min-width:0;word-break:break-word;box-sizing:border-box;}
+img,canvas,video,iframe{max-width:100%;}
+@media(max-width:768px){
+  footer{padding:28px 16px 20px!important;}
+  .footer-inner{flex-direction:column!important;gap:20px!important;align-items:center!important;text-align:center!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:10px 18px!important;}
+  .connect-grid{grid-template-columns:1fr!important;}
+  .curriculum-grid{grid-template-columns:1fr!important;}
+  .paths-grid{grid-template-columns:1fr!important;}
+  .settings-layout{grid-template-columns:1fr!important;}
+  .themes-grid{grid-template-columns:1fr 1fr!important;}
+  .lang-grid{grid-template-columns:1fr!important;}
+  .sbar{grid-template-columns:1fr 1fr!important;}
+  .hero-inner{grid-template-columns:1fr!important;}
+  .hero-inner>*:last-child{display:none!important;}
+  .wrap{grid-template-columns:1fr!important;}
+  .rp{display:none!important;}
+  .lp{padding:56px 20px 40px!important;}
+  h1,.h1{letter-spacing:-2px!important;}
+}
+@media(max-width:480px){
+  .stats-grid,.stat-grid,.stats-row{grid-template-columns:1fr 1fr!important;flex-direction:row!important;flex-wrap:wrap!important;}
+  .page-title,.hero h1{font-size:clamp(2rem,10vw,3rem)!important;}
+  nav,.nav-inner,.nw{padding-left:12px!important;padding-right:12px!important;}
+}
+
+</style>
 </body>
 </html>

@@ -204,7 +204,7 @@
   text-decoration: none;
   cursor: pointer;
   border: none;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--bg);
   isolation: isolate;
   transition: transform 0.3s cubic-bezier(.34,1.4,.64,1), box-shadow 0.4s;
@@ -215,7 +215,7 @@
 .eljasus-btn .ej-border {
   position: absolute;
   inset: -1.5px;
-  border-radius: 999px;
+  border-radius: 10px;
   z-index: -3;
   background: conic-gradient(
     from 0deg at var(--cx) var(--cy),
@@ -235,7 +235,7 @@
   content: '';
   position: absolute;
   inset: 1.5px;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--bg);
   transition: background 0.45s ease, box-shadow 0.45s ease;
 }
@@ -244,7 +244,7 @@
 .eljasus-btn .ej-fill {
   position: absolute;
   inset: 1.5px;
-  border-radius: 999px;
+  border-radius: 10px;
   background: linear-gradient(105deg,
     rgba(0, 232, 162, 0.0)   0%,
     rgba(0, 232, 162, 0.0)  50%,
@@ -289,7 +289,7 @@
 .eljasus-btn .ej-glow {
   position: absolute;
   inset: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   background: radial-gradient(
     circle 55px at var(--cx) var(--cy),
     rgba(0,232,162,0.10), transparent 70%
@@ -304,7 +304,7 @@
 .eljasus-btn .ej-ring1 {
   position: absolute;
   inset: -7px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1px dashed rgba(0,220,160,0.15);
   z-index: -4;
   animation: ej-spin 14s linear infinite;
@@ -315,7 +315,7 @@
 .eljasus-btn .ej-ring2 {
   position: absolute;
   inset: -12px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1px dashed rgba(58,58,255,0.10);
   z-index: -5;
   animation: ej-spin 20s linear infinite reverse;
@@ -358,7 +358,7 @@
 .eljasus-btn .ej-scan {
   position: absolute;
   inset: 0;
-  border-radius: 999px;
+  border-radius: 70px;
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
@@ -912,7 +912,7 @@
 </head>
 <body>
 
-<!-- THREE.JS CANVAS (z=0, behind everything) -->
+<!-- THREE.JS CANVAS -->
 <canvas id="bgCanvas"></canvas>
 
 <!-- LOADING SCREEN -->
@@ -927,7 +927,7 @@
       <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1ab000,#005533);border-radius:12px;transform:rotateY(-90deg) translateZ(32px);opacity:0.6;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(135deg,#39ff14,#00ee88);border-radius:12px;transform:rotateX(90deg) translateZ(32px);opacity:0.85;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0d7700,#003322);border-radius:12px;transform:rotateX(-90deg) translateZ(32px);opacity:0.5;"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform:translateZ(33px);font-size:28px;color:#050508;"><i class="fas fa-dragon"></i></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform:translateZ(33px);font-size:28px;color:#050508;"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div>
     </div>
   </div>
   <div style="position:absolute;top:50%;left:50%;margin:-80px 0 0 -80px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(57,255,20,0.15);animation:orbitRing 3s linear infinite;pointer-events:none;"><div style="position:absolute;top:-4px;left:50%;margin-left:-4px;width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 12px rgba(57,255,20,0.8);"></div></div>
@@ -955,7 +955,8 @@
         <a href="index.html" class="page-item"><i class="fas fa-home"></i><span><span data-i18n="nav.home">Home</span></span></a>
         <a href="hiring.html" class="page-item"><i class="fas fa-laptop-code"></i><span><span data-i18n="nav.joinus">Join Us</span></span></a>
         <a href="x-academy.html" class="page-item"><i class="fas fa-graduation-cap"></i><span><span data-i18n="nav.academy">X-Academy</span></span></a>
-        <a href="community.html" class="page-item"><i class="fas fa-users"></i><span><span data-i18n="nav.community">Community</span></span></a>
+        <a href="docs.html" class="page-item"><i class="fas fa-book"></i><span>Docs</span></a>
+        <a href="community.html" class="page-item"><i class="fas fa-users"></i><span>Community</span></a>
         <a href="bugreport.html" class="page-item"><i class="fas fa-bug"></i><span><span data-i18n="nav.bug">Report Bug</span></span></a>
         <a href="redeemcode.html" class="page-item"><i class="fas fa-gift"></i><span><span data-i18n="nav.redeem">Redeem Code</span></span></a>
         <a href="aboutus.html" class="page-item"><i class="fas fa-info-circle"></i><span><span data-i18n="nav.about">About Us</span></span></a>
@@ -968,6 +969,7 @@
   <div id="mobileMenu" style="display:none;background:var(--surface);border-top:1px solid var(--border);padding:16px 24px;">
     <a href="hiring.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Join Us</a>
     <a href="x-academy.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">X-Academy</a>
+    <a href="docs.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Docs</a>
     <a href="community.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Community</a>
     <a href="bugreport.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Report Bug</a>
     <a href="redeemcode.html" style="display:block;padding:10px 0;color:var(--text);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);">Redeem Code</a>
@@ -984,7 +986,7 @@
     <p class="hero-sub">PhineX is a community of senior developers building real-world projects together. Collaborate, learn, earn, and grow — faster than working alone.</p>
     <div class="hero-actions">
       <a href="#features" class="btn-primary-hero"><i class="fas fa-rocket"></i>Explore Features</a>
-      <a href="hiring.html" class="btn-outline-hero"><i class="fas fa-users"></i>Join Our Team</a>
+      <a href="hiring.html" class="btn-outline-hero"><i class="fas fa-users"></i>Join Our Team</a><br><br>
       <a href="https://phinex-org.github.io/ElJasus"
    target="_blank"
    class="eljasus-btn">
@@ -1064,8 +1066,8 @@
         </a>
     </div>
     <div class="stats-row">
-      <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Needed Devs</div></div>
-      <div class="stat-item"><div class="stat-num">100+</div><div class="stat-label"><span data-i18n="home.stat.projects">Projects</span></div></div>
+      <div class="stat-item"><div class="stat-num">1</div><div class="stat-label">Solo Developing</div></div>
+      <div class="stat-item"><div class="stat-num">10</div><div class="stat-label"><span data-i18n="home.stat.projects">Projects</span></div></div>
       <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Languages</div></div>
       <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label"><span data-i18n="footer.support">Support</span></div></div>
     </div>
@@ -1083,7 +1085,7 @@
   <div class="features-inner">
     <div class="reveal"><div class="section-tag">Why Us</div><h2 class="section-title">Why Choose PhineX?</h2></div>
     <div class="features-grid">
-      <div class="feat-card reveal reveal-delay-1"><div class="feat-icon">💻</div><div class="feat-title">Collaborative Development</div><p class="feat-desc">Stop building alone. Join a team of experienced developers and ship projects faster, better, and with more impact.</p><a href="https://discord.gg/xBQ3ewVVHk" class="feat-link" target="_blank">Join the server <i class="fas fa-arrow-right"></i></a></div>
+      <div class="feat-card reveal reveal-delay-1"><div class="feat-icon">💻</div><div class="feat-title">Collaborative Development</div><p class="feat-desc">Stop building alone. Join a team of experienced developers and ship projects faster, better, and with more impact.</p><a href="https://discord.gg/wk4xtQVRzm" class="feat-link" target="_blank">Join the server <i class="fas fa-arrow-right"></i></a></div>
       <div class="feat-card reveal reveal-delay-2"><div class="feat-icon">🎓</div><div class="feat-title">Continuous Learning</div><p class="feat-desc">Grow through hands-on practice alongside seasoned mentors. Our X-Academy turns learners into professionals.</p><a href="x-academy.html" class="feat-link">Explore Academy <i class="fas fa-arrow-right"></i></a></div>
       <div class="feat-card reveal reveal-delay-3"><div class="feat-icon">💰</div><div class="feat-title">Earning Opportunities</div><p class="feat-desc">Participate in real revenue-generating projects and earn your share. More projects, more income, more experience.</p><a href="hiring.html" class="feat-link">Learn more <i class="fas fa-arrow-right"></i></a></div>
     </div>
@@ -1103,19 +1105,22 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="index.html" class="nav-logo" style="text-decoration:none;"><div class="logo-icon-wrap"><i class="fas fa-dragon"></i></div><span class="logo-text"><span data-i18n="nav.brand">Phine</span><span><span data-i18n="nav.brand">X</span></span></span></a>
+      <a href="index.html" class="nav-logo" style="text-decoration:none;"><div class="logo-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/128/982/982747.png" alt="PhineX Logo" width="30px" height="30px"></div><span class="logo-text"><span data-i18n="nav.brand">Phine</span><span><span data-i18n="nav.brand">X</span></span></span></a>
       <p>A community of senior programmers building innovative solutions together since 2025.</p>
       <div class="social-row">
-        <a href="https://discord.gg/xBQ3ewVVHk" class="social-btn" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://discord.gg/wk4xtQVRzm" class="social-btn" target="_blank"><i class="fab fa-discord"></i></a>
         <a href="https://www.github.com/PhineX-org" class="social-btn" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/phinex_group/" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.notion.so/invite/d6d9824c6e712e4f95d8cc14b8e93467cadea20e" class="social-btn" target="_blank"><i class="fab fa-notion"></i></a>
+        <a href="https://www.linkedin.com/groups/18865045/" class="social-btn" target="_blank"><i class="fab fa-linkedin"></i></a>
         <a href="https://www.youtube.com/channel/UCslNCf9VtxpFH_gtA1VHFyQ" class="social-btn" target="_blank"><i class="fab fa-youtube"></i></a>
         <a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
         <a href="https://www.facebook.com/profile.php?id=61584765330775" class="social-btn" target="_blank"><i class="fab fa-facebook"></i></a>
       </div>
     </div>
-    <div class="footer-col"><h4 style="color: var(--neon);">Platform</h4><a href="index.html">Home</a><a href="hiring.html">Join Us</a><a href="x-academy.html">X-Academy</a><a href="aboutus.html">About Us</a></div>
-    <div class="footer-col"><h4 style="color: var(--neon);">Resources</h4><a href="login.html">Login</a><a href="signup.html">Sign Up</a><a href="redeemcode.html">Redeem Code</a><a href="bugreport.html">Report Bug</a></div>
-    <div class="footer-col"><h4 style="color: var(--neon);">Community</h4><a href="https://discord.gg/xBQ3ewVVHk" target="_blank">Discord Server</a><a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" target="_blank">WhatsApp Group</a><a href="https://www.facebook.com/profile.php?id=61584765330775" target="_blank">Facebook Page</a><a href="https://www.github.com/PhineX-org" target="_blank">Github Account</a></div>
+    <div class="footer-col"><h4 style="color: var(--neon);">Platform</h4><a href="index.html">Home</a><a href="hiring.html">Join Us</a><a href="x-academy.html">X-Academy</a><a href="docs.html">Docs</a><a href="aboutus.html">About Us</a></div>
+    <div class="footer-col"><h4 style="color: var(--neon);">Resources</h4><a href="login.html">Login</a><a href="login.html">Sign Up</a><a href="redeemcode.html">Redeem Code</a><a href="bugreport.html">Report Bug</a></div>
+    <div class="footer-col"><h4 style="color: var(--neon);">Community</h4><a href="https://discord.gg/wk4xtQVRzm" target="_blank">Discord Server</a><a href="https://chat.whatsapp.com/IuC3Gu6x5p61MORTnAuHJA" target="_blank">WhatsApp Group</a><a href="https://www.facebook.com/profile.php?id=61584765330775" target="_blank">Facebook Page</a><a href="https://www.github.com/PhineX-org" target="_blank">Github Account</a></div>
   </div>
   <div class="footer-bottom"><p>&copy; 2026 PhineX. All rights reserved.</p><p>Made with ❤️ by <a href="https://www.facebook.com/A.Mo.Elgohary/" target="_blank">Ahmed Al Gohary</a></p></div>
 </footer>
@@ -1311,17 +1316,17 @@
 <!-- PAGE SCRIPTS -->
 <script>
 const NEWS_DATA = [
-  { category:'Launch',   date:'Mar 2025', title:'PhineX official website update',                  desc:'PhineX has updated its official website with a professional digital showcase featuring new advanced UI/UX designs, interactive elements, and providing smart bug report system and search engine.',       img:'PhineX (2).png', href:'https://PhineX-org.github.io/Portfolio/'  },
-  { category:'Community',date:'May 2025', title:'Join X-Developers — Collaborative Projects Open', desc:'We are actively recruiting senior developers to collaborate on global projects. Earn a share of profits while building remarkable software.',                                                             img:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80', href:'hiring.html'           },
-  { category:'Launch',   date:'Jul 2026', title:'The first project multiplayer game is live',      desc:'PhineX Launches First Multiplayer Game only for arab, this game is a revolutionary experience for PhineX projects development, where the game has a gorgeous gameplay and impressive UI Design.',         img:'ElJasus2.png',    href:'https://phinex-org.github.io/ElJasus'         },
-  { category:'Feature',  date:'Mar 2026', title:'Advanced Bug Reporting System Launched',          desc:'Our new error reporting system lets developers submit issues with screenshots and video attachments directly to the PhineX dev team.',                                                                    img:'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80', href:'bugreport.html'        },
-  { category:'Launch',   date:'Mar 2026', title:'ΣolveX very smart AI powered website',            desc:'AI powered website for solving different complex maths problems, all types of maths, accurate answers, analyze photos and videos, solve the problems fast and accurate with steps.',                                                                                                                                        img:'solvex.png', href:'https://phinex-org.github.io/SolveX'        },
+  { category:'Live Test',date:'May 2025', title:'Join X-Developers — Collaborative Projects Open', desc:'We are actively recruiting senior developers to collaborate on global projects. Earn a share of profits while building remarkable software.',                                                             img:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80', href:'https://discord.gg/wk4xtQVRzm'           },
+  { category:'Update',   date:'Sep 2026', title:'ElJasus classic design update with a better experience for all devices',      desc:'PhineX updates ElJasus with the classic design but with a futuristic experience.',         img:'ElJasus2.png',    href:'https://phinex-org.github.io/ElJasus'         },
+  { category:'Launch',  date:'Apr 2026', title:'X Code code editor launched!',                     desc:'VScode like code editor for web development with multi-language support and free AI assistance with workplace ratio setup while coding feature.',                                                         img:'X-Code.png', href:'https://phinex-org.github.io/X-Code'        },
+  { category:'Update',   date:'Aug 2026', title:'AMG Portfolio updated',                           desc:'New design and more features added to give a professional look.',                                                                                                                                         img:'AMG_Portfolio.png', href:'https://phinex-org.github.io/Portfolio'        },
 ];
 const PROJECTS_DATA = [
-  { title:'EG Portfolio',      desc:'A professional digital showcase featuring advanced UI/UX designs, interactive elements, and personal project highlights.',                                                           stack:['HTML5','CSS3','JavaScript','GitHub Pages'], icon:'🌐', status:'Live', href:'https://PhineX-org.github.io/Portfolio/', views:'2.4k', img:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80' },
-  { title:'PhineX Platform',   desc:'The main PhineX community website — a hub for developers to collaborate, learn, and access resources. Features Firebase auth, theme engine, and multi-language support.',            stack:['HTML','CSS','JavaScript','Firebase'],       icon:'🐉', status:'Live', href:'index.html',    views:'5.1k', img:'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80' },
+  { title:'X Code',            desc:'A modern code editor for web development with multi-language support and integrated AI assistance and visual clarity with multiple simple tools.',                                   stack:['HTML5','CSS3','JavaScript','GitHub Pages'], icon:'🌐', status:'Live', href:'https://PhineX-org.github.io/X-Code/', views:'2.4k', img:'X-Code.png' },
+  { title:'AMG Portfolio',   desc:'A modern portfolio website for showcasing creative work and professional achievements of the founder, AMG.',   stack:['HTML','CSS','JavaScript'],       icon:'🐉', status:'Live', href:'https://phinex-org.github.io/Portfolio/',    views:'5.1k', img:'AMG_Portfolio.png' },
   { title:'El-Jasus',          desc:'Multiplayer online game for family and friends — test your acting skills and detective sense. Built with JavaScript and Firebase for real-time play.',                               stack:['JavaScript','Firebase','Tailwind'],         icon:'🕵️', status:'Live', href:'https://phinex-org.github.io/ElJasus/',                      views:'1.8k', img:'ElJasus2.png"' },
   { title:'ΣolveX',            desc:'AI powered website for solving different complex maths problems, all types of maths, accurate answers, analyze photos and videos, solve the problems fast and accurate with steps.', stack:['Firebase','Tailwind CSS','JavaScript', 'GitHub Pages'],         icon:'📐', status:'Live', href:'https://phinex-org.github.io/SolveX/',   views:'920',  img:'solvex.png' },
+  { title:'XLibrary',            desc:'New coding free course for beginners from scratch, contains everything about web development with a relistic projects building and debugging errors using X-Code window code editors.', stack:['Firebase','Tailwind CSS','JavaScript', 'GitHub Pages', 'X Code'],         icon:'📖', status:'Live', href:'https://phinex-org.github.io/XLibrary/',   views:'920',  img:'PhineX_Courses.png' },
 ];
 
 function buildNews() {
@@ -1465,5 +1470,36 @@ document.querySelectorAll('.eljasus-btn').forEach(btn => {
 window.PXAlert={_resolve:null,show({icon='ℹ️',title='',message='',type='info',buttons=[{label:'OK',value:true,primary:true}]}={}){return new Promise(resolve=>{this._resolve=resolve;const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');document.getElementById('pxAlertIcon').textContent=icon;document.getElementById('pxAlertTitle').textContent=title;document.getElementById('pxAlertMsg').innerHTML=message;const cols={info:'rgba(57,255,20,0.25)',error:'rgba(255,68,68,0.25)',warning:'rgba(255,215,0,0.25)',success:'rgba(57,255,20,0.3)'};c.style.borderColor=cols[type]||cols.info;const be=document.getElementById('pxAlertBtns');be.innerHTML='';buttons.forEach(btn=>{const b=document.createElement('button');b.textContent=btn.label;const ip=btn.primary;b.style.cssText=ip?'background:#39ff14;color:#050508;font-family:Syne,sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border-radius:11px;border:none;cursor:pointer;':'background:transparent;color:#f0f0ff;font-family:Syne,sans-serif;font-weight:600;font-size:14px;padding:11px 28px;border-radius:11px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;';b.onclick=()=>{this.hide();resolve(btn.value);};be.appendChild(b);});o.classList.add('show');document.addEventListener('keydown',this._keyHandler=(e)=>{if(e.key==='Escape'){this.hide();resolve(false);}});})},hide(){const o=document.getElementById('pxAlertOverlay'),c=document.getElementById('pxAlertCard');c.style.transform='scale(0.88)';c.style.opacity='0';setTimeout(()=>o.classList.remove('show'),300);document.removeEventListener('keydown',this._keyHandler);},info(t,m){return this.show({icon:'ℹ️',title:t,message:m,type:'info'})},success(t,m){return this.show({icon:'✅',title:t,message:m,type:'success'})},error(t,m){return this.show({icon:'❌',title:t,message:m,type:'error'})},warning(t,m){return this.show({icon:'⚠️',title:t,message:m,type:'warning'})},confirm(t,m){return this.show({icon:'🤔',title:t,message:m,type:'warning',buttons:[{label:'Cancel',value:false,primary:false},{label:'Confirm',value:true,primary:true}]})}};
 document.getElementById('pxAlertOverlay').addEventListener('click',function(e){if(e.target===this){PXAlert.hide();if(PXAlert._resolve)PXAlert._resolve(false);}});
 </script>
+<style>
+  @media(max-width:360px){ .hide-xs{ display:none; } }
+
+/* ══ MOBILE OVERHAUL ══ */
+body{overflow-x:hidden!important;}
+*{min-width:0;word-break:break-word;box-sizing:border-box;}
+img,canvas,video,iframe{max-width:100%;}
+@media(max-width:768px){
+  footer{padding:28px 16px 20px!important;}
+  .footer-inner{flex-direction:column!important;gap:20px!important;align-items:center!important;text-align:center!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:10px 18px!important;}
+  .connect-grid{grid-template-columns:1fr!important;}
+  .curriculum-grid{grid-template-columns:1fr!important;}
+  .paths-grid{grid-template-columns:1fr!important;}
+  .settings-layout{grid-template-columns:1fr!important;}
+  .themes-grid{grid-template-columns:1fr 1fr!important;}
+  .lang-grid{grid-template-columns:1fr!important;}
+  .sbar{grid-template-columns:1fr 1fr!important;}
+  .hero-inner{grid-template-columns:1fr!important;}
+  .hero-inner>*:last-child{display:none!important;}
+  .wrap{grid-template-columns:1fr!important;}
+  .rp{display:none!important;}
+  .lp{padding:56px 20px 40px!important;}
+  h1,.h1{letter-spacing:-2px!important;}
+}
+@media(max-width:480px){
+  .stats-grid,.stat-grid,.stats-row{grid-template-columns:1fr 1fr!important;flex-direction:row!important;flex-wrap:wrap!important;}
+  .page-title,.hero h1{font-size:clamp(2rem,10vw,3rem)!important;}
+  nav,.nav-inner,.nw{padding-left:12px!important;padding-right:12px!important;}
+}
+</style>
 </body>
 </html>
